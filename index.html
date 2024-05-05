@@ -97,6 +97,55 @@
             </tr>
 
 
+	    <tr onmouseout="ffkm_stop()" onmouseover="ffkm_start()">
+	      <td style="padding:20px;width:25%;vertical-align:middle">
+	        <div class="one">
+	          <div class="two" id='ffkm_image'><video  width=100% muted autoplay loop>
+	          <source src="images/ffkm.mp4" type="video/mov">
+	          Your browser does not support the video tag.
+	          </video></div>
+	          <img src='images/kmeans2022-a.png' width=100%>
+	        </div>
+	        <script type="text/javascript">
+	          function ffkm_start() {
+	            document.getElementById('ffkm_image').style.opacity = "1";
+	          }
+	
+	          function ffkm_stop() {
+	            document.getElementById('ffkm_image').style.opacity = "0";
+	          }
+	          ffkm_stop()
+	        </script>
+              </td>
+              <td style="padding:20px;width:75%;vertical-align:middle">
+                <a href="https://arxiv.org/abs/2201.04822">
+                  <span class="papertitle">A Geometric Approach to <i>k</i>-means</span>
+                </a>
+                <br>
+		<strong>Jiazhen Hong</strong>,
+                Wei Qian,
+                <a href="https://pages.cs.wisc.edu/%7Eyudongchen/">Yudong Chen </a>,
+		<a href="https://www.ece.rutgers.edu/yuqian-zhang">Yuqian Zhang </a>, 
+                <br>
+                <em>arXiv</em>, 2022
+                <br>
+                <a href="https://arxiv.org/abs/2201.04822">arXiv</a>
+                /
+                <p></p>
+                <p>
+                We propose a flexible framework for <i>k</i>-means problem by harnessing the geometric structure of local solutions. It provides a theoretical foundation for future work to design detection routines for varying cluster distributions.
+                </p>
+              </td>
+	    </tr>
+
+
+
+
+
+
+
+
+		  
 	    <tr onmouseout="malle_stop()" onmouseover="malle_start()">
               <td style="padding:20px;width:25%;vertical-align:middle">
                 <div class="one">
