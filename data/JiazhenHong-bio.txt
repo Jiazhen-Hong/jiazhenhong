@@ -1,1 +1,4 @@
-Jiazhen Hong is a Ph.D. Candidate at Rutgers University.
+Jiazhen Hong is currently a Ph.D. Candidate in Computer Engineering at Rutgers University.
+
+Jiazhen received his B.Sc. degree in Communication Engineering from Jimei University, China, in 2016. He then obtained his M.Sc. degree in Electrical Engineering from Stevens Institute of Technology in 2018. From 2019 to 2020, He worked as a research student at the Beth Israel Deaconess Medical Center, Harvard Medical School. He is currently pursuing a Ph.D. degree in Computer Engineering at Rutgers University. His primary research interests include electroencephalogram (EEG)-based brain-computer interfaces (BCI), machine learning algorithms, signal processing, and natural language processing (NLP). During the summer of 2022, he served as an instructor, teaching Linear Systems & Signals to undergraduate students.
+
