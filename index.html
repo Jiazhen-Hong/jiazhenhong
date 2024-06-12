@@ -14,15 +14,16 @@
       .publication-entry {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 20px;
       }
 
       .publication-entry img,
       .publication-entry video {
-        margin-right: 30px;
-        width: 160;
+        margin-right: 20px;
+        max-width: 160px;
         height: auto;
+        object-fit: cover;
       }
 
       .publication-entry .publication-text {
@@ -109,26 +110,11 @@
             </table>
             <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
               <tbody>
-                <tr onmouseout="dbi2022_stop()" onmouseover="dbi2022_start()">
-                  <td style="padding:20px;width:25%;vertical-align:middle">
-                    <div class="one">
-                      <div class="two" id='dbi2022_image'>
-                        <img src='images/embc2022-b.png' width="200">
-                      </div>
-                      <img src='images/embc2022-a.jpg' width="200">
-                    </div>
-                    <script type="text/javascript">
-                      function dbi2022_start() {
-                        document.getElementById('dbi2022_image').style.opacity = "1";
-                      }
-
-                      function dbi2022_stop() {
-                        document.getElementById('dbi2022_image').style.opacity = "0";
-                      }
-                      dbi2022_stop()
-                    </script>
+                <tr class="publication-entry">
+                  <td>
+                    <img src='images/embc2022-a.jpg' alt="EMBC 2022" />
                   </td>
-                  <td style="padding:20px;width:75%;vertical-align:middle">
+                  <td class="publication-text">
                     <a href="https://ieeexplore.ieee.org/abstract/document/9871446">
                       <span class="papertitle">A deep learning framework based on dynamic channel selection for early classification of left and right hand motor imagery tasks</span>
                     </a>
@@ -151,14 +137,14 @@
                   </td>
                 </tr>
 
-                <tr>
-                  <td style="padding:20px;width:25%;vertical-align:middle">
+                <tr class="publication-entry">
+                  <td>
                     <video width="100%" muted autoplay loop>
                       <source src="images/ffkm.mp4" type="video/mp4">
                       Your browser does not support the video tag.
                     </video>
                   </td>
-                  <td style="padding:20px;width:75%;vertical-align:middle">
+                  <td class="publication-text">
                     <a href="https://arxiv.org/abs/2201.04822">
                       <span class="papertitle">A Geometric Approach to <i>k</i>-means</span>
                     </a>
