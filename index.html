@@ -148,7 +148,7 @@
                 <!-- Second Publication Entry with Video -->
                 <tr class="publication-entry">
                   <td>
-                    <video width="100%" muted autoplay loop>
+                    <video id="ffkm-video" width="100%" muted loop controls>
                       <source src="images/ffkm.mp4" type="video/mp4">
                       Your browser does not support the video tag.
                     </video>
@@ -168,6 +168,18 @@
                     <p>We propose a flexible framework for <i>k</i>-means problem by harnessing the geometric structure of local solutions. It provides a theoretical foundation for future work to design detection routines for varying cluster distributions.</p>
                   </td>
                 </tr>
+
+                <script>
+                  const video = document.getElementById('ffkm-video');
+
+                  video.addEventListener('click', function() {
+                    if (video.paused) {
+                      video.play();
+                    } else {
+                      video.pause();
+                    }
+                  });
+                </script>
               </tbody>
             </table>
 
