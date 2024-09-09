@@ -9,40 +9,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
-
+    
     <style>
       .publication-entry {
         display: flex;
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center; /* Center-align the content */
         margin-bottom: 20px;
       }
-
+    
       .publication-entry img,
       .publication-entry video {
         margin-right: 20px;
-        max-width: 160px;
-        height: auto;
+        max-width: 300px; /* Set a fixed larger width for images/videos */
+        width: 100%; /* Ensure it adapts to smaller screens */
+        height: auto; /* Maintain aspect ratio */
         object-fit: cover;
       }
-
+    
       .publication-entry .publication-text {
         flex: 1;
+        font-size: 0.9em; /* Slightly reduce the text size */
+        line-height: 1.5; /* Increase line spacing for better readability */
       }
-
+    
+      .publication-entry .papertitle {
+        font-weight: bold;
+        color: #0070C0; /* Blue color for titles to make them stand out */
+      }
+    
       .publication-section {
         margin-left: 20px;
       }
-
+    
       .publication-section h3 {
         margin-left: -20px;
       }
-
+    
       .publication-section ul {
         list-style-type: disc;
         padding-left: 20px;
       }
-
+    
       .publication-section li {
         margin-bottom: 10px;
       }
@@ -109,21 +117,22 @@
                 </tr>
               </tbody>
             </table>
+
             <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
               <tbody>
                 <!-- First Publication Entry with Image -->
                 <tr class="publication-entry">
-                  <td style="width:40%;">
-                    <img src='images/embc2022-a.jpg' alt="EMBC 2022" style="width:100%; height:auto; object-fit:cover;" />
+                  <td>
+                    <img src='images/embc2022-a.jpg' alt="EMBC 2022" />
                   </td>
-                  <td class="publication-text" style="width:60%;">
+                  <td class="publication-text">
                     <a href="https://ieeexplore.ieee.org/abstract/document/9871446">
                       <span class="papertitle">A deep learning framework based on dynamic channel selection for early classification of left and right hand motor imagery tasks</span>
                     </a>
                     <br>
                     <strong>Jiazhen Hong</strong>,
                     <a href="https://scholar.google.com/citations?hl=en&user=ATrih2UAAAAJ&view_op=list_works&sortby=pubdate">Foroogh Shamsi</a>,
-                    <a href="https://eceweb1.rutgers.edu/~laleh/#/people/PI">Laleh Najafizadeh </a>,
+                    <a href="https://eceweb1.rutgers.edu/~laleh/#/people/PI">Laleh Najafizadeh</a>,
                     <br>
                     <em>EMBC</em>, 2022
                     <br>
@@ -136,13 +145,13 @@
             
                 <!-- Second Publication Entry with Video -->
                 <tr class="publication-entry">
-                  <td style="width:40%;">
-                    <video style="width:100%; height:auto;" muted autoplay loop>
+                  <td>
+                    <video width="100%" muted autoplay loop>
                       <source src="images/ffkm.mp4" type="video/mp4">
                       Your browser does not support the video tag.
                     </video>
                   </td>
-                  <td class="publication-text" style="width:60%;">
+                  <td class="publication-text">
                     <a href="https://arxiv.org/abs/2201.04822">
                       <span class="papertitle">A Geometric Approach to <i>k</i>-means</span>
                     </a>
