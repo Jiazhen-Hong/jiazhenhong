@@ -745,6 +745,14 @@
       document.getElementById('publications-content').innerHTML = html;
     });
 
+  function switchSubtab(id, btn) {
+    const parent = btn.closest('#tab-publications');
+    parent.querySelectorAll('.subtabs button').forEach(b => b.classList.remove('active'));
+    parent.querySelectorAll('.subtab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    parent.querySelector('#subtab-' + id).classList.add('active');
+  }
+  
   function switchTab(id, btn) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
