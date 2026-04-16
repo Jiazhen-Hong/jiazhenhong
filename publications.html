@@ -1,0 +1,400 @@
+<!-- ══════════════ PUBLICATIONS TAB ══════════════ -->
+<div id="tab-publications" class="tab-panel">
+
+  <div class="subtabs">
+    <button class="active" onclick="switchSubtab('all', this)">All</button>
+    <button onclick="switchSubtab('journal', this)">Journal</button>
+    <button onclick="switchSubtab('conference', this)">Conference</button>
+    <button onclick="switchSubtab('review', this)">Under Review</button>
+  </div>
+
+  <!-- ── ALL: reference-list style ── -->
+  <div id="subtab-all" class="subtab-panel active">
+
+    <style>
+      .ref-list { list-style: none; padding: 0; }
+      .ref-list li {
+        padding: 7px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.88em;
+        line-height: 1.65;
+        display: flex;
+        gap: 10px;
+      }
+      .ref-list li:last-child { border-bottom: none; }
+      .ref-num { flex-shrink: 0; color: var(--text-light); min-width: 28px; padding-top: 1px; }
+      .ref-body { flex: 1; }
+      .ref-body .me { font-weight: 700; color: var(--navy); }
+      .ref-body .jtitle { font-style: italic; color: var(--scarlet); }
+      .ref-body .jtitle a { color: var(--scarlet); text-decoration: none; }
+      .ref-body .jtitle a:hover { text-decoration: underline; }
+      .ref-links { display: inline-flex; gap: 6px; margin-left: 6px; }
+      .ref-links a {
+        font-size: 0.8em; font-weight: 600;
+        color: var(--scarlet); text-decoration: none;
+        padding: 1px 6px; border: 1px solid #ffd0d0; border-radius: 3px;
+      }
+      .ref-links a:hover { background: var(--scarlet); color: #fff; border-color: var(--scarlet); }
+    </style>
+
+    <div class="pub-year">2026</div>
+    <ol class="ref-list">
+      <li>
+        <span class="ref-num">[1]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span>, P. Rao, W. Wang, and L. Najafizadeh. "ChatBCI-Assist: An Intent-Based P300 Speller with A Locally-Deployed LLM and Adaptive Stopping Strategy Enabling Record Online Spelling Performance."
+          <span class="jtitle"><a href="#">IEEE Transactions on Biomedical Engineering (TBME)</a></span>, 2026.
+          <span class="ref-links"><a href="#">Link</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[2]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span>, W. Qian, Y. Chen, and Y. Zhang. "A Geometric Approach to k-Means Clustering."
+          <span class="jtitle"><a href="https://ieeexplore.ieee.org/document/11194164">IEEE Transactions on Knowledge and Data Engineering (TKDE)</a></span>, 38, 1442–1453, 2026.
+          <span class="ref-links"><a href="https://arxiv.org/abs/2201.04822">arXiv</a><a href="https://ieeexplore.ieee.org/document/11194164">IEEE</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[3]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span>, P. Rao, W. Wang, and L. Najafizadeh. "Improving Spelling Performance of LLM-based P300 Speller BCIs using Circular Nonadjacent Flashing and Cross-Validated Calibration."
+          <span class="jtitle"><a href="https://embc.embs.org/2026/">IEEE EMBC 2026</a></span>. Accepted.
+          <span class="ref-links"><a href="https://embc.embs.org/2026/">Link</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[4]</span>
+        <span class="ref-body">
+          P. Rao, <span class="me">J. Hong</span>, W. Wang, and L. Najafizadeh. "Llama-4-ALS: A Locally Deployable LLM, Tuned with LoRA and Dynamic Hierarchical Data Augmentation, for Speller-Based AAC."
+          <span class="jtitle"><a href="https://embc.embs.org/2026/">IEEE EMBC 2026</a></span>. Accepted.
+          <span class="ref-links"><a href="https://embc.embs.org/2026/">Link</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[5]</span>
+        <span class="ref-body">
+          A. Subramanian, S. Mai, <span class="me">J. Hong</span>, and L. Najafizadeh. "Neural Dynamics of Time Perception Under Acute Pain: An Auditory Temporal Bisection Study."
+          <span class="jtitle"><a href="https://biomedicalimaging.org/2025/">IEEE International Symposium on Biomedical Imaging (ISBI 2026)</a></span>. Accepted.
+          <span class="ref-links"><a href="https://biomedicalimaging.org/2025/">Link</a></span>
+        </span>
+      </li>
+    </ol>
+
+    <div class="pub-year" style="margin-top:24px;">2025</div>
+    <ol class="ref-list">
+      <li>
+        <span class="ref-num">[6]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span>, W. Wang, and L. Najafizadeh. "ChatBCI: A P300 Speller BCI with Context-Driven Word Prediction Leveraging Large Language Models, from Concept to Evaluation."
+          <span class="jtitle"><a href="https://www.nature.com/srep/">Scientific Reports (Nature Portfolio)</a></span>, 16, 6379, 2026.
+          <span class="ref-links"><a href="https://arxiv.org/abs/2411.15395">arXiv</a><a href="https://www.nature.com/srep/">Journal</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[7]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span>, G. Mackellar, and S. Ghane. "SpellerSSL: Self-Supervised Learning with P300 Aggregation for Speller BCIs."
+          <span class="jtitle"><a href="https://neurips.cc/">NeurIPS 2025, Data on the Brain &amp; Mind Workshop</a></span>. Accepted.
+          <span class="ref-links"><a href="https://arxiv.org/abs/2509.19401">arXiv</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[8]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span>, G. Mackellar, and S. Ghane. "An Efficient Self-Supervised Framework for Long-Sequence EEG Modeling."
+          <span class="jtitle"><a href="https://www3.cs.stonybrook.edu/~icdm2025/index.html">IEEE ICDM 2025, AI for Time Series Workshop</a></span>. Accepted.
+          <span class="ref-links"><a href="https://arxiv.org/abs/2502.17873">arXiv</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[9]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span> and L. Najafizadeh. "Enhancing Typing Speed in LLM-based P300 Speller BCIs Using A New Data-Driven Dynamic Stopping Strategy."
+          <span class="jtitle"><a href="https://neuro.embs.org/2025/">IEEE EMBS NER 2025</a></span>. Accepted.
+          <span class="ref-links"><a href="https://neuro.embs.org/2025/">Link</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[10]</span>
+        <span class="ref-body">
+          S. Mai, <span class="me">J. Hong</span>, T. Shors, and L. Najafizadeh. "Longest Sustained Cortical Activity Duration in Temporal Bisection Task Aligns with Geometric Mean for Log-Spaced Probes."
+          <span class="jtitle"><a href="https://neuro.embs.org/2025/">IEEE EMBS NER 2025</a></span>. Accepted.
+          <span class="ref-links"><a href="https://neuro.embs.org/2025/">Link</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[11]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span>, P. Rao, W. Wang, S. Chen, and L. Najafizadeh. "ChatBCI4ALS: A High-Performance, LLM-Driven Intent-Based BCI Communication System for Individuals with ALS."
+          <span class="jtitle"><a href="https://embc.embs.org/2025/">IEEE EMBC 2025</a></span>, pp. 1–6.
+          <span class="ref-links"><a href="https://embc.embs.org/2025/">Link</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[12]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span> and L. Najafizadeh. "TopoEEG: a TimeSformer-Based Topographic Image Representation Method for Single-Trial Early Detection of P300."
+          <span class="jtitle"><a href="https://biomedicalimaging.org/2025/">IEEE ISBI 2025</a></span>, pp. 1–4.
+          <span class="ref-links"><a href="https://biomedicalimaging.org/2025/">Link</a></span>
+        </span>
+      </li>
+    </ol>
+
+    <div class="pub-year" style="margin-top:24px;">2024</div>
+    <ol class="ref-list">
+      <li>
+        <span class="ref-num">[13]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span>, W. Wang, and L. Najafizadeh. "ChatBCI: A Fast P300 Speller Brain-Computer Interface Incorporating Generative AI-Based Word Prediction."
+          <span class="jtitle"><a href="https://brain.ieee.org/">2024 IEEE Brain Discovery and Neurotechnology Workshop</a></span>. (Spotlight)
+          <span class="ref-links"><a href="data/poster/IEEEbrain2024.pdf">Poster</a></span>
+        </span>
+      </li>
+      <li>
+        <span class="ref-num">[14]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span> and L. Najafizadeh. "P3T: A Transformer Model for Enhancing Character Recognition Rates in P300 Speller Systems."
+          <span class="jtitle"><a href="https://www.asilomarssc.org/">Asilomar ACSSC 2024</a></span>, pp. 514–518.
+          <span class="ref-links"><a href="data/poster/Asilomar2024">Poster</a></span>
+        </span>
+      </li>
+    </ol>
+
+    <div class="pub-year" style="margin-top:24px;">2022</div>
+    <ol class="ref-list">
+      <li>
+        <span class="ref-num">[15]</span>
+        <span class="ref-body">
+          <span class="me">J. Hong</span>, F. Shamsi, and L. Najafizadeh. "A Deep Learning Framework Based on Dynamic Channel Selection for Early Classification of Left and Right Hand Motor Imagery Tasks."
+          <span class="jtitle"><a href="https://ieeexplore.ieee.org/abstract/document/9871446">IEEE EMBC 2022</a></span>, Glasgow, Scotland, pp. 3550–3553.
+          <span class="ref-links"><a href="https://ieeexplore.ieee.org/abstract/document/9871446">IEEE</a><a href="data/poster/EMBC2022-poster.pdf">Poster</a></span>
+        </span>
+      </li>
+    </ol>
+
+  </div>
+
+  <!-- ── JOURNAL: detailed cards ── -->
+  <div id="subtab-journal" class="subtab-panel">
+
+    <div class="pub-card">
+      <div class="pub-num">[1]</div>
+      <div class="pub-body">
+        <div class="pub-title"><a href="#">ChatBCI-Assist: An Intent-Based P300 Speller with A Locally-Deployed LLM and Adaptive Stopping Strategy Enabling Record Online Spelling Performance</a></div>
+        <div class="pub-authors"><strong>J. Hong</strong>, P. Rao, W. Wang, and L. Najafizadeh</div>
+        <div class="pub-venue">IEEE Transactions on Biomedical Engineering (TBME), 2026</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          We present ChatBCI-Assist, the most advanced intent-based P300 speller integrating a locally-deployed LLM with an adaptive stopping strategy. The system achieves record-breaking online spelling performance, significantly advancing real-time BCI communication for individuals with motor disabilities.
+        </p>
+        <div class="pub-links"><a href="#">Link</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[2]</div>
+      <div class="pub-body">
+        <div class="pub-title"><a href="https://arxiv.org/abs/2411.15395">ChatBCI: A P300 Speller BCI with Context-Driven Word Prediction Leveraging Large Language Models, from Concept to Evaluation</a></div>
+        <div class="pub-authors"><strong>J. Hong</strong>, W. Wang, and L. Najafizadeh</div>
+        <div class="pub-venue">Scientific Reports (Nature Portfolio), 16, 6379, 2026</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          ChatBCI leverages the zero-shot learning capability of large language models to improve sentence writing speed in P300 speller BCIs. The system retrieves word suggestions to complete partially spelled words or predict the next word, improving efficiency in realistic communication scenarios.
+        </p>
+        <div class="pub-links"><a href="https://arxiv.org/abs/2411.15395">arXiv</a><a href="https://www.nature.com/srep/">Journal</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[3]</div>
+      <div class="pub-body">
+        <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11194164">A Geometric Approach to k-Means Clustering</a></div>
+        <div class="pub-authors"><strong>J. Hong</strong>, W. Qian, Y. Chen, and Y. Zhang</div>
+        <div class="pub-venue">IEEE Transactions on Knowledge and Data Engineering (TKDE), 38, 1442–1453, 2026</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          We propose a flexible framework for the k-means problem by harnessing the geometric structure of local solutions, providing a theoretical foundation for designing detection routines for varying cluster distributions and addressing issues related to local minima.
+        </p>
+        <div class="pub-links"><a href="https://arxiv.org/abs/2201.04822">arXiv</a><a href="https://ieeexplore.ieee.org/document/11194164">IEEE</a></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── CONFERENCE: detailed cards ── -->
+  <div id="subtab-conference" class="subtab-panel">
+
+    <div class="pub-card">
+      <div class="pub-num">[1]</div>
+      <div class="pub-body">
+        <div class="pub-title">Improving Spelling Performance of LLM-based P300 Speller BCIs using Circular Nonadjacent Flashing and Cross-Validated Calibration</div>
+        <div class="pub-authors"><strong>J. Hong</strong>, P. Rao, W. Wang, and L. Najafizadeh</div>
+        <div class="pub-venue">IEEE EMBC 2026. Accepted.</div>
+        <div class="pub-links"><a href="https://embc.embs.org/2026/">Link</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[2]</div>
+      <div class="pub-body">
+        <div class="pub-title">Llama-4-ALS: A Locally Deployable LLM, Tuned with LoRA and Dynamic Hierarchical Data Augmentation, for Speller-Based AAC</div>
+        <div class="pub-authors">P. Rao, <strong>J. Hong</strong>, W. Wang, and L. Najafizadeh</div>
+        <div class="pub-venue">IEEE EMBC 2026. Accepted.</div>
+        <div class="pub-links"><a href="https://embc.embs.org/2026/">Link</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[3]</div>
+      <div class="pub-body">
+        <div class="pub-title">Neural Dynamics of Time Perception Under Acute Pain: An Auditory Temporal Bisection Study</div>
+        <div class="pub-authors">A. Subramanian, S. Mai, <strong>J. Hong</strong>, and L. Najafizadeh</div>
+        <div class="pub-venue">IEEE International Symposium on Biomedical Imaging (ISBI 2026). Accepted.</div>
+        <div class="pub-links"><a href="https://biomedicalimaging.org/2025/">Link</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[4]</div>
+      <div class="pub-body">
+        <div class="pub-title"><a href="https://arxiv.org/abs/2509.19401">SpellerSSL: Self-Supervised Learning with P300 Aggregation for Speller BCIs</a></div>
+        <div class="pub-authors"><strong>J. Hong</strong>, G. Mackellar, and S. Ghane</div>
+        <div class="pub-venue">NeurIPS 2025, Data on the Brain &amp; Mind Workshop</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          We introduce SpellerSSL, a self-supervised learning framework with P300 aggregation designed for speller BCIs, enabling effective representation learning from unlabeled EEG data.
+        </p>
+        <div class="pub-links"><a href="https://arxiv.org/abs/2509.19401">arXiv</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[5]</div>
+      <div class="pub-body">
+        <div class="pub-title"><a href="https://arxiv.org/abs/2502.17873">An Efficient Self-Supervised Framework for Long-Sequence EEG Modeling</a></div>
+        <div class="pub-authors"><strong>J. Hong</strong>, G. Mackellar, and S. Ghane</div>
+        <div class="pub-venue">IEEE ICDM 2025, AI for Time Series Workshop</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          A computationally efficient self-supervised framework designed for modeling long-sequence EEG signals, addressing key challenges in EEG foundation model pretraining.
+        </p>
+        <div class="pub-links"><a href="https://arxiv.org/abs/2502.17873">arXiv</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[6]</div>
+      <div class="pub-body">
+        <div class="pub-title">Enhancing Typing Speed in LLM-based P300 Speller BCIs Using A New Data-Driven Dynamic Stopping Strategy</div>
+        <div class="pub-authors"><strong>J. Hong</strong> and L. Najafizadeh</div>
+        <div class="pub-venue">IEEE EMBS 12th Annual International Conference on Neural Engineering (NER 2025)</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          A novel data-driven dynamic stopping strategy for LLM-based P300 speller BCIs that adaptively determines when to finalize character selection. Achieves over 260% improvement in information transfer rate compared to traditional methods.
+        </p>
+        <div class="pub-links"><a href="https://neuro.embs.org/2025/">Link</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[7]</div>
+      <div class="pub-body">
+        <div class="pub-title">Longest Sustained Cortical Activity Duration in Temporal Bisection Task Aligns with Geometric Mean for Log-Spaced Probes</div>
+        <div class="pub-authors">S. Mai, <strong>J. Hong</strong>, T. Shors, and L. Najafizadeh</div>
+        <div class="pub-venue">IEEE EMBS NER 2025</div>
+        <div class="pub-links"><a href="https://neuro.embs.org/2025/">Link</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[8]</div>
+      <div class="pub-body">
+        <div class="pub-title">ChatBCI4ALS: A High-Performance, LLM-Driven Intent-Based BCI Communication System for Individuals with ALS</div>
+        <div class="pub-authors"><strong>J. Hong</strong>, P. Rao, W. Wang, S. Chen, and L. Najafizadeh</div>
+        <div class="pub-venue">IEEE EMBC 2025, pp. 1–6</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          The first intent-based P300 BCI communication system tailored for individuals with ALS. Achieves up to 42.16 characters/min and 128.85 bits/min information transfer rate, significantly advancing real-time BCI communication.
+        </p>
+        <div class="pub-links"><a href="https://embc.embs.org/2025/">Link</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[9]</div>
+      <div class="pub-body">
+        <div class="pub-title">TopoEEG: a TimeSformer-Based Topographic Image Representation Method for Single-Trial Early Detection of P300</div>
+        <div class="pub-authors"><strong>J. Hong</strong> and L. Najafizadeh</div>
+        <div class="pub-venue">IEEE ISBI 2025, pp. 1–4</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          TopoEEG generates sequences of topographic maps from EEG data, preserving both temporal and spatial information for decoding neural dynamics using TimeSformer with joint and divided space-time attention.
+        </p>
+        <div class="pub-links"><a href="https://biomedicalimaging.org/2025/">Link</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[10]</div>
+      <div class="pub-body">
+        <div class="pub-title">ChatBCI: A Fast P300 Speller Brain-Computer Interface Incorporating Generative AI-Based Word Prediction</div>
+        <div class="pub-authors"><strong>J. Hong</strong>, W. Wang, and L. Najafizadeh</div>
+        <div class="pub-venue">2024 IEEE Brain Discovery and Neurotechnology Workshop. (Spotlight)</div>
+        <div class="pub-links"><a href="data/poster/IEEEbrain2024.pdf">Poster</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[11]</div>
+      <div class="pub-body">
+        <div class="pub-title">P3T: A Transformer Model for Enhancing Character Recognition Rates in P300 Speller Systems</div>
+        <div class="pub-authors"><strong>J. Hong</strong> and L. Najafizadeh</div>
+        <div class="pub-venue">Asilomar ACSSC 2024, pp. 514–518</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          P300-Transformer (P3T): a single-trial P300 detector transfer model designed to optimize the information transfer rate in P300-BCI speller systems while maintaining a high character recognition rate.
+        </p>
+        <div class="pub-links"><a href="data/poster/Asilomar2024">Poster</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[12]</div>
+      <div class="pub-body">
+        <div class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/9871446">A Deep Learning Framework Based on Dynamic Channel Selection for Early Classification of Left and Right Hand Motor Imagery Tasks</a></div>
+        <div class="pub-authors"><strong>J. Hong</strong>, F. Shamsi, and L. Najafizadeh</div>
+        <div class="pub-venue">IEEE EMBC 2022, Glasgow, Scotland, pp. 3550–3553</div>
+        <p style="font-size:0.85em;color:var(--text-light);margin-top:8px;line-height:1.65;">
+          A deep learning framework utilizing dynamic channel selection for early classification of motor imagery tasks, reducing data dimensionality and accelerating BCI technologies.
+        </p>
+        <div class="pub-links"><a href="https://ieeexplore.ieee.org/abstract/document/9871446">IEEE</a><a href="data/poster/EMBC2022-poster.pdf">Poster</a></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── UNDER REVIEW ── -->
+  <div id="subtab-review" class="subtab-panel">
+
+    <div class="pub-card">
+      <div class="pub-num">[1]</div>
+      <div class="pub-body">
+        <div class="pub-title">ChatBCI: A P300 Speller BCI Leveraging Large Language Models for Improved Sentence Composition in Realistic Scenarios</div>
+        <div class="pub-authors"><strong>J. Hong</strong>, W. Wang, and L. Najafizadeh</div>
+        <div class="pub-venue">Under Review</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[2]</div>
+      <div class="pub-body">
+        <div class="pub-title">SAMBA: An Efficient Mamba-2-Based Self-Supervised Framework for Long-Sequence EEG Modeling</div>
+        <div class="pub-authors"><strong>J. Hong</strong>, G. Mackellar, and S. Ghane</div>
+        <div class="pub-venue">Under Review</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">[3]</div>
+      <div class="pub-body">
+        <div class="pub-title">Subject-specific Channel Selection Based on Davies-Bouldin Index for EEG Motor Imagery Classification</div>
+        <div class="pub-authors"><strong>J. Hong</strong>, W. Wang, S. Haghani, and L. Najafizadeh</div>
+        <div class="pub-venue">In Preparation</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

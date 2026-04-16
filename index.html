@@ -85,9 +85,7 @@
 
     nav.tabs button:hover { color: rgba(255,255,255,0.9); }
 
-    nav.tabs button.active {
-      color: #fff;
-    }
+    nav.tabs button.active { color: #fff; }
 
     nav.tabs button.active::after {
       content: '';
@@ -272,11 +270,7 @@
       line-height: 1.5;
     }
 
-    .pub-title a {
-      color: inherit;
-      text-decoration: none;
-    }
-
+    .pub-title a { color: inherit; text-decoration: none; }
     .pub-title a:hover { color: var(--scarlet); }
 
     .pub-authors {
@@ -389,6 +383,8 @@
     }
 
     .person-card .person-name { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .person-card .person-name a { color: var(--navy); text-decoration: none; }
+    .person-card .person-name a:hover { color: var(--scarlet); }
     .person-card .person-role { color: var(--text-light); font-size: 0.82em; }
     .person-card .person-year { color: var(--scarlet); font-size: 0.78em; margin-top: 2px; }
 
@@ -492,7 +488,6 @@
       In Fall 2024, I worked as a Research Intern at Emotiv, focusing on Foundation Models and Generative AI for Brain-Computer Interface (BCI) applications. At Rutgers in 2024, I designed a P300 Speller BCI incorporating Generative AI. In 2023, I developed an LLM-based BCI mind-controlled speller system aimed at assisting individuals with disabilities in communication. In 2022, I created a channel selection method to enhance the speed and efficiency of BCIs in real-world applications. In 2020, I proposed a geometric approach to optimize the k-means algorithm, addressing issues related to local minima. Before joining Rutgers University in 2019, I conducted biostatistics research at Harvard Medical School, focusing on pancreatic cancer diagnosis.
     </p>
 
-    <!-- Quick recent news on home -->
     <h2 class="section-title">Recent Highlights</h2>
     <ul class="news-list">
       <li>
@@ -636,347 +631,120 @@
 
   <!-- ══════════════ PUBLICATIONS TAB ══════════════ -->
   <div id="tab-publications" class="tab-panel">
-
-    <div class="subtabs">
-      <button class="active" onclick="switchSubtab('all', this)">All</button>
-      <button onclick="switchSubtab('journal', this)">Journal</button>
-      <button onclick="switchSubtab('conference', this)">Conference</button>
-      <button onclick="switchSubtab('review', this)">Under Review</button>
-    </div>
-
-    <!-- ALL -->
-    <div id="subtab-all" class="subtab-panel active">
-      <div class="pub-year-group">
-        <div class="pub-year">2026</div>
-
-        <div class="pub-card">
-          <div class="pub-num">[1]</div>
-          <div class="pub-body">
-            <div class="pub-title"><a href="#">ChatBCI-Assist: An Intent-Based P300 Speller with A Locally-Deployed LLM and Adaptive Stopping Strategy Enabling Record Online Spelling Performance</a></div>
-            <div class="pub-authors"><strong>J. Hong</strong>, P. Rao, W. Wang, and L. Najafizadeh</div>
-            <div class="pub-venue">IEEE Transactions on Biomedical Engineering (TBME), 2026</div>
-            <div class="pub-links"><a href="#">Link</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[2]</div>
-          <div class="pub-body">
-            <div class="pub-title">Improving Spelling Performance of LLM-based P300 Speller BCIs using Circular Nonadjacent Flashing and Cross-Validated Calibration</div>
-            <div class="pub-authors"><strong>J. Hong</strong> et al.</div>
-            <div class="pub-venue">IEEE EMBC 2026</div>
-            <div class="pub-links"><a href="https://embc.embs.org/2026/">Link</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[3]</div>
-          <div class="pub-body">
-            <div class="pub-title">Llama-4-ALS: A Locally Deployable LLM, Tuned with LoRA and Dynamic Hierarchical Data Augmentation, for Speller-Based AAC</div>
-            <div class="pub-authors"><strong>J. Hong</strong> et al.</div>
-            <div class="pub-venue">IEEE EMBC 2026</div>
-            <div class="pub-links"><a href="https://embc.embs.org/2026/">Link</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[4]</div>
-          <div class="pub-body">
-            <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11194164">A Geometric Approach to k-means</a></div>
-            <div class="pub-authors"><strong>J. Hong</strong>, W. Qian, Y. Chen, and Y. Zhang</div>
-            <div class="pub-venue">IEEE Transactions on Knowledge and Data Engineering (TKDE), 38, 1442–1453, 2026</div>
-            <div class="pub-links"><a href="https://arxiv.org/abs/2201.04822">arXiv</a><a href="https://ieeexplore.ieee.org/document/11194164">IEEE</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[5]</div>
-          <div class="pub-body">
-            <div class="pub-title">Neural Dynamics of Time Perception Under Acute Pain: An Auditory Temporal Bisection Study</div>
-            <div class="pub-authors">A. Subramanian, S. Mai, <strong>J. Hong</strong>, and L. Najafizadeh</div>
-            <div class="pub-venue">IEEE International Symposium on Biomedical Imaging (ISBI 2026)</div>
-            <div class="pub-links"><a href="https://biomedicalimaging.org/2025/">Link</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-year-group">
-        <div class="pub-year">2025</div>
-
-        <div class="pub-card">
-          <div class="pub-num">[6]</div>
-          <div class="pub-body">
-            <div class="pub-title"><a href="https://arxiv.org/abs/2411.15395">ChatBCI: A P300 Speller BCI with Context-Driven Word Prediction Leveraging Large Language Models, from Concept to Evaluation</a></div>
-            <div class="pub-authors"><strong>J. Hong</strong>, W. Wang, and L. Najafizadeh</div>
-            <div class="pub-venue">Scientific Reports (Nature Portfolio), 16, 6379, 2026</div>
-            <div class="pub-links"><a href="https://arxiv.org/abs/2411.15395">arXiv</a><a href="https://www.nature.com/srep/">Journal</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[7]</div>
-          <div class="pub-body">
-            <div class="pub-title"><a href="https://arxiv.org/abs/2509.19401">SpellerSSL: Self-Supervised Learning with P300 Aggregation for Speller BCIs</a></div>
-            <div class="pub-authors"><strong>J. Hong</strong>, G. Mackellar, S. Ghane</div>
-            <div class="pub-venue">NeurIPS 2025, Data on the Brain &amp; Mind Workshop</div>
-            <div class="pub-links"><a href="https://arxiv.org/abs/2509.19401">arXiv</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[8]</div>
-          <div class="pub-body">
-            <div class="pub-title"><a href="https://arxiv.org/abs/2502.17873">An Efficient Self-Supervised Framework for Long-Sequence EEG Modeling</a></div>
-            <div class="pub-authors"><strong>J. Hong</strong>, G. Mackellar, S. Ghane</div>
-            <div class="pub-venue">IEEE ICDM 2025, AI for Time Series Workshop</div>
-            <div class="pub-links"><a href="https://arxiv.org/abs/2502.17873">arXiv</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[9]</div>
-          <div class="pub-body">
-            <div class="pub-title">Enhancing Typing Speed in LLM-based P300 Speller BCIs Using A New Data-Driven Dynamic Stopping Strategy</div>
-            <div class="pub-authors"><strong>J. Hong</strong> and L. Najafizadeh</div>
-            <div class="pub-venue">IEEE EMBS NER 2025</div>
-            <div class="pub-links"><a href="https://neuro.embs.org/2025/">Link</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[10]</div>
-          <div class="pub-body">
-            <div class="pub-title">Longest Sustained Cortical Activity Duration in Temporal Bisection Task Aligns with Geometric Mean for Log-Spaced Probes</div>
-            <div class="pub-authors">S. Mai, <strong>J. Hong</strong>, T. Shors, and L. Najafizadeh</div>
-            <div class="pub-venue">IEEE EMBS NER 2025</div>
-            <div class="pub-links"><a href="https://neuro.embs.org/2025/">Link</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[11]</div>
-          <div class="pub-body">
-            <div class="pub-title">ChatBCI4ALS: A High-Performance, LLM-Driven Intent-Based BCI Communication System for Individuals with ALS</div>
-            <div class="pub-authors"><strong>J. Hong</strong>, P. Rao, W. Wang, S. Chen, and L. Najafizadeh</div>
-            <div class="pub-venue">IEEE EMBC 2025, pp. 1–6</div>
-            <div class="pub-links"><a href="https://embc.embs.org/2025/">Link</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[12]</div>
-          <div class="pub-body">
-            <div class="pub-title">TopoEEG: a TimeSformer-Based Topographic Image Representation Method for Single-Trial Early Detection of P300</div>
-            <div class="pub-authors"><strong>J. Hong</strong> and L. Najafizadeh</div>
-            <div class="pub-venue">IEEE ISBI 2025, pp. 1–4</div>
-            <div class="pub-links"><a href="https://biomedicalimaging.org/2025/">Link</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-year-group">
-        <div class="pub-year">2024</div>
-
-        <div class="pub-card">
-          <div class="pub-num">[13]</div>
-          <div class="pub-body">
-            <div class="pub-title">ChatBCI: A Fast P300 Speller BCI Incorporating Generative AI-Based Word Prediction</div>
-            <div class="pub-authors"><strong>J. Hong</strong>, W. Wang, and L. Najafizadeh</div>
-            <div class="pub-venue">2024 IEEE Brain Discovery and Neurotechnology Workshop (Spotlight)</div>
-            <div class="pub-links"><a href="data/poster/IEEEbrain2024.pdf">Poster</a></div>
-          </div>
-        </div>
-
-        <div class="pub-card">
-          <div class="pub-num">[14]</div>
-          <div class="pub-body">
-            <div class="pub-title">P3T: A Transformer Model for Enhancing Character Recognition Rates in P300 Speller Systems</div>
-            <div class="pub-authors"><strong>J. Hong</strong> and L. Najafizadeh</div>
-            <div class="pub-venue">Asilomar ACSSC 2024, pp. 514–518</div>
-            <div class="pub-links"><a href="data/poster/Asilomar2024">Poster</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-year-group">
-        <div class="pub-year">2022</div>
-
-        <div class="pub-card">
-          <div class="pub-num">[15]</div>
-          <div class="pub-body">
-            <div class="pub-title"><a href="https://ieeexplore.ieee.org/abstract/document/9871446">A Deep Learning Framework Based on Dynamic Channel Selection for Early Classification of Left and Right Hand Motor Imagery Tasks</a></div>
-            <div class="pub-authors"><strong>J. Hong</strong>, F. Shamsi, and L. Najafizadeh</div>
-            <div class="pub-venue">IEEE EMBC 2022, Glasgow, Scotland, pp. 3550–3553</div>
-            <div class="pub-links"><a href="https://ieeexplore.ieee.org/abstract/document/9871446">IEEE</a><a href="data/poster/EMBC2022-poster.pdf">Poster</a></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- JOURNAL -->
-    <div id="subtab-journal" class="subtab-panel">
-      <div class="pub-card">
-        <div class="pub-num">[1]</div>
-        <div class="pub-body">
-          <div class="pub-title"><a href="#">ChatBCI-Assist</a> — IEEE Transactions on Biomedical Engineering (TBME), 2026</div>
-          <div class="pub-authors"><strong>J. Hong</strong>, P. Rao, W. Wang, and L. Najafizadeh</div>
-        </div>
-      </div>
-      <div class="pub-card">
-        <div class="pub-num">[2]</div>
-        <div class="pub-body">
-          <div class="pub-title"><a href="https://arxiv.org/abs/2411.15395">ChatBCI</a> — Scientific Reports (Nature Portfolio), 16, 6379, 2026</div>
-          <div class="pub-authors"><strong>J. Hong</strong>, W. Wang, and L. Najafizadeh</div>
-          <div class="pub-links"><a href="https://arxiv.org/abs/2411.15395">arXiv</a></div>
-        </div>
-      </div>
-      <div class="pub-card">
-        <div class="pub-num">[3]</div>
-        <div class="pub-body">
-          <div class="pub-title"><a href="https://ieeexplore.ieee.org/document/11194164">A Geometric Approach to k-means</a> — IEEE TKDE, 38, 1442–1453, 2026</div>
-          <div class="pub-authors"><strong>J. Hong</strong>, W. Qian, Y. Chen, and Y. Zhang</div>
-          <div class="pub-links"><a href="https://arxiv.org/abs/2201.04822">arXiv</a><a href="https://ieeexplore.ieee.org/document/11194164">IEEE</a></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CONFERENCE -->
-    <div id="subtab-conference" class="subtab-panel">
-      <p style="color:var(--text-light); font-size:0.88em; margin-bottom:16px;">See "All" tab for full conference list.</p>
-      <div class="pub-card"><div class="pub-num">[1]</div><div class="pub-body"><div class="pub-title">EMBC 2026 (×2), ISBI 2026, NeurIPS W 2025, ICDM W 2025, NER 2025 (×2), EMBC 2025, ISBI 2025, IEEE Brain 2024, Asilomar 2024, EMBC 2022</div><div class="pub-venue">See All tab for full details.</div></div></div>
-    </div>
-
-    <!-- UNDER REVIEW -->
-    <div id="subtab-review" class="subtab-panel">
-      <div class="pub-card">
-        <div class="pub-num">[1]</div>
-        <div class="pub-body">
-          <div class="pub-title">ChatBCI: A P300 Speller BCI Leveraging Large Language Models for Improved Sentence Composition in Realistic Scenarios</div>
-          <div class="pub-authors"><strong>J. Hong</strong>, W. Wang, and L. Najafizadeh</div>
-          <div class="pub-venue">Under Review</div>
-        </div>
-      </div>
-      <div class="pub-card">
-        <div class="pub-num">[2]</div>
-        <div class="pub-body">
-          <div class="pub-title">SAMBA: An Efficient Mamba-2-Based Self-Supervised Framework for Long-Sequence EEG Modeling</div>
-          <div class="pub-authors"><strong>J. Hong</strong>, G. Mackellar, and S. Ghane</div>
-          <div class="pub-venue">Under Review</div>
-        </div>
-      </div>
-      <div class="pub-card">
-        <div class="pub-num">[3]</div>
-        <div class="pub-body">
-          <div class="pub-title">Subject-specific Channel Selection Based on Davies-Bouldin Index for EEG Motor Imagery Classification</div>
-          <div class="pub-authors"><strong>J. Hong</strong>, W. Wang, S. Haghani, and L. Najafizadeh</div>
-          <div class="pub-venue">In Preparation</div>
-        </div>
-      </div>
-    </div>
-
+    <div id="publications-content">Loading...</div>
   </div>
 
   <!-- ══════════════ PEOPLE TAB ══════════════ -->
-  <!-- Advisor -->
-  <h2 class="section-title">🎓 Advisor</h2>
-  <div class="people-grid">
-    <div class="person-card">
-      <div class="person-name"><a href="https://eceweb1.rutgers.edu/~laleh/#/people/PI">Laleh Najafizadeh</a></div>
-      <div class="person-role">Professor of Electrical &amp; Computer Engineering</div>
-      <div class="person-year">Rutgers University</div>
-    </div>
-  </div>
-
-
-  <!-- Collaborators -->
-  <h2 class="section-title">🤝 Collaborators</h2>
-  <div class="people-grid">
-    <div class="person-card">
-      <div class="person-name"><a href="https://umg.rwjms.rutgers.edu/doctor_page.php?phys_id=51376">Shan Chen, MD, PhD</a></div>
-      <div class="person-role">Neurologist · Dept. of Neurology</div>
-      <div class="person-year">Rutgers RWJ Medical School</div>
-    </div>
-    <div class="person-card">
-      <div class="person-name"><a href="https://pages.cs.wisc.edu/~yudongchen/">Yudong Chen</a></div>
-      <div class="person-role">Associate Professor</div>
-      <div class="person-year">University of Wisconsin–Madison</div>
-    </div>
-    <div class="person-card">
-      <div class="person-name"><a href="https://www.ece.rutgers.edu/yuqian-zhang">Yuqian Zhang</a></div>
-      <div class="person-role">Assistant Professor, ECE</div>
-      <div class="person-year">Rutgers University</div>
-    </div>
-    <div class="person-card">
-    <div class="person-name">Geoff Mackellar</div>
-    <div class="person-role">Co-founder &amp; CTO · CEO @ Emotiv Research</div>
-    <div class="person-year">EMOTIV · Macquarie University</div>
-  </div>
-  <div class="person-card">
-      <div class="person-name">Soheila Ghane</div>
-      <div class="person-role">AI/ML Lead · MLE @ Google</div>
-      <div class="person-year">University of Melbourne</div>
-    </div>
-    <div class="person-card">
-      <div class="person-name"><a href="https://weinanwang-ru.github.io/">Weinan Wang</a></div>
-      <div class="person-role">Postdoctoral Researcher, ECE</div>
-      <div class="person-year">Rutgers University</div>
-    </div>
-    <div class="person-card">
-      <div class="person-name">Foroogh Shamsi</div>
-      <div class="person-role">Senior Data Scientist</div>
-      <div class="person-year">Novo Nordisk</div>
-    </div>
-    <div class="person-card">
-      <div class="person-name">Wei Qian</div>
-      <div class="person-role">Ph.D. , CS</div>
-      <div class="person-year">Cornell University</div>
-    </div>
-    <div class="person-card">
-      <div class="person-name">Ashwini Subramanian</div>
-      <div class="person-role">Ph.D. Student, ECE</div>
-      <div class="person-year">Rutgers University</div>
-    </div>
-  </div>
-
   <div id="tab-people" class="tab-panel">
+
+    <h2 class="section-title">🎓 Advisor</h2>
+    <div class="people-grid">
+      <div class="person-card">
+        <div class="person-name"><a href="https://eceweb1.rutgers.edu/~laleh/#/people/PI">Laleh Najafizadeh</a></div>
+        <div class="person-role">Professor of Electrical &amp; Computer Engineering</div>
+        <div class="person-year">Rutgers University</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">🤝 Collaborators</h2>
+    <div class="people-grid">
+      <div class="person-card">
+        <div class="person-name"><a href="https://umg.rwjms.rutgers.edu/doctor_page.php?phys_id=51376">Shan Chen, MD, PhD</a></div>
+        <div class="person-role">Neurologist · Dept. of Neurology</div>
+        <div class="person-year">Rutgers RWJ Medical School</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name"><a href="https://pages.cs.wisc.edu/~yudongchen/">Yudong Chen</a></div>
+        <div class="person-role">Associate Professor</div>
+        <div class="person-year">University of Wisconsin–Madison</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name"><a href="https://www.ece.rutgers.edu/yuqian-zhang">Yuqian Zhang</a></div>
+        <div class="person-role">Assistant Professor, ECE</div>
+        <div class="person-year">Rutgers University</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name"><a href="https://www.linkedin.com/in/geoffmackellar/">Geoff Mackellar</a></div>
+        <div class="person-role">Co-founder &amp; CTO @ Emotiv · CEO @ Emotiv Research</div>
+        <div class="person-year">EMOTIV · Macquarie University</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name"><a href="https://www.linkedin.com/in/soheila-ghane/">Soheila Ghane</a></div>
+        <div class="person-role">AI/ML Lead · MLE @ Google</div>
+        <div class="person-year">University of Melbourne</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name"><a href="https://weinanwang-ru.github.io/">Weinan Wang</a></div>
+        <div class="person-role">Postdoctoral Researcher, ECE</div>
+        <div class="person-year">Rutgers University</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name"><a href="https://www.linkedin.com/in/foroogh-shamsi-64a92b162/">Foroogh Shamsi</a></div>
+        <div class="person-role">Senior Data Scientist</div>
+        <div class="person-year">Novo Nordisk</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name"><a href="https://www.linkedin.com/in/wei-qian-03132330/">Wei Qian</a></div>
+        <div class="person-role">Ph.D. Mathematical Programming</div>
+        <div class="person-year">Cornell University</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Ashwini Subramanian</div>
+        <div class="person-role">Ph.D. Student, ECE</div>
+        <div class="person-year">Rutgers University</div>
+      </div>
+    </div>
+
     <h2 class="section-title">🧑‍🎓 Supervised Students</h2>
     <div class="people-grid">
       <div class="person-card">
         <div class="person-name">Pradyumna Rao</div>
-        <div class="person-role">Ph.D. Student, ECE · Rutgers</div>
-        <div class="person-year">2025–</div>
+        <div class="person-role">Ph.D. Student, ECE</div>
+        <div class="person-year">Rutgers · 2025–</div>
       </div>
       <div class="person-card">
         <div class="person-name">Logan Pasternak</div>
-        <div class="person-role">Ph.D. Student, ECE · Rutgers</div>
-        <div class="person-year">2025–</div>
+        <div class="person-role">Ph.D. Student, ECE</div>
+        <div class="person-year">Rutgers · 2025–</div>
       </div>
       <div class="person-card">
         <div class="person-name">Siwei Mai</div>
-        <div class="person-role">Ph.D. Student, ECE · Rutgers</div>
-        <div class="person-year">2024–</div>
+        <div class="person-role">Ph.D. Student, ECE</div>
+        <div class="person-year">Rutgers · 2024–</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Ankith Kunduru</div>
+        <div class="person-role">Undergraduate Student, ECE</div>
+        <div class="person-year">Rutgers · 2026–</div>
       </div>
       <div class="person-card">
         <div class="person-name">Joel Paley</div>
-        <div class="person-role">Master Student, ECE · Rutgers</div>
-        <div class="person-year">2024</div>
+        <div class="person-role">Master Student, ECE</div>
+        <div class="person-year">Rutgers · 2024</div>
       </div>
       <div class="person-card">
         <div class="person-name">Justin Ding</div>
-        <div class="person-role">Master Student, ECE · Rutgers</div>
-        <div class="person-year">2023</div>
+        <div class="person-role">Master Student, ECE</div>
+        <div class="person-year">Rutgers · 2023</div>
       </div>
       <div class="person-card">
         <div class="person-name">William Milne</div>
-        <div class="person-role">Master Student, ECE · Rutgers</div>
-        <div class="person-year">2023</div>
+        <div class="person-role">Master Student, ECE</div>
+        <div class="person-year">Rutgers · 2023</div>
       </div>
     </div>
+
   </div>
 
 </div><!-- /page-wrap -->
 
 <script>
+  fetch('publications.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('publications-content').innerHTML = html;
+    });
+
   function switchTab(id, btn) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
