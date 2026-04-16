@@ -1,6 +1,4 @@
 <!-- ══════════════ PUBLICATIONS TAB ══════════════ -->
-<div id="tab-publications" class="tab-panel">
-
   <style>
     /* ---------- Publications ---------- */
     #tab-publications{
@@ -721,15 +719,3 @@
 
     </div>
   </div>
-
-</div>
-
-<script>
-  function switchSubtab(tabName, btn){
-    const parent = btn.closest('#tab-publications');
-    parent.querySelectorAll('.subtabs button').forEach(b => b.classList.remove('active'));
-    parent.querySelectorAll('.subtab-panel').forEach(panel => panel.classList.remove('active'));
-    btn.classList.add('active');
-    parent.querySelector('#subtab-' + tabName).classList.add('active');
-  }
-</script>
