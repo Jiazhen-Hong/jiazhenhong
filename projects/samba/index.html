@@ -14,26 +14,26 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=9">
+  <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
   <header class="nav shell">
     <a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a>
-    <nav><a href="#play">Playground</a><a href="#method">Method</a><a href="#spatial">Spatial maps</a></nav>
+    <nav><a href="#play">Playground</a><a href="#method">Method</a><a href="#spatial">Spatial maps</a><a href="#cite">Cite</a></nav>
     <div class="nav-actions"><a href="../" class="pill">All projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer" class="pill accent">GitHub ↗</a></div>
   </header>
 
   <main id="top">
     <section class="hero shell">
-      <div class="hero-meta mono"><span>NEURREPS 2026 · PROCEEDINGS TRACK</span><span>EEG FOUNDATION MODEL</span></div>
+      <div class="hero-meta mono"><a class="conference-link" href="https://neurips.cc/virtual/2026/loc/sydney/157481" target="_blank" rel="noreferrer">NEURREPS 2026 · PROCEEDINGS TRACK <span aria-hidden="true">↗</span></a><span>EEG FOUNDATION MODEL</span></div>
       <div class="hero-grid">
         <div class="hero-copy reveal">
           <p class="eyebrow mono">LONG SEQUENCES. DIFFERENT DEVICES. ONE MODEL.</p>
           <h1>SAMBA</h1>
           <p class="subtitle">Toward an EEG Foundation Model via <em>Differential Mamba</em> and <em>Coordinate-Driven Spatial Embedding</em></p>
           <p class="authors">Jiazhen Hong · Geoffrey Mackellar · Soheila Ghane</p>
-          <div class="hero-buttons"><a href="#play" class="button primary">Play with SAMBA <span>↓</span></a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer" class="button secondary">View source ↗</a></div>
+          <div class="hero-buttons"><a href="#play" class="button primary">Play with SAMBA <span>↓</span></a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer" class="button secondary">View source ↗</a><a href="#cite" class="button secondary cite-button">Cite / BibTeX <span>↓</span></a></div>
         </div>
         <div class="hero-visual reveal">
           <canvas id="heroCanvas" aria-label="Long EEG sequence passing through SAMBA"></canvas>
@@ -154,7 +154,7 @@
 
     <section class="use-section section shell"><div class="use-copy reveal"><p class="kicker mono">EXPLORE</p><h2>Paper and code.</h2><div class="links"><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer"><span>01</span><b>Repository</b><i>GitHub ↗</i></a><a href="https://arxiv.org/abs/2511.18571" target="_blank" rel="noreferrer"><span>02</span><b>Paper</b><i>arXiv ↗</i></a><a href="https://github.com/Jiazhen-Hong/SAMBA/tree/main/Montage" target="_blank" rel="noreferrer"><span>03</span><b>Montage coordinates</b><i>Data ↗</i></a></div></div></section>
 
-    <section class="citation shell reveal"><span class="mono">CITE SAMBA</span><p>Hong, J., Mackellar, G., &amp; Ghane, S. (2026). <em>SAMBA: Toward an EEG Foundation Model via Differential Mamba and Coordinate-Driven Spatial Embedding.</em> NeurReps 2026 Proceedings Track.</p><button id="copyCitation" type="button">Copy BibTeX</button></section>
+    <section id="cite" class="citation shell reveal"><div class="citation-label"><span class="mono">CITE SAMBA</span><small class="mono">BIBTEX + PLAIN TEXT</small></div><p>Hong, J., Mackellar, G., &amp; Ghane, S. (2026). <em>SAMBA: Toward an EEG Foundation Model via Differential Mamba and Coordinate-Driven Spatial Embedding.</em> NeurReps 2026 Proceedings Track.</p><button id="copyCitation" type="button">Copy BibTeX</button></section>
   </main>
   <footer class="footer shell"><a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a><p>Accepted to the NeurReps 2026 Proceedings Track at NeurIPS 2026.</p><div><a href="../">Projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
   <script src="montages.js?v=3" defer></script>
