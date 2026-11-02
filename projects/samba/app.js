@@ -57,7 +57,7 @@
   }
   drawHero();
 
-  const state = { seq: 120, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 };
+  const state = { seq: 120, mask: 50, heads: 4, channels: 14, seed: 3, selected: 0 };
   const montageByChannels = { 2: 'mn8', 14: 'epocx', 32: 'standard32', 64: 'physionet64', 128: 'grosse128', 256: 'standard256' };
   const montages = window.SAMBA_MONTAGES || {};
   function currentMontage() { return montages[montageByChannels[state.channels]]; }
@@ -279,7 +279,7 @@
   $('#heads').addEventListener('input', (e) => { state.heads = +e.target.value; updatePlay(); });
   $$('#montageButtons button').forEach((b) => b.addEventListener('click', () => { state.channels = +b.dataset.ch; $$('#montageButtons button').forEach((x) => x.classList.toggle('active', x === b)); state.selected = 0; updatePlay(); }));
   $('#resample').addEventListener('click', () => { state.seed++; drawSequence(); });
-  $('#reset').addEventListener('click', () => { Object.assign(state, { seq: 120, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 }); $('#seq').value = 120; $('#mask').value = 50; $('#heads').value = 8; $$('#montageButtons button').forEach((b) => b.classList.toggle('active', b.dataset.ch === '14')); updatePlay(); });
+  $('#reset').addEventListener('click', () => { Object.assign(state, { seq: 120, mask: 50, heads: 4, channels: 14, seed: 3, selected: 0 }); $('#seq').value = 120; $('#mask').value = 50; $('#heads').value = 4; $$('#montageButtons button').forEach((b) => b.classList.toggle('active', b.dataset.ch === '14')); updatePlay(); });
 
   const method = {
     tsr: ['SELF-SUPERVISION','Hide EEG spans','Hide part of the signal, then rebuild it.','Learn the larger pattern.',['hidden EEG','context','rebuilt EEG']],

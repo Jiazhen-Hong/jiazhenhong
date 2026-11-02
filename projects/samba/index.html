@@ -51,7 +51,7 @@
           <div class="controls-title"><span class="pulse"></span><span class="mono">MODEL CONTROLS</span><button id="reset" type="button">Reset</button></div>
           <label class="sequence-control"><span><b>Sequence length</b><output id="seqValue">120 s</output></span><small>Tested to 120 s. Longer values are estimates.</small><div class="range-shell"><input id="seq" type="range" min="5" max="600" step="5" value="120"><i class="experiment-marker" aria-hidden="true"><span>120 s tested</span></i></div><div class="range-zones mono"><span>TESTED</span><span>ESTIMATED →</span></div></label>
           <label><span><b>TSR mask ratio</b><output id="maskValue">50%</output></span><small>Hide part of the signal to learn the rest.</small><input id="mask" type="range" min="10" max="80" step="5" value="50"></label>
-          <label><span><b>Differential heads</b><output id="headValue">8</output></span><small>Paired paths reduce shared noise.</small><input id="heads" type="range" min="2" max="8" step="2" value="8"></label>
+          <label><span><b>Differential heads</b><output id="headValue">4</output></span><small>Paired paths reduce shared noise.</small><input id="heads" type="range" min="2" max="8" step="2" value="4"></label>
           <button id="resample" type="button" class="button primary full">↻ Resample TSR mask</button>
           <p class="disclaimer mono">ILLUSTRATIVE DEMO · NO TRAINED WEIGHTS</p>
         </aside>
@@ -69,7 +69,7 @@
           <div id="denoise" class="diff-lab">
             <div class="diff-head">
               <div><span class="mono">DIFFERENTIAL MAMBA</span><h3>Remove noise. Keep the EEG.</h3></div>
-              <div class="diff-readout"><span id="headPairCount" class="mono">8 PAIRED HEADS</span><strong id="noiseResidual">10% illustrative noise amplitude</strong></div>
+              <div class="diff-readout"><span id="headPairCount" class="mono">4 PAIRED HEADS · 8 MAMBA BRANCHES</span><strong id="noiseResidual">70% illustrative noise amplitude</strong></div>
             </div>
             <div class="diff-grid">
               <div class="diff-signal"><canvas id="diffCanvas" aria-label="One example EEG channel with noise amplitude controlled by Differential heads"></canvas><div class="diff-legend mono"><span><i class="branch-one"></i>CURRENT OUTPUT</span><span><i class="diff-output"></i>UNDERLYING EEG</span></div></div>
@@ -159,6 +159,6 @@
   <footer class="footer shell"><a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a><p>Accepted to the NeurReps 2026 Proceedings Track at NeurIPS 2026.</p><div><a href="../">Projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
   <script src="montages.js?v=3" defer></script>
   <script src="montage32.js?v=1" defer></script>
-  <script src="app.js?v=13" defer></script>
+  <script src="app.js?v=14" defer></script>
 </body>
 </html>
