@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Jiazhen Hong">
+  <meta name="description" content="{{ page.description | default: page.title | escape }}">
+  <base href="{{ '/' | relative_url }}">
+  <link rel="icon" href="{{ '/images/favicon/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ '/assets/section-pages.css' | relative_url }}">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>{{ page.title }} · Jiazhen Hong</title>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="site-title" href="{{ '/' | relative_url }}">Jiazhen Hong &nbsp;|&nbsp; 洪嘉桢</a>
+      <nav class="tabs" aria-label="Main navigation">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a class="{% if page.section == 'news' %}active{% endif %}" href="{{ '/news/' | relative_url }}">News</a>
+        <a class="{% if page.section == 'research' %}active{% endif %}" href="{{ '/research/' | relative_url }}">Research</a>
+        <a class="{% if page.section == 'publications' %}active{% endif %}" href="{{ '/publications/' | relative_url }}">Publications</a>
+        <a class="{% if page.section == 'projects' %}active{% endif %}" href="{{ '/projects/' | relative_url }}">Projects</a>
+        <a class="{% if page.section == 'people' %}active{% endif %}" href="{{ '/people/' | relative_url }}">People</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    <header class="page-heading">
+      <p class="page-kicker">JIAZHEN HONG</p>
+      <h1>{{ page.title }}</h1>
+      {% if page.intro %}<p>{{ page.intro }}</p>{% endif %}
+    </header>
+    <div id="tab-{{ page.section }}" class="section-content">
+      {{ content }}
+    </div>
+  </main>
+
+  <script>
+    function switchSubtab(id, btn) {
+      const parent = btn.closest('#tab-publications');
+      if (!parent) return;
+      parent.querySelectorAll('.subtabs button').forEach(function (button) {
+        button.classList.remove('active');
+      });
+      parent.querySelectorAll('.subtab-panel').forEach(function (panel) {
+        panel.classList.remove('active');
+      });
+      btn.classList.add('active');
+      parent.querySelector('#subtab-' + id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
