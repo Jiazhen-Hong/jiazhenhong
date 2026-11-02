@@ -35,6 +35,9 @@
   drawHero();
 
   const state = { seq: 30, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 };
+  const montageByChannels = { 2: 'mn8', 14: 'epocx', 64: 'physionet64', 128: 'grosse128', 256: 'standard256' };
+  const montages = window.SAMBA_MONTAGES || {};
+  function currentMontage() { return montages[montageByChannels[state.channels]]; }
   function rand(i) { const x = Math.sin((i + state.seed * 31) * 12.9898) * 43758.5453; return x - Math.floor(x); }
   function signal(t, row) { return Math.sin(t * (.72 + row * .018) + row) * .48 + Math.sin(t * 2.2 + row * .3) * .2 + Math.sin(t * 6.2) * .07; }
 
@@ -163,7 +166,8 @@
   }
 
   function updatePlay() {
-    $('#seqValue').textContent = `${state.seq} s`; $('#maskValue').textContent = `${state.mask}%`; $('#headValue').textContent = state.heads; $('#montageValue').textContent = `${state.channels} ch`; $('#visibleValue').textContent = `${100 - state.mask}%`;
+    const montage = currentMontage();
+    $('#seqValue').textContent = `${state.seq} s`; $('#maskValue').textContent = `${state.mask}%`; $('#headValue').textContent = state.heads; $('#montageValue').textContent = montage ? `${montage.label} · ${montage.channels} ch` : `${state.channels} ch`; $('#visibleValue').textContent = `${100 - state.mask}%`;
     ['seq','mask','heads'].forEach((id) => setFill($(`#${id}`))); drawSequence(); updateGrowth(); updateResourceForecast(); renderScalps();
   }
   $('#seq').addEventListener('input', (e) => { state.seq = +e.target.value; updatePlay(); });
@@ -185,24 +189,129 @@
     ['tag1','tag2','tag3'].forEach((c, i) => $(`.${c}`).textContent = d[4][i]);
   }));
 
-  function points(count, phase = 0) {
-    const out = [];
-    for (let i = 0; i < count; i++) {
-      const ring = Math.floor(Math.sqrt(i)), ringStart = ring * ring, inRing = i - ringStart, nRing = Math.max(1, 2 * ring + 1);
-      const radius = 18 + ring / Math.max(1, Math.sqrt(count)) * 95, a = phase + inRing / nRing * Math.PI * 2 + ring * .7;
-      out.push([150 + Math.cos(a) * radius * .88, 148 + Math.sin(a) * radius, i]);
-    }
-    return out;
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const headOutline = '<path d="M48 135c-18 0-22 15-18 31 3 13 12 21 23 19M252 135c18 0 22 15 18 31-3 13-12 21-23 19M137 49l13-21 13 21" fill="none" stroke="#294851" stroke-width="2"/><circle cx="150" cy="150" r="105" fill="#092029" stroke="#294851"/>';
+
+  function projectPoint(point) {
+    return { x: 150 + point.x / .105 * 102, y: 150 - point.y / .12 * 100 };
   }
-  function scalp(svg, pts, interactive) {
-    svg.innerHTML = '<path d="M48 135c-18 0-22 15-18 31 3 13 12 21 23 19M252 135c18 0 22 15 18 31-3 13-12 21-23 19M137 49l13-21 13 21" fill="none" stroke="#294851" stroke-width="2"/><circle cx="150" cy="150" r="105" fill="#092029" stroke="#294851"/>';
-    pts.forEach(([x,y,i]) => { const g = document.createElementNS('http://www.w3.org/2000/svg','g'); g.setAttribute('class', `dot${interactive && i === state.selected ? ' active' : ''}`); g.innerHTML = `<circle cx="${x}" cy="${y}" r="${interactive ? 7 : 3.5}" fill="${interactive && i === state.selected ? '#ff745c' : '#61d5dd'}" opacity="${interactive && i !== state.selected ? '.72' : '1'}"/>`; if (interactive) { g.setAttribute('role','button'); g.setAttribute('tabindex','0'); const pick=()=>{state.selected=i;renderScalps()}; g.addEventListener('click',pick); g.addEventListener('keydown',(e)=>(e.key==='Enter'||e.key===' ')&&pick()); } svg.appendChild(g); });
+
+  function electrodeRadius(count) {
+    if (count <= 14) return 7;
+    if (count <= 64) return 4.3;
+    if (count <= 128) return 3.1;
+    return 2.25;
   }
-  function renderProjection(inputPts, targetPts) {
-    const box = $('#projectionLines'); box.innerHTML = ''; const chosen = inputPts[state.selected] || inputPts[0];
-    targetPts.map((p) => ({ p, d: Math.hypot(p[0]-chosen[0],p[1]-chosen[1]) })).sort((a,b)=>a.d-b.d).slice(0,8).forEach((item,i) => { const line=document.createElement('i'); line.style.top=`${24+i*7}%`; line.style.width=`${55+Math.max(0,35-item.d/4)}%`; line.style.opacity=`${.75-i*.07}`; line.style.transform=`rotate(${(i-3.5)*4}deg)`; box.appendChild(line); });
+
+  function proxyWeights(inputPoints, targetPoints) {
+    const sigma = inputPoints.length <= 2 ? .08 : inputPoints.length <= 14 ? .052 : .038;
+    const sigma2 = 2 * sigma * sigma;
+    return targetPoints.map((target, targetIndex) => {
+      const logits = inputPoints.map((input) => {
+        const dx = target.x - input.x, dy = target.y - input.y, dz = target.z - input.z;
+        return -(dx * dx + dy * dy + dz * dz) / sigma2;
+      });
+      const maxLogit = Math.max(...logits);
+      const exp = logits.map((value) => Math.exp(value - maxLogit));
+      const denominator = exp.reduce((sum, value) => sum + value, 0);
+      return { targetIndex, value: exp[state.selected] / denominator };
+    });
   }
-  function renderScalps() { const inputPts=points(Math.min(state.channels,64),.4), targetPts=points(64,.1); scalp($('#inputScalp'),inputPts,true); scalp($('#targetScalp'),targetPts,false); renderProjection(inputPts,targetPts); $('#inputMapTitle').textContent=`${state.channels} channels`; }
+
+  function relativeWeights(weights) {
+    const values = weights.map((weight) => weight.value), min = Math.min(...values), max = Math.max(...values);
+    return weights.map((weight) => ({ ...weight, relative: max === min ? 1 : (weight.value - min) / (max - min) }));
+  }
+
+  function weightColor(relative) {
+    const hue = 185 - 170 * Math.pow(relative, .78);
+    const light = 56 + 8 * relative;
+    return `hsl(${hue.toFixed(0)} 88% ${light.toFixed(0)}%)`;
+  }
+
+  function makeTitle(text) {
+    const title = document.createElementNS(svgNS, 'title');
+    title.textContent = text;
+    return title;
+  }
+
+  function renderInputScalp(svg, montage) {
+    svg.innerHTML = headOutline;
+    const radius = electrodeRadius(montage.points.length);
+    montage.points.forEach((point, index) => {
+      const projected = projectPoint(point), selected = index === state.selected;
+      const group = document.createElementNS(svgNS, 'g');
+      group.setAttribute('class', `electrode input-electrode${selected ? ' active' : ''}`);
+      group.setAttribute('data-index', index);
+      group.setAttribute('role', 'button');
+      group.setAttribute('tabindex', '0');
+      group.setAttribute('aria-label', `Select ${point.name}`);
+      group.appendChild(makeTitle(`${point.name} · (${point.x.toFixed(3)}, ${point.y.toFixed(3)}, ${point.z.toFixed(3)}) m`));
+      const circle = document.createElementNS(svgNS, 'circle');
+      circle.setAttribute('cx', projected.x); circle.setAttribute('cy', projected.y); circle.setAttribute('r', selected ? radius + 1.6 : radius);
+      circle.setAttribute('fill', selected ? '#ff745c' : '#61d5dd'); circle.setAttribute('opacity', selected ? '1' : '.72');
+      circle.setAttribute('stroke', selected ? '#ffe4de' : '#06161d'); circle.setAttribute('stroke-width', selected ? '1.4' : '.6');
+      group.appendChild(circle);
+      const pick = () => { state.selected = index; renderScalps(); };
+      group.addEventListener('click', pick);
+      group.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); pick(); } });
+      svg.appendChild(group);
+    });
+  }
+
+  function renderTargetScalp(svg, targetMontage, weights, selectedName) {
+    svg.innerHTML = headOutline;
+    weights.forEach((weight) => {
+      const point = targetMontage.points[weight.targetIndex], projected = projectPoint(point);
+      const group = document.createElementNS(svgNS, 'g');
+      group.setAttribute('class', 'electrode target-electrode');
+      group.setAttribute('data-index', weight.targetIndex);
+      group.appendChild(makeTitle(`${point.name}: ${(weight.value * 100).toFixed(2)}% contribution from ${selectedName}`));
+      const circle = document.createElementNS(svgNS, 'circle');
+      circle.setAttribute('cx', projected.x); circle.setAttribute('cy', projected.y);
+      circle.setAttribute('r', 3.2 + weight.relative * 4.7); circle.setAttribute('fill', weightColor(weight.relative));
+      circle.setAttribute('opacity', .28 + weight.relative * .72); circle.setAttribute('stroke', '#06161d'); circle.setAttribute('stroke-width', '.65');
+      group.appendChild(circle); svg.appendChild(group);
+    });
+  }
+
+  function renderProjectionBars(weights) {
+    const box = $('#projectionLines'); box.innerHTML = '';
+    [...weights].sort((a, b) => b.value - a.value).slice(0, 8).forEach((weight, index) => {
+      const line = document.createElement('i'); line.style.top = `${24 + index * 7}%`; line.style.width = `${48 + 42 * weight.relative}%`;
+      line.style.opacity = `${.28 + .62 * weight.relative}`; line.style.transform = `rotate(${(index - 3.5) * 3.2}deg)`; line.style.background = `linear-gradient(90deg,transparent,${weightColor(weight.relative)},transparent)`; box.appendChild(line);
+    });
+  }
+
+  function renderMappingOverlay(weights) {
+    const overlay = $('#mappingOverlay'), lab = $('.spatial-lab'), selected = $('#inputScalp .input-electrode.active circle');
+    if (!overlay || !lab || !selected) return;
+    const labRect = lab.getBoundingClientRect(), sourceRect = selected.getBoundingClientRect();
+    overlay.setAttribute('viewBox', `0 0 ${labRect.width} ${labRect.height}`); overlay.innerHTML = '';
+    const sourceX = sourceRect.left + sourceRect.width / 2 - labRect.left, sourceY = sourceRect.top + sourceRect.height / 2 - labRect.top;
+    [...weights].sort((a, b) => b.value - a.value).slice(0, 9).forEach((weight) => {
+      const target = $(`#targetScalp .target-electrode[data-index="${weight.targetIndex}"] circle`); if (!target) return;
+      const targetRect = target.getBoundingClientRect(), targetX = targetRect.left + targetRect.width / 2 - labRect.left, targetY = targetRect.top + targetRect.height / 2 - labRect.top;
+      const path = document.createElementNS(svgNS, 'path');
+      const bend = Math.max(45, Math.abs(targetX - sourceX) * .32);
+      path.setAttribute('d', `M ${sourceX} ${sourceY} C ${sourceX + bend} ${sourceY}, ${targetX - bend} ${targetY}, ${targetX} ${targetY}`);
+      path.setAttribute('fill', 'none'); path.setAttribute('stroke', weightColor(weight.relative)); path.setAttribute('stroke-width', 1 + weight.relative * 2.7); path.setAttribute('opacity', .15 + weight.relative * .58);
+      overlay.appendChild(path);
+    });
+  }
+
+  function renderScalps() {
+    const montage = currentMontage(), target = montages.target64;
+    if (!montage || !target) return;
+    state.selected = Math.min(state.selected, montage.points.length - 1);
+    const selected = montage.points[state.selected], weights = relativeWeights(proxyWeights(montage.points, target.points));
+    renderInputScalp($('#inputScalp'), montage); renderTargetScalp($('#targetScalp'), target, weights, selected.name); renderProjectionBars(weights);
+    $('#inputMapTitle').textContent = `${montage.label} · ${montage.channels} channels${montage.schematic ? ' · schematic' : ''}`;
+    $('#selectedChannel').textContent = selected.name;
+    const strongest = [...weights].sort((a, b) => b.value - a.value)[0];
+    $('#weightSummary').textContent = `Strongest target: ${target.points[strongest.targetIndex].name} · ${(strongest.value * 100).toFixed(2)}%`;
+    requestAnimationFrame(() => renderMappingOverlay(weights));
+  }
 
   const tasks = {
     eyes:['assets/topography/eyes-state.gif','FRONTAL REGION','Eyes open / closed','The repository reports frontal emphasis, consistent with alpha modulation during eye closure.'],
