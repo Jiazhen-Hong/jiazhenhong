@@ -66,6 +66,30 @@
               <div class="mamba"><span>SAMBA state-space <b>O(n)</b></span><div class="track"><i id="mambaBar"></i></div><output id="mambaGrowth">×6.0</output></div>
             </div>
           </div>
+          <div class="resource-model">
+            <div class="resource-head">
+              <div><span class="mono">RESOURCE TREND</span><h3>Measured first. Estimated after.</h3></div>
+              <div id="estimateStatus" class="estimate-status estimated"><i></i><span>ESTIMATED</span><small>Beyond 2,000 measured steps</small></div>
+            </div>
+            <div class="resource-grid">
+              <article class="metric-card">
+                <div class="metric-title"><span>GPU memory</span><strong id="memoryEstimate">2,695 MB</strong></div>
+                <canvas id="memoryChart" aria-label="SAMBA GPU memory trend with measured and estimated regions"></canvas>
+                <p>Paper measurements: <b>207.20 MB</b> at 200 steps and <b>1,437.54 MB</b> at 2,000 steps.</p>
+              </article>
+              <article class="metric-card">
+                <div class="metric-title"><span>Inference / sample</span><strong id="inferenceEstimate">0.48 ms</strong></div>
+                <canvas id="inferenceChart" aria-label="SAMBA inference time trend with measured and estimated regions"></canvas>
+                <p>Paper measurements: <b>0.28 ms</b> at 200 steps and <b>0.38 ms</b> at 2,000 steps.</p>
+              </article>
+            </div>
+            <div class="benchmark-legend mono">
+              <span><i class="measured-line"></i>FIT WITHIN MEASURED RANGE</span>
+              <span><i class="estimated-line"></i>CODE-INFORMED EXTRAPOLATION</span>
+              <span><i class="boundary-line"></i>2,000-STEP VALIDATION LIMIT</span>
+            </div>
+            <p class="benchmark-note">Based on Figure 10 of the <a href="https://arxiv.org/abs/2511.18571" target="_blank" rel="noreferrer">SAMBA paper</a>: synthetic 22-channel EEG, five repeated measurements. The solid segment connects the two reported measurements. The dashed segment extrapolates their affine trend, consistent with the model’s linear-time Mamba and convolutional path. Estimates depend on the original software and RTX 6000 Ada setup and should not be treated as new benchmark results.</p>
+          </div>
         </div>
       </div>
     </section>

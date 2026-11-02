@@ -75,9 +75,96 @@
     $('#mambaBar').style.width = `${Math.max(2, Math.min(100, ratio / 24 * 100))}%`;
   }
 
+  const benchmark = {
+    sampleRate: 128,
+    measuredMax: 2000,
+    maxSteps: 120 * 128,
+    memory: { points: [[200, 207.20], [2000, 1437.54]], unit: 'MB', decimals: 0 },
+    inference: { points: [[200, .28], [2000, .38]], unit: 'ms', decimals: 2 }
+  };
+
+  function affineEstimate(points, steps) {
+    const [[x1, y1], [x2, y2]] = points;
+    const slope = (y2 - y1) / (x2 - x1);
+    return Math.max(0, y1 + (steps - x1) * slope);
+  }
+
+  function drawResourceChart(canvas, series, currentSteps) {
+    const { ctx, w, h } = canvasContext(canvas);
+    ctx.clearRect(0, 0, w, h);
+    const pad = { left: 39, right: 12, top: 19, bottom: 28 };
+    const plotW = Math.max(1, w - pad.left - pad.right), plotH = Math.max(1, h - pad.top - pad.bottom);
+    const x = (steps) => pad.left + steps / benchmark.maxSteps * plotW;
+    const maxValue = affineEstimate(series.points, benchmark.maxSteps) * 1.12;
+    const y = (value) => pad.top + plotH - value / maxValue * plotH;
+    const boundaryX = x(benchmark.measuredMax);
+
+    ctx.font = '7px DM Mono, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#617b81';
+    ctx.strokeStyle = '#17343d';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 3; i++) {
+      const value = maxValue * i / 3, yy = y(value);
+      ctx.beginPath(); ctx.moveTo(pad.left, yy); ctx.lineTo(w - pad.right, yy); ctx.stroke();
+      const label = series.unit === 'MB' ? `${Math.round(value / 100) * 100}` : value.toFixed(1);
+      ctx.fillText(label, pad.left - 6, yy + 3);
+    }
+
+    ctx.textAlign = 'center';
+    [0, 30, 60, 90, 120].forEach((seconds) => {
+      const xx = x(seconds * benchmark.sampleRate);
+      ctx.fillStyle = '#617b81'; ctx.fillText(`${seconds}s`, xx, h - 8);
+    });
+
+    ctx.fillStyle = '#0d2731';
+    ctx.fillRect(boundaryX, pad.top, w - pad.right - boundaryX, plotH);
+    ctx.save();
+    ctx.setLineDash([4, 4]); ctx.strokeStyle = '#ff745c99';
+    ctx.beginPath(); ctx.moveTo(boundaryX, pad.top); ctx.lineTo(boundaryX, pad.top + plotH); ctx.stroke();
+    ctx.restore();
+    ctx.fillStyle = '#ff8e7a'; ctx.font = '7px DM Mono, monospace'; ctx.textAlign = 'left';
+    ctx.fillText('VALIDATED TO 2,000', Math.min(boundaryX + 5, w - 105), pad.top + 9);
+
+    const start = series.points[0], end = series.points[1];
+    ctx.strokeStyle = '#61d5dd'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x(start[0]), y(start[1])); ctx.lineTo(x(end[0]), y(end[1])); ctx.stroke();
+
+    ctx.save();
+    ctx.setLineDash([7, 5]); ctx.strokeStyle = '#ff745c';
+    ctx.beginPath(); ctx.moveTo(x(end[0]), y(end[1])); ctx.lineTo(x(benchmark.maxSteps), y(affineEstimate(series.points, benchmark.maxSteps))); ctx.stroke();
+    ctx.restore();
+
+    series.points.forEach(([steps, value]) => {
+      ctx.beginPath(); ctx.arc(x(steps), y(value), 3.5, 0, Math.PI * 2); ctx.fillStyle = '#61d5dd'; ctx.fill();
+      ctx.strokeStyle = '#06161d'; ctx.lineWidth = 1; ctx.stroke();
+    });
+
+    const currentValue = affineEstimate(series.points, currentSteps);
+    ctx.beginPath(); ctx.arc(x(currentSteps), y(currentValue), 5, 0, Math.PI * 2);
+    ctx.fillStyle = currentSteps > benchmark.measuredMax ? '#ff745c' : '#edf4f2'; ctx.fill();
+    ctx.strokeStyle = '#06161d'; ctx.lineWidth = 2; ctx.stroke();
+  }
+
+  function updateResourceForecast() {
+    const steps = state.seq * benchmark.sampleRate;
+    const memory = affineEstimate(benchmark.memory.points, steps);
+    const inference = affineEstimate(benchmark.inference.points, steps);
+    $('#memoryEstimate').textContent = `${Math.round(memory).toLocaleString()} MB`;
+    $('#inferenceEstimate').textContent = `${inference.toFixed(2)} ms`;
+    const estimated = steps > benchmark.measuredMax;
+    const status = $('#estimateStatus');
+    status.classList.toggle('estimated', estimated);
+    status.classList.toggle('measured', !estimated);
+    status.querySelector('span').textContent = estimated ? 'ESTIMATED' : 'MEASURED RANGE';
+    status.querySelector('small').textContent = estimated ? 'Beyond 2,000 measured steps' : 'Interpolated between paper measurements';
+    drawResourceChart($('#memoryChart'), benchmark.memory, steps);
+    drawResourceChart($('#inferenceChart'), benchmark.inference, steps);
+  }
+
   function updatePlay() {
     $('#seqValue').textContent = `${state.seq} s`; $('#maskValue').textContent = `${state.mask}%`; $('#headValue').textContent = state.heads; $('#montageValue').textContent = `${state.channels} ch`; $('#visibleValue').textContent = `${100 - state.mask}%`;
-    ['seq','mask','heads'].forEach((id) => setFill($(`#${id}`))); drawSequence(); updateGrowth(); renderScalps();
+    ['seq','mask','heads'].forEach((id) => setFill($(`#${id}`))); drawSequence(); updateGrowth(); updateResourceForecast(); renderScalps();
   }
   $('#seq').addEventListener('input', (e) => { state.seq = +e.target.value; updatePlay(); });
   $('#mask').addEventListener('input', (e) => { state.mask = +e.target.value; updatePlay(); });
@@ -130,6 +217,6 @@
   $('#copyCode').addEventListener('click',()=>copy($('#copyCode'),$('.code-card code').innerText,'Copy'));
   const bib=`@inproceedings{hong2026samba,\n  title={{SAMBA}: Toward an {EEG} Foundation Model via Differential Mamba and Coordinate-Driven Spatial Embedding},\n  author={Hong, Jiazhen and Mackellar, Geoffrey and Ghane, Soheila},\n  booktitle={NeurReps 2026: Symmetry and Geometry in Neural Representations},\n  year={2026},\n  note={Proceedings Track, to appear in Proceedings of Machine Learning Research}\n}`;
   $('#copyCitation').addEventListener('click',()=>copy($('#copyCitation'),bib,'Copy BibTeX'));
-  addEventListener('resize',()=>{drawSequence();renderScalps();if(reduced)drawHero()});
+  addEventListener('resize',()=>{drawSequence();updateResourceForecast();renderScalps();if(reduced)drawHero()});
   updatePlay();
 })();
