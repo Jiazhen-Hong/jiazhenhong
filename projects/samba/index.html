@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -52,7 +52,6 @@
           <label class="sequence-control"><span><b>Sequence length</b><output id="seqValue">120 s</output></span><small>Experimentally tested to 120 s; extrapolated after.</small><div class="range-shell"><input id="seq" type="range" min="5" max="600" step="5" value="120"><i class="experiment-marker" aria-hidden="true"><span>120 s tested</span></i></div><div class="range-zones mono"><span>TESTED</span><span>EXTRAPOLATED →</span></div></label>
           <label><span><b>TSR mask ratio</b><output id="maskValue">50%</output></span><small>Semantic segments hidden before reconstruction</small><input id="mask" type="range" min="10" max="80" step="5" value="50"></label>
           <label><span><b>Differential heads</b><output id="headValue">8</output></span><small>Parallel Mamba heads used to suppress redundancy</small><input id="heads" type="range" min="2" max="8" step="2" value="8"></label>
-          <div class="choice"><span><b>Input montage</b><output id="montageValue">EPOC X · 14 ch</output></span><small>Layouts use coordinates from the SAMBA montage tables</small><div id="montageButtons" class="segments montage-segments"><button data-ch="2"><b>2</b><small>MN8</small></button><button data-ch="14" class="active"><b>14</b><small>EPOC X</small></button><button data-ch="32"><b>32</b><small>10–20</small></button><button data-ch="64"><b>64</b><small>PhysioNet</small></button><button data-ch="128"><b>128</b><small>Grosse</small></button><button data-ch="256"><b>256</b><small>10–5</small></button></div></div>
           <button id="resample" type="button" class="button primary full">↻ Resample TSR mask</button>
           <p class="disclaimer mono">ILLUSTRATIVE DEMO · NO TRAINED WEIGHTS</p>
         </aside>
@@ -129,6 +128,10 @@
 
     <section id="spatial" class="section shell">
       <div class="section-head split reveal"><div><p class="kicker mono">03 / SPATIAL MAPPING</p><h2>Electrodes move.<br><em>Coordinates remain.</em></h2></div><p>Choose an input electrode to reveal its simulated whole-scalp mapping.</p></div>
+      <div class="spatial-controls reveal" aria-label="Input montage controls">
+        <div class="spatial-controls-copy"><span class="mono">INPUT MONTAGE</span><output id="montageValue">EPOC X · 14 ch</output><small>Select a layout to update the mapping below.</small></div>
+        <div id="montageButtons" class="segments montage-segments"><button data-ch="2"><b>2</b><small>MN8</small></button><button data-ch="14" class="active"><b>14</b><small>EPOC X</small></button><button data-ch="32"><b>32</b><small>10–20</small></button><button data-ch="64"><b>64</b><small>PhysioNet</small></button><button data-ch="128"><b>128</b><small>Grosse</small></button><button data-ch="256"><b>256</b><small>10–5</small></button></div>
+      </div>
       <div class="spatial-lab reveal">
         <div class="head-map"><div class="map-title"><span class="mono">INPUT SPACE</span><strong id="inputMapTitle">14 channels</strong></div><svg id="inputScalp" viewBox="0 0 300 300" role="img" aria-label="Input EEG montage"></svg></div>
         <div class="projection"><div class="projection-lines" id="projectionLines"></div><div class="weight-card" aria-label="Simulated CDSE mapping"><span class="mono simulation-label">SIMULATED MAPPING</span><strong id="selectedChannel">AF3</strong><p id="weightSummary">Peak: Fp1 · 36.1%</p><small>Coordinate-distance proxy</small></div><p class="mono">ILLUSTRATIVE W COLUMN</p></div>
