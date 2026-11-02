@@ -93,39 +93,59 @@
     masked.forEach((i) => { const x = i * w / blocks, bw = w / blocks + .5; ctx.fillStyle = '#17353be0'; ctx.fillRect(x, 19, bw, panelH - 25); ctx.strokeStyle = '#55c7d4'; ctx.setLineDash([3, 3]); ctx.strokeRect(x, 19, bw, panelH - 25); ctx.setLineDash([]); });
   }
 
-  function drawDifferentialSignal() {
+  let differentialFrame = 0;
+  function drawDifferentialSignal(reveal = 1) {
     const canvas = $('#diffCanvas'), { ctx, w, h } = canvasContext(canvas); ctx.clearRect(0, 0, w, h);
     const residual = Math.max(.18, .72 - (state.heads - 2) * .09);
-    const gap = 14, panelW = (w - gap) / 2, panelH = (h - gap) / 2;
-    const labels = ['AF3', 'T7', 'Pz', 'O2'];
-    ctx.font = '8px DM Mono, monospace';
-    for (let panel = 0; panel < 4; panel++) {
-      const col = panel % 2, row = Math.floor(panel / 2), x0 = col * (panelW + gap), y0 = row * (panelH + gap);
-      ctx.fillStyle = '#111b23'; ctx.fillRect(x0, y0, panelW, panelH);
-      ctx.strokeStyle = '#31414c'; ctx.lineWidth = 1; ctx.strokeRect(x0 + .5, y0 + .5, panelW - 1, panelH - 1);
-      for (let grid = 1; grid < 4; grid++) {
-        ctx.strokeStyle = '#31414c66'; ctx.beginPath();
-        ctx.moveTo(x0 + panelW * grid / 4, y0); ctx.lineTo(x0 + panelW * grid / 4, y0 + panelH); ctx.stroke();
+    const pad = Math.max(20, w * .025), plotLeft = pad, plotRight = w - pad;
+    const top = 34, bottom = h - 22, divider = h * .52, rawBase = h * .31, cleanBase = h * .75;
+    const amplitude = Math.min(57, h * .16), duration = 22;
+    const neural = (t) => Math.sin(t * .55) * .52 + Math.sin(t * 1.28 + .7) * .19 + Math.sin(t * .18 - .8) * .14;
+    const noise = (t) => Math.sin(t * 6.8 + .2) * .47 + Math.sin(t * 12.4 + 1.1) * .27 + Math.sin(t * 19.7) * .13 + (Math.sin(t * .38) > .68 ? Math.sin(t * 25.4) * .24 : 0);
+    const trace = (baseline, color, width, alpha, valueAt, end = plotRight) => {
+      ctx.beginPath();
+      for (let x = plotLeft; x <= end; x += 1.25) {
+        const t = (x - plotLeft) / (plotRight - plotLeft) * duration, y = baseline - valueAt(t) * amplitude;
+        x > plotLeft ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
-      ctx.fillStyle = '#8ea2ac'; ctx.fillText(labels[panel], x0 + 10, y0 + 16);
-      const baseline = y0 + panelH * .55, amplitude = Math.min(31, panelH * .28);
-      const neural = (t) => Math.sin(t * (.62 + panel * .05) + panel) * .55 + Math.sin(t * 1.55 + panel * .8) * .2;
-      const shared = (t) => Math.sin(t * 5.8 + panel * .18) * .32 + Math.sin(t * 10.4 + .4) * .16 + (Math.sin(t * .42 + panel) > .72 ? .27 * Math.sin(t * 13.2) : 0);
-      const trace = (color, width, alpha, valueAt) => {
-        ctx.beginPath();
-        for (let x = x0 + 7; x <= x0 + panelW - 7; x += 1.5) {
-          const t = (x - x0) / panelW * 18, y = baseline - valueAt(t) * amplitude;
-          x > x0 + 7 ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-        }
-        ctx.save(); ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke(); ctx.restore();
-      };
-      trace('#ff7461', 1.1, .42, (t) => neural(t) + shared(t));
-      trace('#f1c56f', .8, .24, (t) => shared(t));
-      trace('#dffbf7', 1.65, .95, (t) => neural(t) + shared(t) * residual);
+      ctx.save(); ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke(); ctx.restore();
+    };
+
+    ctx.fillStyle = '#111b23'; ctx.fillRect(.5, .5, w - 1, h - 1);
+    ctx.strokeStyle = '#31414c'; ctx.lineWidth = 1; ctx.strokeRect(.5, .5, w - 1, h - 1);
+    for (let grid = 1; grid < 8; grid++) {
+      const x = plotLeft + (plotRight - plotLeft) * grid / 8;
+      ctx.strokeStyle = '#31414c55'; ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom); ctx.stroke();
+    }
+    ctx.strokeStyle = '#31414c'; ctx.beginPath(); ctx.moveTo(plotLeft, divider); ctx.lineTo(plotRight, divider); ctx.stroke();
+    ctx.font = '8px DM Mono, monospace'; ctx.fillStyle = '#8ea2ac';
+    ctx.fillText('EXAMPLE CHANNEL · AF3', plotLeft, 18);
+    ctx.fillStyle = '#ff8c7b'; ctx.fillText('NOISY INPUT', plotLeft, rawBase - amplitude - 10);
+    ctx.fillStyle = '#b9d9d5'; ctx.fillText('DENOISED OUTPUT', plotLeft, cleanBase - amplitude - 10);
+
+    trace(rawBase, '#ff7461', 1.15, .55, (t) => neural(t) + noise(t));
+    trace(rawBase, '#ffb0a6', .7, .28, (t) => neural(t) + noise(t) * 1.28);
+    const revealEnd = plotLeft + (plotRight - plotLeft) * Math.max(0, Math.min(1, reveal));
+    trace(cleanBase, '#dffbf7', 2, .98, (t) => neural(t) + noise(t) * residual, revealEnd);
+    trace(cleanBase, '#62d1c5', .9, .34, neural, revealEnd);
+    if (reveal < 1) {
+      ctx.strokeStyle = '#f1c56fcc'; ctx.beginPath(); ctx.moveTo(revealEnd, divider + 12); ctx.lineTo(revealEnd, bottom); ctx.stroke();
     }
     const residualPercent = Math.round(residual * 100);
     $('#headPairCount').textContent = `${state.heads} PAIRED HEADS · ${state.heads * 2} MAMBA BRANCHES`;
-    $('#noiseResidual').textContent = `${residualPercent}% illustrative residual`;
+    $('#noiseResidual').textContent = `${residualPercent}% illustrative noise left`;
+  }
+
+  function animateDifferentialSignal() {
+    cancelAnimationFrame(differentialFrame);
+    if (reduced) { drawDifferentialSignal(); return; }
+    const started = performance.now(), duration = 520;
+    const frame = (now) => {
+      const progress = Math.min(1, (now - started) / duration);
+      drawDifferentialSignal(1 - Math.pow(1 - progress, 3));
+      if (progress < 1) differentialFrame = requestAnimationFrame(frame);
+    };
+    differentialFrame = requestAnimationFrame(frame);
   }
 
   function renderDifferentialHeads() {
@@ -137,7 +157,7 @@
     }
   }
 
-  function updateDifferentialDemo() { renderDifferentialHeads(); drawDifferentialSignal(); }
+  function updateDifferentialDemo() { renderDifferentialHeads(); animateDifferentialSignal(); }
 
   function updateGrowth() {
     const baselineSeconds = 120;

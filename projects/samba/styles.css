@@ -302,7 +302,7 @@ body,.method-section,.maps-section{background:var(--bg);color:var(--ink)}
 .diff-grid{display:grid;grid-template-columns:1fr;gap:12px}
 .diff-grid>div{border-color:#3a4b56}
 .diff-signal{order:1;padding:14px}
-.diff-signal canvas{height:330px}
+.diff-signal canvas{height:300px}
 .diff-heads{order:2;grid-template-columns:repeat(8,1fr);gap:7px;padding:10px;background:var(--panel2)}
 .diff-head-card{padding:8px 7px;background:#101820;border-color:#3b5360}
 .diff-head-card strong{color:#dffbf7}
@@ -311,7 +311,7 @@ body,.method-section,.maps-section{background:var(--bg);color:var(--ink)}
 .diff-legend{justify-content:center}
 
 @media(max-width:1000px){.hero{min-height:760px}.hero-grid{min-height:600px}.hero-copy{padding-top:20px}.hero h1{font-size:clamp(82px,14vw,128px)}.hero-visual{inset:20px -12% 0}.hero-stats{max-width:90%}.diff-heads{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:700px){.hero{min-height:770px;padding-top:26px}.hero::before{inset:64px 0 58px}.hero-grid{min-height:590px}.hero-copy{width:100%;padding:0 10px}.hero-copy .eyebrow{font-size:7px;margin-bottom:16px}.hero h1{font-size:72px;letter-spacing:.14em;margin-left:.14em;margin-bottom:24px}.subtitle{max-width:300px;font-size:13px;letter-spacing:.06em}.authors{font-size:9px}.hero-buttons{align-items:center}.hero-visual{inset:50px -65% 0}.hero-label{display:none}.hero-stats{max-width:100%;padding:17px 8px;backdrop-filter:none}.hero-stats div{margin:0;padding:0 8px}.hero-stats strong{font-size:25px}.hero-stats span{font-size:7px}.diff-lab{padding:22px 14px}.diff-head h3{font-size:27px}.diff-signal{padding:8px}.diff-signal canvas{height:360px}.diff-heads{grid-template-columns:repeat(4,1fr)}.diff-legend{justify-content:flex-start;gap:11px}.diff-legend span{font-size:6px}}
+@media(max-width:700px){.hero{min-height:770px;padding-top:26px}.hero::before{inset:64px 0 58px}.hero-grid{min-height:590px}.hero-copy{width:100%;padding:0 10px}.hero-copy .eyebrow{font-size:7px;margin-bottom:16px}.hero h1{font-size:72px;letter-spacing:.14em;margin-left:.14em;margin-bottom:24px}.subtitle{max-width:300px;font-size:13px;letter-spacing:.06em}.authors{font-size:9px}.hero-buttons{align-items:center}.hero-visual{inset:50px -65% 0}.hero-label{display:none}.hero-stats{max-width:100%;padding:17px 8px;backdrop-filter:none}.hero-stats div{margin:0;padding:0 8px}.hero-stats strong{font-size:25px}.hero-stats span{font-size:7px}.diff-lab{padding:22px 14px}.diff-head h3{font-size:27px}.diff-signal{padding:8px}.diff-signal canvas{height:310px}.diff-heads{grid-template-columns:repeat(4,1fr)}.diff-legend{justify-content:flex-start;gap:11px}.diff-legend span{font-size:6px}}
 
 /* v13: restore the warm paper treatment for the model explainer only. */
 .method-section{background:#f3e8e5;color:#351518;border-color:#d5b9b5}
