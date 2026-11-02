@@ -224,3 +224,55 @@ body{background:var(--bg)}
 
 @media(max-width:1000px){.hero-stats{max-width:none}.aligned-growth{grid-template-columns:1fr}.growth-bars>div{grid-template-columns:150px 1fr 60px}}
 @media(max-width:700px){.section{padding:82px 0}.hero-meta{font-size:9px}.conference-link{gap:6px}.hero-copy .eyebrow{margin-bottom:28px}.hero-buttons{flex-wrap:wrap}.hero-stats{grid-template-columns:repeat(3,1fr)}.hero-stats div{padding-right:12px;margin-right:12px}.hero-stats strong{font-size:29px}.complexity{grid-template-columns:1fr}.growth-bars>div{grid-template-columns:110px 1fr 50px}.source-strip{grid-template-columns:1fr auto}.source-strip span{grid-column:1/-1}.experiment-marker span{transform:rotate(-35deg);transform-origin:left bottom}.cdse-method-visual{grid-template-columns:1fr 105px 1fr;padding:22px 10px;gap:4px}.cdse-operator{min-width:0;padding:15px 5px}.cdse-operator strong{font-size:23px}.mini-topomap svg{max-width:125px}.citation{padding:34px 24px}.citation-label{align-self:auto}}
+
+/* v11: one dark canvas with functional color accents. */
+:root{--bg:#101820;--panel:#16222c;--panel2:#1b2a35;--ink:#f4f1eb;--muted:#9aa8b2;--line:#31414c;--coral:#ff7461;--cyan:#ff7461;--teal:#62d1c5;--gold:#f1c56f;--green:#72d3ae}
+body,.method-section,.maps-section{background:var(--bg);color:var(--ink)}
+.grain{opacity:.015}
+.method-section,.maps-section{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.method-section .kicker,.method-copy>p:first-child,#method .section-head h2 em{color:var(--teal)}
+.method-section .section-head.split>p,.method-copy>p{color:var(--muted)}
+.method{border-color:var(--line);background:var(--panel)}
+.method-tabs{border-color:var(--line)}
+.method-tabs button{color:#8fa0aa}
+.method-tabs button.active{border-color:var(--teal);color:var(--ink);background:#62d1c514}
+.method-copy h3{color:var(--ink)}
+.method-note{border-color:var(--gold)}
+.method-note span{color:var(--gold)}
+.method-note p{color:#d9d1c6}
+.method-visual{background:radial-gradient(circle at 52% 48%,#24414a 0,#1b2b35 38%,#14202a 72%)}
+.tower i{border-color:#57707b;background:#1d303a}
+.bridge{border-color:var(--teal);background:#172630;box-shadow:0 0 0 14px #62d1c50a}
+.bridge span{color:var(--gold)}
+.bridge b{color:#aab9bf}
+.flow{background:var(--teal)}
+.flow::after{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.tag{border-color:#4f6873;background:#14212a;color:#b8c5c9}
+.method-visual[data-step=mamba] .bridge{box-shadow:0 0 0 12px #62d1c518,0 0 0 25px #62d1c509}
+.method-visual[data-step=decoder] .tower.right i{background:#263c3d}
+.cdse-method-visual{background:radial-gradient(circle at 50% 50%,#27434a 0,#1a2a34 46%,#14202a 100%)}
+.mini-topomap>span{color:#a8bbc1}
+.cdse-operator{border-color:#4d968f;background:#15242dcc;box-shadow:0 12px 30px #050a0e30}
+.cdse-operator::before,.cdse-operator::after{background:var(--teal)}
+.cdse-operator>span{color:#8bb8b6}
+.cdse-operator strong{color:var(--gold)}
+.cdse-operator b{color:#a7b8bd}
+.cdse-operator small{color:#d4ddd9}
+.method-section .source-strip{border-color:var(--line)}
+#spatial .kicker,#spatial .section-head h2 em{color:var(--teal)}
+#spatial .montage-segments button.active{background:var(--teal);border-color:var(--teal);color:#0d1b20}
+#spatial .map-title strong{color:var(--teal)}
+#spatial .target-map .map-title span{color:var(--gold)}
+.maps-section .kicker,.maps-section .section-head h2 em,.topo-view span{color:var(--gold)}
+.maps-section .task-list button.active{background:var(--gold);color:#182027}
+.maps-section .map-gallery{background:var(--panel)}
+.playground,.diff-lab,.resource-model,.metric-card,.estimate-status,.diff-grid>div,.diff-head-card{background:var(--panel)}
+.aligned-growth{background:var(--panel2)}
+.spatial-lab,.spatial-controls{background:var(--panel)}
+.weight-card{background:#111b23c7}
+.citation{background:linear-gradient(135deg,#62d1c50a,#f1c56f08);border-color:#4c666d}
+.citation-label span,.citation button{color:var(--teal)}
+.citation button{border-color:#62d1c566}
+.citation button:hover{background:var(--teal);border-color:var(--teal);color:#102027}
+
+@media(max-width:700px){.method-tabs{border-color:var(--line)}.method-tabs button.active{border-bottom-color:var(--teal)}.method-copy{border-top:1px solid var(--line)}.citation{grid-template-columns:1fr}.citation button{width:100%}}

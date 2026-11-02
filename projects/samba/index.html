@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=10">
+  <link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -29,9 +29,9 @@
       <div class="hero-meta mono"><a class="conference-link" href="https://neurips.cc/virtual/2026/loc/sydney/157481" target="_blank" rel="noreferrer">NEURREPS 2026 · PROCEEDINGS TRACK <span aria-hidden="true">↗</span></a><span>EEG FOUNDATION MODEL</span></div>
       <div class="hero-grid">
         <div class="hero-copy reveal">
-          <p class="eyebrow mono">LONG SEQUENCES. DIFFERENT DEVICES. ONE MODEL.</p>
+          <p class="eyebrow mono">LONG EEG. ANY HEADSET. ONE MODEL.</p>
           <h1>SAMBA</h1>
-          <p class="subtitle">Toward an EEG Foundation Model via <em>Differential Mamba</em> and <em>Coordinate-Driven Spatial Embedding</em></p>
+          <p class="subtitle">Learn from <em>long EEG</em> across <em>different headsets.</em></p>
           <p class="authors">Jiazhen Hong · Geoffrey Mackellar · Soheila Ghane</p>
           <div class="hero-buttons"><a href="#play" class="button primary">Play with SAMBA <span>↓</span></a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer" class="button secondary">View source ↗</a><a href="#cite" class="button secondary cite-button">Cite / BibTeX <span>↓</span></a></div>
         </div>
@@ -41,24 +41,24 @@
           <div class="hero-label label-left mono">LONG EEG</div><div class="hero-label label-right mono">REPRESENTATION</div>
         </div>
       </div>
-      <div class="hero-stats reveal"><div><strong>O(n)</strong><span>linear computational complexity</span></div><div><strong>3D</strong><span>montage-agnostic spatial learning</span></div><div><strong>TSR + DM</strong><span>representation learning and denoising</span></div></div>
+      <div class="hero-stats reveal"><div><strong>O(n)</strong><span>linear with sequence length</span></div><div><strong>3D</strong><span>one space for every headset</span></div><div><strong>TSR + DM</strong><span>learn signals, reduce shared noise</span></div></div>
     </section>
 
     <section id="play" class="section shell">
-      <div class="section-head reveal"><p class="kicker mono">01 / PLAYGROUND</p><h2>Stretch the context.<br><em>See what changes.</em></h2><p>Move a control and read the matching visual beside it.</p></div>
+      <div class="section-head reveal"><p class="kicker mono">01 / PLAYGROUND</p><h2>Try the model.<br><em>Watch it change.</em></h2><p>Move a slider. The visual updates beside it.</p></div>
       <div class="playground reveal">
         <aside class="controls">
           <div class="controls-title"><span class="pulse"></span><span class="mono">MODEL CONTROLS</span><button id="reset" type="button">Reset</button></div>
-          <label class="sequence-control"><span><b>Sequence length</b><output id="seqValue">120 s</output></span><small>Experimentally tested to 120 s; extrapolated after.</small><div class="range-shell"><input id="seq" type="range" min="5" max="600" step="5" value="120"><i class="experiment-marker" aria-hidden="true"><span>120 s tested</span></i></div><div class="range-zones mono"><span>TESTED</span><span>EXTRAPOLATED →</span></div></label>
-          <label><span><b>TSR mask ratio</b><output id="maskValue">50%</output></span><small>Semantic segments hidden before reconstruction</small><input id="mask" type="range" min="10" max="80" step="5" value="50"></label>
-          <label><span><b>Differential heads</b><output id="headValue">8</output></span><small>Parallel Mamba heads used to suppress redundancy</small><input id="heads" type="range" min="2" max="8" step="2" value="8"></label>
+          <label class="sequence-control"><span><b>Sequence length</b><output id="seqValue">120 s</output></span><small>Tested to 120 s. Longer values are estimates.</small><div class="range-shell"><input id="seq" type="range" min="5" max="600" step="5" value="120"><i class="experiment-marker" aria-hidden="true"><span>120 s tested</span></i></div><div class="range-zones mono"><span>TESTED</span><span>ESTIMATED →</span></div></label>
+          <label><span><b>TSR mask ratio</b><output id="maskValue">50%</output></span><small>Hide part of the signal to learn the rest.</small><input id="mask" type="range" min="10" max="80" step="5" value="50"></label>
+          <label><span><b>Differential heads</b><output id="headValue">8</output></span><small>Paired paths reduce shared noise.</small><input id="heads" type="range" min="2" max="8" step="2" value="8"></label>
           <button id="resample" type="button" class="button primary full">↻ Resample TSR mask</button>
           <p class="disclaimer mono">ILLUSTRATIVE DEMO · NO TRAINED WEIGHTS</p>
         </aside>
         <div class="stage">
-          <div class="stage-head"><div><span class="mono">LIVE VIEW</span><strong>Long-context behavior</strong></div><div><span class="mono">VISIBLE</span><strong id="visibleValue">50%</strong></div><div><span class="mono">TARGET</span><strong>64 ch</strong></div></div>
+          <div class="stage-head"><div><span class="mono">LIVE VIEW</span><strong>Long EEG</strong></div><div><span class="mono">VISIBLE</span><strong id="visibleValue">50%</strong></div><div><span class="mono">SHARED SPACE</span><strong>64 ch</strong></div></div>
           <div class="complexity aligned-growth">
-            <div class="complexity-copy"><span class="mono">SEQUENCE LENGTH</span><h3 id="tokenCount">15,360 time steps</h3><p>Relative growth from the paper-tested 120 s context.</p></div>
+            <div class="complexity-copy"><span class="mono">SEQUENCE LENGTH</span><h3 id="tokenCount">15,360 time steps</h3><p>Compared with the tested 120 s setting.</p></div>
             <div class="growth-bars">
               <div><span>Transformer <b>O(n²)</b></span><div class="track"><i id="transformerBar"></i></div><output id="transformerGrowth">×1.0</output></div>
               <div class="mamba"><span>SAMBA <b>O(n)</b></span><div class="track"><i id="mambaBar"></i></div><output id="mambaGrowth">×1.0</output></div>
@@ -75,12 +75,12 @@
               <div><div id="diffHeads" class="diff-heads" aria-label="Differential Mamba paired head structure"></div><p class="diff-equation mono">x₁ − λx₂ → GroupNorm → concat → projection + residual</p></div>
               <div class="diff-signal"><canvas id="diffCanvas" aria-label="Illustrative common noise cancellation as differential head count changes"></canvas><div class="diff-legend mono"><span><i class="branch-one"></i>x₁ SIGNAL + SHARED NOISE</span><span><i class="branch-two"></i>λx₂ SHARED RESPONSE</span><span><i class="diff-output"></i>DIFFERENTIAL OUTPUT</span></div></div>
             </div>
-            <p class="diff-note">Illustrative signal subtraction, not a measured denoising score.</p>
+            <p class="diff-note">Illustration only. This is not a measured denoising score.</p>
           </div>
           <div class="resource-model">
             <div class="resource-head">
               <div><span class="mono">RESOURCE TREND</span><h3>Measured → estimated</h3></div>
-              <div id="estimateStatus" class="estimate-status estimated"><i></i><span>ESTIMATED</span><small>Beyond reported resource points</small></div>
+              <div id="estimateStatus" class="estimate-status estimated"><i></i><span>ESTIMATED</span><small>Past reported resource points</small></div>
             </div>
             <div class="resource-grid">
               <article class="metric-card">
@@ -95,11 +95,11 @@
               </article>
             </div>
             <div class="benchmark-legend mono">
-              <span><i class="measured-line"></i>FIT WITHIN MEASURED RANGE</span>
-              <span><i class="estimated-line"></i>CODE-INFORMED EXTRAPOLATION</span>
-              <span><i class="boundary-line"></i>LAST REPORTED RESOURCE POINT</span>
+              <span><i class="measured-line"></i>SOLID: REPORTED</span>
+              <span><i class="estimated-line"></i>DASHED: ESTIMATED</span>
+              <span><i class="boundary-line"></i>LAST REPORTED POINT</span>
             </div>
-            <p class="benchmark-note">Solid = reported measurements. Dashed = affine extrapolation from the <a href="https://arxiv.org/abs/2511.18571" target="_blank" rel="noreferrer">paper</a>; not a new benchmark.</p>
+            <p class="benchmark-note">Solid lines use reported measurements. Dashed lines extend the trend; they are not new benchmarks. <a href="https://arxiv.org/abs/2511.18571" target="_blank" rel="noreferrer">Paper ↗</a></p>
           </div>
         </div>
       </div>
@@ -107,13 +107,13 @@
 
     <section id="method" class="method-section section">
       <div class="shell">
-        <div class="section-head split reveal"><div><p class="kicker mono">02 / THE MODEL</p><h2>Four ideas.<br><em>One signal path.</em></h2></div><p>Tap a step to change the diagram.</p></div>
+        <div class="section-head split reveal"><div><p class="kicker mono">02 / THE MODEL</p><h2>Four steps.<br><em>One model.</em></h2></div><p>Tap a step.</p></div>
         <div class="method reveal">
           <div class="method-tabs" role="tablist"><button class="active" data-step="tsr"><span>01</span>TSR masking</button><button data-step="cdse"><span>02</span>CDSE</button><button data-step="mamba"><span>03</span>Differential Mamba</button><button data-step="decoder"><span>04</span>U-shaped decoder</button></div>
           <div class="method-content">
-            <div class="method-copy"><p id="methodKicker" class="mono">SELF-SUPERVISION</p><h3 id="methodTitle">Hide meaningful spans</h3><p id="methodText">Mask contiguous EEG segments, then reconstruct them from context.</p><div class="method-note"><span>WHY</span><p id="methodNote">Learn beyond local interpolation.</p></div></div>
+            <div class="method-copy"><p id="methodKicker" class="mono">SELF-SUPERVISION</p><h3 id="methodTitle">Hide EEG spans</h3><p id="methodText">Hide part of the signal, then rebuild it.</p><div class="method-note"><span>WHY</span><p id="methodNote">Learn the larger pattern.</p></div></div>
             <div class="method-visual" id="methodVisual" data-step="tsr">
-              <div class="generic-method-visual"><div class="tower left"><i></i><i></i><i></i><i></i></div><div class="bridge"><span>Δ</span><b>MAMBA</b></div><div class="tower right"><i></i><i></i><i></i><i></i></div><div class="flow"></div><span class="tag tag1">masked EEG</span><span class="tag tag2">3D coordinates</span><span class="tag tag3">reconstruction</span></div>
+              <div class="generic-method-visual"><div class="tower left"><i></i><i></i><i></i><i></i></div><div class="bridge"><span>Δ</span><b>MAMBA</b></div><div class="tower right"><i></i><i></i><i></i><i></i></div><div class="flow"></div><span class="tag tag1">hidden EEG</span><span class="tag tag2">context</span><span class="tag tag3">rebuilt EEG</span></div>
               <div class="cdse-method-visual" aria-label="CDSE coordinate-driven spatial mapping">
                 <div class="mini-topomap"><span class="mono" id="methodInputLabel">EPOC X · 14 ch</span><svg id="methodInputTopo" viewBox="0 0 300 300" role="img" aria-label="CDSE input montage"></svg></div>
                 <div class="cdse-operator"><span class="mono">PAIRWISE 3D DIFFERENCE</span><strong>Δ(x, y, z)</strong><b>MLP → softmax over input channels</b><i></i><small class="mono">X<sub>target</sub> = W X<sub>input</sub></small></div>
@@ -122,43 +122,43 @@
             </div>
           </div>
         </div>
-        <a class="source-strip reveal" href="https://github.com/Jiazhen-Hong/SAMBA/blob/main/Models/SAMBA.py" target="_blank" rel="noreferrer"><span class="mono">FULL MODEL</span><strong>Open the architecture source</strong><i>↗</i></a>
+        <a class="source-strip reveal" href="https://github.com/Jiazhen-Hong/SAMBA/blob/main/Models/SAMBA.py" target="_blank" rel="noreferrer"><span class="mono">FULL MODEL</span><strong>Open model code</strong><i>↗</i></a>
       </div>
     </section>
 
     <section id="spatial" class="section shell">
-      <div class="section-head split reveal"><div><p class="kicker mono">03 / SPATIAL MAPPING</p><h2>Electrodes move.<br><em>Coordinates remain.</em></h2></div><p>Choose an input electrode to reveal its simulated whole-scalp mapping.</p></div>
+      <div class="section-head split reveal"><div><p class="kicker mono">03 / SPATIAL MAPPING</p><h2>Any headset.<br><em>One pretraining space.</em></h2></div><p>3D coordinates map each headset into the same space.</p></div>
       <div class="spatial-controls reveal" aria-label="Input montage controls">
-        <div class="spatial-controls-copy"><span class="mono">INPUT MONTAGE</span><output id="montageValue">EPOC X · 14 ch</output><small>Select a layout to update the mapping below.</small></div>
+        <div class="spatial-controls-copy"><span class="mono">INPUT HEADSET</span><output id="montageValue">EPOC X · 14 ch</output><small>Choose a layout.</small></div>
         <div id="montageButtons" class="segments montage-segments"><button data-ch="2"><b>2</b><small>MN8</small></button><button data-ch="14" class="active"><b>14</b><small>EPOC X</small></button><button data-ch="32"><b>32</b><small>10–20</small></button><button data-ch="64"><b>64</b><small>PhysioNet</small></button><button data-ch="128"><b>128</b><small>Grosse</small></button><button data-ch="256"><b>256</b><small>10–5</small></button></div>
       </div>
       <div class="spatial-lab reveal">
         <div class="head-map"><div class="map-title"><span class="mono">INPUT SPACE</span><strong id="inputMapTitle">14 channels</strong></div><svg id="inputScalp" viewBox="0 0 300 300" role="img" aria-label="Input EEG montage"></svg></div>
         <div class="projection"><div class="projection-lines" id="projectionLines"></div><div class="weight-card" aria-label="Simulated CDSE mapping"><span class="mono simulation-label">SIMULATED MAPPING</span><strong id="selectedChannel">AF3</strong><p id="weightSummary">Peak: Fp1 · 36.1%</p><small>Coordinate-distance proxy</small></div><p class="mono">ILLUSTRATIVE W COLUMN</p></div>
-        <div class="head-map target-map"><div class="map-title"><span class="mono">SIMULATED RESPONSE</span><strong>PhysioNet · 64 ch</strong></div><svg id="targetScalp" viewBox="0 0 300 300" role="img" aria-label="Simulated whole-scalp CDSE mapping response"></svg><div class="weight-legend mono"><span>LOW</span><i></i><span>HIGH CONTRIBUTION</span></div></div>
+        <div class="head-map target-map"><div class="map-title"><span class="mono">SHARED PRETRAINING SPACE</span><strong>64-channel target</strong></div><svg id="targetScalp" viewBox="0 0 300 300" role="img" aria-label="Simulated whole-scalp CDSE mapping response"></svg><div class="weight-legend mono"><span>LOW</span><i></i><span>HIGH CONTRIBUTION</span></div></div>
         <svg id="mappingOverlay" class="mapping-overlay" aria-hidden="true"></svg>
       </div>
-      <p class="spatial-note mono reveal">SIMULATED PROXY · NO CHECKPOINT WEIGHTS. LAYOUTS USE REPOSITORY COORDINATES; MN8 LOCATIONS ARE SCHEMATIC.</p>
+      <p class="spatial-note mono reveal">SIMULATION ONLY · NO CHECKPOINT WEIGHTS · REPOSITORY COORDINATES; MN8 IS SCHEMATIC.</p>
       <a class="source-strip reveal" href="https://github.com/Jiazhen-Hong/SAMBA/tree/main/Montage" target="_blank" rel="noreferrer"><span class="mono">REAL COORDINATES</span><strong>Open montage files</strong><i>↗</i></a>
     </section>
 
     <section class="maps-section section">
       <div class="shell">
-        <div class="section-head split reveal"><div><p class="kicker mono">04 / RESULTS</p><h2>Where SAMBA<br><em>looks.</em></h2></div><p>Select a task to animate its learned topography.</p></div>
+        <div class="section-head split reveal"><div><p class="kicker mono">04 / RESULTS</p><h2>What SAMBA<br><em>learns.</em></h2></div><p>Pick a task to see where it focuses.</p></div>
         <div class="map-gallery reveal">
           <div class="task-list" role="tablist"><button class="active" data-task="eyes">Eyes open / closed</button><button data-task="driver">Driver distraction</button><button data-task="workload">Mental workload</button><button data-task="tuab">Abnormal EEG</button><button data-task="motor">Motor imagery</button></div>
-          <div class="topo-view"><img id="topoImage" src="assets/topography/eyes-state.gif" alt="Animated spatial weights for eyes open and closed"><div><span id="topoRegion" class="mono">FRONTAL REGION</span><h3 id="topoTitle">Eyes open / closed</h3><p id="topoText">The repository reports frontal emphasis, consistent with alpha modulation during eye closure.</p></div></div>
+          <div class="topo-view"><img id="topoImage" src="assets/topography/eyes-state.gif" alt="Animated spatial weights for eyes open and closed"><div><span id="topoRegion" class="mono">FRONTAL REGION</span><h3 id="topoTitle">Eyes open / closed</h3><p id="topoText">Focuses on frontal signals linked to eye closure.</p></div></div>
         </div>
       </div>
     </section>
 
-    <section class="use-section section shell"><div class="use-copy reveal"><p class="kicker mono">EXPLORE</p><h2>Paper and code.</h2><div class="links"><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer"><span>01</span><b>Repository</b><i>GitHub ↗</i></a><a href="https://arxiv.org/abs/2511.18571" target="_blank" rel="noreferrer"><span>02</span><b>Paper</b><i>arXiv ↗</i></a><a href="https://github.com/Jiazhen-Hong/SAMBA/tree/main/Montage" target="_blank" rel="noreferrer"><span>03</span><b>Montage coordinates</b><i>Data ↗</i></a></div></div></section>
+    <section class="use-section section shell"><div class="use-copy reveal"><p class="kicker mono">EXPLORE</p><h2>Go deeper.</h2><div class="links"><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer"><span>01</span><b>Code</b><i>GitHub ↗</i></a><a href="https://arxiv.org/abs/2511.18571" target="_blank" rel="noreferrer"><span>02</span><b>Paper</b><i>arXiv ↗</i></a><a href="https://github.com/Jiazhen-Hong/SAMBA/tree/main/Montage" target="_blank" rel="noreferrer"><span>03</span><b>Electrode layouts</b><i>Data ↗</i></a></div></div></section>
 
     <section id="cite" class="citation shell reveal"><div class="citation-label"><span class="mono">CITE SAMBA</span><small class="mono">BIBTEX + PLAIN TEXT</small></div><p>Hong, J., Mackellar, G., &amp; Ghane, S. (2026). <em>SAMBA: Toward an EEG Foundation Model via Differential Mamba and Coordinate-Driven Spatial Embedding.</em> NeurReps 2026 Proceedings Track.</p><button id="copyCitation" type="button">Copy BibTeX</button></section>
   </main>
   <footer class="footer shell"><a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a><p>Accepted to the NeurReps 2026 Proceedings Track at NeurIPS 2026.</p><div><a href="../">Projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
   <script src="montages.js?v=3" defer></script>
   <script src="montage32.js?v=1" defer></script>
-  <script src="app.js?v=9" defer></script>
+  <script src="app.js?v=10" defer></script>
 </body>
 </html>

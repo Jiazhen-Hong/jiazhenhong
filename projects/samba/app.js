@@ -202,7 +202,7 @@
     status.classList.toggle('estimated', estimated);
     status.classList.toggle('measured', !estimated);
     status.querySelector('span').textContent = estimated ? 'ESTIMATED' : 'MEASURED RANGE';
-    status.querySelector('small').textContent = estimated ? 'Beyond reported resource points' : 'Interpolated between reported resource points';
+    status.querySelector('small').textContent = estimated ? 'Past reported resource points' : 'Between reported resource points';
     drawResourceChart($('#memoryChart'), benchmark.memory, steps);
     drawResourceChart($('#inferenceChart'), benchmark.inference, steps);
   }
@@ -220,10 +220,10 @@
   $('#reset').addEventListener('click', () => { Object.assign(state, { seq: 120, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 }); $('#seq').value = 120; $('#mask').value = 50; $('#heads').value = 8; $$('#montageButtons button').forEach((b) => b.classList.toggle('active', b.dataset.ch === '14')); updatePlay(); });
 
   const method = {
-    tsr: ['SELF-SUPERVISION','Hide meaningful spans','Mask contiguous EEG, then reconstruct it from context.','Learn beyond local interpolation.',['masked EEG','semantic spans','reconstruction']],
-    cdse: ['SPATIAL MAPPING','Learn a map between layouts','Pairwise 3D coordinate differences pass through an MLP and softmax to form W.','Project input EEG into a shared target montage.',['input montage','Δ(x,y,z)','target montage']],
-    mamba: ['LONG CONTEXT','Subtract shared responses','Paired Mamba branches remove redundant temporal responses.','Keep distinctive dynamics.',['head A','difference Δ','head B']],
-    decoder: ['RECONSTRUCTION','Compress and rebuild','A U-shaped decoder restores masked EEG across scales.','Mix global and local context.',['encoder','mediator','decoder']]
+    tsr: ['SELF-SUPERVISION','Hide EEG spans','Hide part of the signal, then rebuild it.','Learn the larger pattern.',['hidden EEG','context','rebuilt EEG']],
+    cdse: ['SHARED EEG SPACE','Unify headset layouts','3D electrode positions map any headset into one pretraining space.','Train across different layouts.',['input headset','3D map','shared space']],
+    mamba: ['DENOISING','Reduce shared noise','Paired paths subtract repeated responses.','Keep useful changes.',['path A','difference','path B']],
+    decoder: ['RECONSTRUCTION','Rebuild the signal','Restore hidden EEG at several scales.','Use short and long context.',['compress','combine','rebuild']]
   };
   $$('.method-tabs button').forEach((button) => button.addEventListener('click', () => {
     $$('.method-tabs button').forEach((b) => b.classList.toggle('active', b === button)); const d = method[button.dataset.step];
@@ -238,7 +238,7 @@
     return { x: 150 + point.x / .105 * 102, y: 150 - point.y / .12 * 100 };
   }
 
-  const methodHeadOutline = '<path d="M48 135c-18 0-22 15-18 31 3 13 12 21 23 19M252 135c18 0 22 15 18 31-3 13-12 21-23 19M137 49l13-21 13 21" fill="none" stroke="#9c7773" stroke-width="2"/><circle cx="150" cy="150" r="105" fill="#f3ebe9" stroke="#9c7773" stroke-width="2"/>';
+  const methodHeadOutline = '<path d="M48 135c-18 0-22 15-18 31 3 13 12 21 23 19M252 135c18 0 22 15 18 31-3 13-12 21-23 19M137 49l13-21 13 21" fill="none" stroke="#58717d" stroke-width="2"/><circle cx="150" cy="150" r="105" fill="#17232d" stroke="#58717d" stroke-width="2"/>';
 
   function renderMethodTopo(svg, montage, fill) {
     if (!svg || !montage) return;
@@ -380,11 +380,11 @@
   }
 
   const tasks = {
-    eyes:['assets/topography/eyes-state.gif','FRONTAL REGION','Eyes open / closed','The repository reports frontal emphasis, consistent with alpha modulation during eye closure.'],
-    driver:['assets/topography/driver-distraction.gif','LEFT TEMPORAL REGION','Driver distraction','The repository reports left temporal emphasis, associated with auditory processing and cognitive control under distraction.'],
-    workload:['assets/topography/workload.gif','LEFT FRONTAL REGION','Mental workload','The repository reports left frontal emphasis, linked to stress-related workload processing.'],
-    tuab:['assets/topography/tuab.gif','OCCIPITAL REGION','Abnormal EEG','The repository reports occipital dominance for distinguishing abnormal EEG.'],
-    motor:['assets/topography/motor-imagery.gif','MOTOR CORTEX','Motor imagery','The learned spatial weights localize around sensorimotor regions during motor imagery.']
+    eyes:['assets/topography/eyes-state.gif','FRONTAL REGION','Eyes open / closed','Focuses on frontal signals linked to eye closure.'],
+    driver:['assets/topography/driver-distraction.gif','LEFT TEMPORAL REGION','Driver distraction','Focuses on left temporal signals during distraction.'],
+    workload:['assets/topography/workload.gif','LEFT FRONTAL REGION','Mental workload','Focuses on left frontal signals during workload.'],
+    tuab:['assets/topography/tuab.gif','OCCIPITAL REGION','Abnormal EEG','Focuses on occipital signals for abnormal EEG.'],
+    motor:['assets/topography/motor-imagery.gif','MOTOR CORTEX','Motor imagery','Focuses near sensorimotor regions during imagined movement.']
   };
   $$('.task-list button').forEach((button)=>button.addEventListener('click',()=>{ $$('.task-list button').forEach((b)=>b.classList.toggle('active',b===button)); const d=tasks[button.dataset.task]; $('#topoImage').src=d[0]; $('#topoImage').alt=`Animated SAMBA spatial weights for ${d[2]}`; $('#topoRegion').textContent=d[1]; $('#topoTitle').textContent=d[2]; $('#topoText').textContent=d[3]; }));
 
