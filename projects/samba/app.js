@@ -34,7 +34,7 @@
   }
   drawHero();
 
-  const state = { seq: 30, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 };
+  const state = { seq: 120, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 };
   const montageByChannels = { 2: 'mn8', 14: 'epocx', 32: 'standard32', 64: 'physionet64', 128: 'grosse128', 256: 'standard256' };
   const montages = window.SAMBA_MONTAGES || {};
   function currentMontage() { return montages[montageByChannels[state.channels]]; }
@@ -110,8 +110,9 @@
   function updateDifferentialDemo() { renderDifferentialHeads(); drawDifferentialSignal(); }
 
   function updateGrowth() {
-    const ratio = state.seq / 5, quad = ratio * ratio;
-    const maxRatio = +$('#seq').max / 5, maxGrowth = maxRatio * maxRatio;
+    const baselineSeconds = 120;
+    const ratio = state.seq / baselineSeconds, quad = ratio * ratio;
+    const maxRatio = +$('#seq').max / baselineSeconds, maxGrowth = maxRatio * maxRatio;
     const sharedLogScale = (value) => Math.log1p(value) / Math.log1p(maxGrowth) * 100;
     $('#tokenCount').textContent = `${(state.seq * 128).toLocaleString()} time steps`;
     $('#transformerGrowth').textContent = `×${quad.toFixed(1)}`; $('#mambaGrowth').textContent = `×${ratio.toFixed(1)}`;
@@ -216,7 +217,7 @@
   $('#heads').addEventListener('input', (e) => { state.heads = +e.target.value; updatePlay(); });
   $$('#montageButtons button').forEach((b) => b.addEventListener('click', () => { state.channels = +b.dataset.ch; $$('#montageButtons button').forEach((x) => x.classList.toggle('active', x === b)); state.selected = 0; updatePlay(); }));
   $('#resample').addEventListener('click', () => { state.seed++; drawSequence(); });
-  $('#reset').addEventListener('click', () => { Object.assign(state, { seq: 30, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 }); $('#seq').value = 30; $('#mask').value = 50; $('#heads').value = 8; $$('#montageButtons button').forEach((b) => b.classList.toggle('active', b.dataset.ch === '14')); updatePlay(); });
+  $('#reset').addEventListener('click', () => { Object.assign(state, { seq: 120, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 }); $('#seq').value = 120; $('#mask').value = 50; $('#heads').value = 8; $$('#montageButtons button').forEach((b) => b.classList.toggle('active', b.dataset.ch === '14')); updatePlay(); });
 
   const method = {
     tsr: ['SELF-SUPERVISION','Hide meaningful spans','Mask contiguous EEG, then reconstruct it from context.','Learn beyond local interpolation.',['masked EEG','semantic spans','reconstruction']],

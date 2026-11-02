@@ -49,7 +49,7 @@
       <div class="playground reveal">
         <aside class="controls">
           <div class="controls-title"><span class="pulse"></span><span class="mono">MODEL CONTROLS</span><button id="reset" type="button">Reset</button></div>
-          <label class="sequence-control"><span><b>Sequence length</b><output id="seqValue">30 s</output></span><small>Experimentally tested to 120 s; extrapolated after.</small><div class="range-shell"><input id="seq" type="range" min="5" max="600" step="5" value="30"><i class="experiment-marker" aria-hidden="true"><span>120 s tested</span></i></div><div class="range-zones mono"><span>TESTED</span><span>EXTRAPOLATED →</span></div></label>
+          <label class="sequence-control"><span><b>Sequence length</b><output id="seqValue">120 s</output></span><small>Experimentally tested to 120 s; extrapolated after.</small><div class="range-shell"><input id="seq" type="range" min="5" max="600" step="5" value="120"><i class="experiment-marker" aria-hidden="true"><span>120 s tested</span></i></div><div class="range-zones mono"><span>TESTED</span><span>EXTRAPOLATED →</span></div></label>
           <label><span><b>TSR mask ratio</b><output id="maskValue">50%</output></span><small>Semantic segments hidden before reconstruction</small><input id="mask" type="range" min="10" max="80" step="5" value="50"></label>
           <label><span><b>Differential heads</b><output id="headValue">8</output></span><small>Parallel Mamba heads used to suppress redundancy</small><input id="heads" type="range" min="2" max="8" step="2" value="8"></label>
           <div class="choice"><span><b>Input montage</b><output id="montageValue">EPOC X · 14 ch</output></span><small>Layouts use coordinates from the SAMBA montage tables</small><div id="montageButtons" class="segments montage-segments"><button data-ch="2"><b>2</b><small>MN8</small></button><button data-ch="14" class="active"><b>14</b><small>EPOC X</small></button><button data-ch="32"><b>32</b><small>10–20</small></button><button data-ch="64"><b>64</b><small>PhysioNet</small></button><button data-ch="128"><b>128</b><small>Grosse</small></button><button data-ch="256"><b>256</b><small>10–5</small></button></div></div>
@@ -59,10 +59,10 @@
         <div class="stage">
           <div class="stage-head"><div><span class="mono">LIVE VIEW</span><strong>Long-context behavior</strong></div><div><span class="mono">VISIBLE</span><strong id="visibleValue">50%</strong></div><div><span class="mono">TARGET</span><strong>64 ch</strong></div></div>
           <div class="complexity aligned-growth">
-            <div class="complexity-copy"><span class="mono">SEQUENCE LENGTH</span><h3 id="tokenCount">3,840 time steps</h3><p>Growth from the 5 s baseline.</p></div>
+            <div class="complexity-copy"><span class="mono">SEQUENCE LENGTH</span><h3 id="tokenCount">15,360 time steps</h3><p>Relative growth from the paper-tested 120 s context.</p></div>
             <div class="growth-bars">
-              <div><span>Transformer <b>O(n²)</b></span><div class="track"><i id="transformerBar"></i></div><output id="transformerGrowth">×36.0</output></div>
-              <div class="mamba"><span>SAMBA <b>O(n)</b></span><div class="track"><i id="mambaBar"></i></div><output id="mambaGrowth">×6.0</output></div>
+              <div><span>Transformer <b>O(n²)</b></span><div class="track"><i id="transformerBar"></i></div><output id="transformerGrowth">×1.0</output></div>
+              <div class="mamba"><span>SAMBA <b>O(n)</b></span><div class="track"><i id="mambaBar"></i></div><output id="mambaGrowth">×1.0</output></div>
               <small class="mono">SHARED LOG SCALE</small>
             </div>
           </div>
@@ -156,6 +156,6 @@
   <footer class="footer shell"><a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a><p>Accepted to the NeurReps 2026 Proceedings Track at NeurIPS 2026.</p><div><a href="../">Projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
   <script src="montages.js?v=3" defer></script>
   <script src="montage32.js?v=1" defer></script>
-  <script src="app.js?v=8" defer></script>
+  <script src="app.js?v=9" defer></script>
 </body>
 </html>
