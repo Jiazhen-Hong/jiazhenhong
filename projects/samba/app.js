@@ -27,7 +27,7 @@
         const y = y0 + (Math.sin(t) * 5 + Math.sin(t * 2.7) * 2.5 + Math.sin(t * .17) * 4) * envelope;
         x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
-      const g = ctx.createLinearGradient(0, 0, w, 0); g.addColorStop(0, '#92727677'); g.addColorStop(.45, '#ff6f6144'); g.addColorStop(.55, '#ff6f6155'); g.addColorStop(1, '#ff6f61bb');
+      const g = ctx.createLinearGradient(0, 0, w, 0); g.addColorStop(0, '#71808f66'); g.addColorStop(.45, '#55c7d455'); g.addColorStop(.58, '#f4bd6266'); g.addColorStop(1, '#ff6f61cc');
       ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.stroke();
     }
     if (!reduced) requestAnimationFrame(drawHero);
@@ -64,10 +64,10 @@
           if (panel === 1) v = v * .96 + Math.sin(t * 2.5 + 1.2) * (state.mask / 100) * .045;
           const y = y0 - v * 13; x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
         }
-        ctx.strokeStyle = panel ? '#ff6f61' : '#aa9295'; ctx.lineWidth = 1; ctx.stroke();
+        ctx.strokeStyle = panel ? '#ff6f61' : '#aeb8c4'; ctx.lineWidth = 1; ctx.stroke();
       }
     }
-    masked.forEach((i) => { const x = i * w / blocks, bw = w / blocks + .5; ctx.fillStyle = '#20373ee8'; ctx.fillRect(x, 19, bw, panelH - 25); ctx.strokeStyle = '#55747d'; ctx.setLineDash([3, 3]); ctx.strokeRect(x, 19, bw, panelH - 25); ctx.setLineDash([]); });
+    masked.forEach((i) => { const x = i * w / blocks, bw = w / blocks + .5; ctx.fillStyle = '#17353be0'; ctx.fillRect(x, 19, bw, panelH - 25); ctx.strokeStyle = '#55c7d4'; ctx.setLineDash([3, 3]); ctx.strokeRect(x, 19, bw, panelH - 25); ctx.setLineDash([]); });
   }
 
   function drawDifferentialSignal() {
@@ -90,7 +90,7 @@
     };
     const neural = (t) => Math.sin(t * .72) * .62 + Math.sin(t * 1.9 + .6) * .22;
     const shared = (t) => Math.sin(t * 6.1) * .34 + Math.sin(t * 10.7 + .4) * .18 + (Math.sin(t * .36) > .78 ? .32 * Math.sin(t * 14) : 0);
-    trace(0, '#ff6f61', (t) => neural(t) + shared(t));
+    trace(0, '#55c7d4', (t) => neural(t) + shared(t));
     trace(1, '#ffb05c', (t) => shared(t) * .94 + Math.sin(t * 5.6 + 1.1) * .045);
     trace(2, '#edf4f2', (t) => neural(t) + shared(t) * residual + Math.sin(t * (4 + state.heads * .15)) * residual * .07);
     const residualPercent = Math.round(residual * 100);
@@ -111,16 +111,18 @@
 
   function updateGrowth() {
     const ratio = state.seq / 5, quad = ratio * ratio;
+    const maxRatio = +$('#seq').max / 5, maxGrowth = maxRatio * maxRatio;
+    const sharedLogScale = (value) => Math.log1p(value) / Math.log1p(maxGrowth) * 100;
     $('#tokenCount').textContent = `${(state.seq * 128).toLocaleString()} time steps`;
     $('#transformerGrowth').textContent = `×${quad.toFixed(1)}`; $('#mambaGrowth').textContent = `×${ratio.toFixed(1)}`;
-    $('#transformerBar').style.width = `${Math.max(2, Math.min(100, quad / 576 * 100))}%`;
-    $('#mambaBar').style.width = `${Math.max(2, Math.min(100, ratio / 24 * 100))}%`;
+    $('#transformerBar').style.width = `${Math.max(2, sharedLogScale(quad))}%`;
+    $('#mambaBar').style.width = `${Math.max(2, sharedLogScale(ratio))}%`;
   }
 
   const benchmark = {
     sampleRate: 128,
     measuredMax: 2000,
-    maxSteps: 120 * 128,
+    maxSteps: 300 * 128,
     memory: { points: [[200, 207.20], [2000, 1437.54]], unit: 'MB', decimals: 0 },
     inference: { points: [[200, .28], [2000, .38]], unit: 'ms', decimals: 2 }
   };
@@ -154,12 +156,12 @@
     }
 
     ctx.textAlign = 'center';
-    [0, 30, 60, 90, 120].forEach((seconds) => {
+    [0, 60, 120, 180, 240, 300].forEach((seconds) => {
       const xx = x(seconds * benchmark.sampleRate);
       ctx.fillStyle = '#617b81'; ctx.fillText(`${seconds}s`, xx, h - 8);
     });
 
-    ctx.fillStyle = '#0d2731';
+    ctx.fillStyle = '#171b24';
     ctx.fillRect(boundaryX, pad.top, w - pad.right - boundaryX, plotH);
     ctx.save();
     ctx.setLineDash([4, 4]); ctx.strokeStyle = '#ffb05caa';
@@ -169,7 +171,7 @@
     ctx.fillText('VALIDATED TO 2,000', Math.min(boundaryX + 5, w - 105), pad.top + 9);
 
     const start = series.points[0], end = series.points[1];
-    ctx.strokeStyle = '#ff6f61'; ctx.lineWidth = 2;
+    ctx.strokeStyle = '#55c7d4'; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(x(start[0]), y(start[1])); ctx.lineTo(x(end[0]), y(end[1])); ctx.stroke();
 
     ctx.save();
@@ -178,14 +180,14 @@
     ctx.restore();
 
     series.points.forEach(([steps, value]) => {
-      ctx.beginPath(); ctx.arc(x(steps), y(value), 3.5, 0, Math.PI * 2); ctx.fillStyle = '#ff6f61'; ctx.fill();
-      ctx.strokeStyle = '#06161d'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.beginPath(); ctx.arc(x(steps), y(value), 3.5, 0, Math.PI * 2); ctx.fillStyle = '#55c7d4'; ctx.fill();
+      ctx.strokeStyle = '#0e1017'; ctx.lineWidth = 1; ctx.stroke();
     });
 
     const currentValue = affineEstimate(series.points, currentSteps);
     ctx.beginPath(); ctx.arc(x(currentSteps), y(currentValue), 5, 0, Math.PI * 2);
     ctx.fillStyle = currentSteps > benchmark.measuredMax ? '#ffb05c' : '#fff2ef'; ctx.fill();
-    ctx.strokeStyle = '#06161d'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.strokeStyle = '#0e1017'; ctx.lineWidth = 2; ctx.stroke();
   }
 
   function updateResourceForecast() {
@@ -217,10 +219,10 @@
   $('#reset').addEventListener('click', () => { Object.assign(state, { seq: 30, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 }); $('#seq').value = 30; $('#mask').value = 50; $('#heads').value = 8; $$('#montageButtons button').forEach((b) => b.classList.toggle('active', b.dataset.ch === '14')); updatePlay(); });
 
   const method = {
-    tsr: ['SELF-SUPERVISION','Hide meaningful temporal spans','Temporal Semantic Random masking removes contiguous segments rather than isolated samples, forcing the model to use longer-range neural context.','Learn structure that remains useful beyond local waveform interpolation.',['masked EEG','semantic spans','reconstruction']],
-    cdse: ['SPATIAL GENERALIZATION','Map one montage into another','CDSE builds pairwise 3D coordinate differences between input and target electrodes, then learns a soft spatial projection.','Transfer representations across heterogeneous headsets without treating channel names as fixed identities.',['input montage','Δ(x,y,z)','target montage']],
-    mamba: ['LONG-SEQUENCE MODELING','Subtract redundant state-space views','Multiple Mamba heads process the sequence. Differential combinations suppress common responses and preserve more distinctive temporal information.','Model long EEG with linear sequence scaling while emphasizing salient dynamics.',['head A','difference Δ','head B']],
-    decoder: ['MULTI-SCALE RECONSTRUCTION','Compress, mediate, and rebuild','A U-shaped encoder-decoder combines downsampling, Mamba blocks, upsampling, and skip connections to reconstruct the masked EEG.','Mix global context with local temporal detail across several resolutions.',['encoder','mediator','decoder']]
+    tsr: ['SELF-SUPERVISION','Hide meaningful spans','Mask contiguous EEG, then reconstruct it from context.','Learn beyond local interpolation.',['masked EEG','semantic spans','reconstruction']],
+    cdse: ['SPATIAL MAPPING','Map layouts by coordinates','Relative 3D positions produce a soft montage projection.','Transfer across headsets.',['input montage','Δ(x,y,z)','target montage']],
+    mamba: ['LONG CONTEXT','Subtract shared responses','Paired Mamba branches remove redundant temporal responses.','Keep distinctive dynamics.',['head A','difference Δ','head B']],
+    decoder: ['RECONSTRUCTION','Compress and rebuild','A U-shaped decoder restores masked EEG across scales.','Mix global and local context.',['encoder','mediator','decoder']]
   };
   $$('.method-tabs button').forEach((button) => button.addEventListener('click', () => {
     $$('.method-tabs button').forEach((b) => b.classList.toggle('active', b === button)); const d = method[button.dataset.step];
@@ -229,7 +231,7 @@
   }));
 
   const svgNS = 'http://www.w3.org/2000/svg';
-  const headOutline = '<path d="M48 135c-18 0-22 15-18 31 3 13 12 21 23 19M252 135c18 0 22 15 18 31-3 13-12 21-23 19M137 49l13-21 13 21" fill="none" stroke="#63343a" stroke-width="2"/><circle cx="150" cy="150" r="105" fill="#220e13" stroke="#63343a"/>';
+  const headOutline = '<path d="M48 135c-18 0-22 15-18 31 3 13 12 21 23 19M252 135c18 0 22 15 18 31-3 13-12 21-23 19M137 49l13-21 13 21" fill="none" stroke="#485563" stroke-width="2"/><circle cx="150" cy="150" r="105" fill="#111821" stroke="#485563"/>';
 
   function projectPoint(point) {
     return { x: 150 + point.x / .105 * 102, y: 150 - point.y / .12 * 100 };
@@ -288,8 +290,8 @@
       group.appendChild(makeTitle(`${point.name} · (${point.x.toFixed(3)}, ${point.y.toFixed(3)}, ${point.z.toFixed(3)}) m`));
       const circle = document.createElementNS(svgNS, 'circle');
       circle.setAttribute('cx', projected.x); circle.setAttribute('cy', projected.y); circle.setAttribute('r', selected ? radius + 1.6 : radius);
-      circle.setAttribute('fill', selected ? '#ff6f61' : '#ff9b8f'); circle.setAttribute('opacity', selected ? '1' : '.72');
-      circle.setAttribute('stroke', selected ? '#ffe4de' : '#06161d'); circle.setAttribute('stroke-width', selected ? '1.4' : '.6');
+      circle.setAttribute('fill', selected ? '#ff6f61' : '#55c7d4'); circle.setAttribute('opacity', selected ? '1' : '.72');
+      circle.setAttribute('stroke', selected ? '#fff2ef' : '#0e1017'); circle.setAttribute('stroke-width', selected ? '1.4' : '.6');
       group.appendChild(circle);
       const pick = () => { state.selected = index; renderScalps(); };
       group.addEventListener('click', pick);
@@ -364,7 +366,7 @@
   $$('.task-list button').forEach((button)=>button.addEventListener('click',()=>{ $$('.task-list button').forEach((b)=>b.classList.toggle('active',b===button)); const d=tasks[button.dataset.task]; $('#topoImage').src=d[0]; $('#topoImage').alt=`Animated SAMBA spatial weights for ${d[2]}`; $('#topoRegion').textContent=d[1]; $('#topoTitle').textContent=d[2]; $('#topoText').textContent=d[3]; }));
 
   function copy(button,text,label){navigator.clipboard.writeText(text).then(()=>{button.textContent='Copied';setTimeout(()=>button.textContent=label,1400)}).catch(()=>button.textContent='Select text')}
-  $('#copyCode').addEventListener('click',()=>copy($('#copyCode'),$('.code-card code').innerText,'Copy'));
+  if ($('#copyCode')) $('#copyCode').addEventListener('click',()=>copy($('#copyCode'),$('.code-card code').innerText,'Copy'));
   const bib=`@inproceedings{hong2026samba,\n  title={{SAMBA}: Toward an {EEG} Foundation Model via Differential Mamba and Coordinate-Driven Spatial Embedding},\n  author={Hong, Jiazhen and Mackellar, Geoffrey and Ghane, Soheila},\n  booktitle={NeurReps 2026: Symmetry and Geometry in Neural Representations},\n  year={2026},\n  note={Proceedings Track, to appear in Proceedings of Machine Learning Research}\n}`;
   $('#copyCitation').addEventListener('click',()=>copy($('#copyCitation'),bib,'Copy BibTeX'));
   addEventListener('resize',()=>{drawSequence();drawDifferentialSignal();updateResourceForecast();renderScalps();if(reduced)drawHero()});

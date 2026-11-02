@@ -111,7 +111,7 @@
       const y = h / 2 - v * h * .32;
       x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     }
-    ctx.strokeStyle = kind === 'raw' ? '#aeb8c8' : kind === 'target' ? '#7ec8ff' : '#4f8cff';
+    ctx.strokeStyle = kind === 'raw' ? '#aeb8c8' : kind === 'target' ? '#64d1c4' : '#4f8cff';
     ctx.lineWidth = 1.25;
     ctx.stroke();
   }
@@ -191,10 +191,10 @@
   updateLab();
 
   const pipelineData = {
-    tokenizer: { eyebrow: 'DEVICE VARIABILITY', title: 'Position, not device identity', text: 'Each channel receives an embedding from its scalp coordinates. Nearby electrodes get similar representations, even when headset names and layouts differ.', takeaway: 'A pretrained model can understand a new 8-, 14-, or 22-channel layout without relearning every channel from scratch.', tags: ['F4 · (u,v)', 'P7 · (u,v)', 'Cz · (u,v)'], nodes: ['EEG', 'X', 'z'], small: ['variable layout', 'EEG-X', 'shared space'] },
-    latent: { eyebrow: 'LATENT SELF-PREDICTION', title: 'Learn what the hidden signal means', text: 'A student sees masked tokens. A teacher sees the complete sample. A predictor learns to match the teacher representation at hidden positions.', takeaway: 'The target lives in a learned feature space, where small raw-signal details and artifacts matter less.', tags: ['MASK 50%', 'EMA TEACHER', 'ALIGN + REG'], nodes: ['x̄', 'S', 'T'], small: ['masked tokens', 'student', 'teacher target'] },
-    raw: { eyebrow: 'NOISE-AWARE RECONSTRUCTION', title: 'Reconstruct the clean target', text: 'The decoder receives student features and predicted masked features, but its target is artifact-removed EEG rather than the original noisy recording.', takeaway: 'The representation is rewarded for keeping neural information, not for reproducing eye, muscle, heart, or line artifacts.', tags: ['RAW EEG', 'ICA + ICLABEL', 'DiCT LOSS'], nodes: ['x', 'X', 'x̂'], small: ['noisy input', 'decoder', 'clean target'] },
-    downstream: { eyebrow: 'FROZEN TRANSFER', title: 'Reuse the encoder anywhere', text: 'After pretraining, the tokenizer and student encoder are frozen. A simple classifier learns a new task from their representations.', takeaway: 'One foundation model supports emotion, workload, abnormal EEG, motor imagery, SSVEP, and other tasks across devices.', tags: ['FROZEN', 'LINEAR PROBE', 'NEW DEVICE'], nodes: ['EEG', 'z', 'ŷ'], small: ['new sample', 'frozen encoder', 'task label'] }
+    tokenizer: { eyebrow: 'DEVICE VARIABILITY', title: 'Position, not device identity', text: 'Scalp coordinates align channels across headsets.', takeaway: 'New layouts enter one shared space.', tags: ['F4 · (u,v)', 'P7 · (u,v)', 'Cz · (u,v)'], nodes: ['EEG', 'X', 'z'], small: ['variable layout', 'EEG-X', 'shared space'] },
+    latent: { eyebrow: 'LATENT PREDICTION', title: 'Predict hidden meaning', text: 'The student matches teacher features at masked positions.', takeaway: 'Learn stable structure, not raw noise.', tags: ['MASK 50%', 'EMA TEACHER', 'ALIGN + REG'], nodes: ['x̄', 'S', 'T'], small: ['masked tokens', 'student', 'teacher target'] },
+    raw: { eyebrow: 'CLEAN TARGET', title: 'Reconstruct neural EEG', text: 'The decoder targets artifact-removed EEG.', takeaway: 'Preserve brain activity, not artifacts.', tags: ['RAW EEG', 'ICA + ICLABEL', 'DiCT LOSS'], nodes: ['x', 'X', 'x̂'], small: ['noisy input', 'decoder', 'clean target'] },
+    downstream: { eyebrow: 'FROZEN TRANSFER', title: 'Reuse the encoder', text: 'A small classifier reads frozen EEG-X features.', takeaway: 'One encoder supports many devices and tasks.', tags: ['FROZEN', 'LINEAR PROBE', 'NEW DEVICE'], nodes: ['EEG', 'z', 'ŷ'], small: ['new sample', 'frozen encoder', 'task label'] }
   };
 
   $$('.pipeline-tab').forEach((tab) => tab.addEventListener('click', () => {
@@ -270,7 +270,7 @@
   function copyText(button, text, defaultLabel) {
     navigator.clipboard.writeText(text).then(() => { button.textContent = 'Copied'; setTimeout(() => button.textContent = defaultLabel, 1400); }).catch(() => { button.textContent = 'Select text'; });
   }
-  $('#copyCode').addEventListener('click', () => copyText($('#copyCode'), $('.code-card code').innerText, 'Copy'));
+  if ($('#copyCode')) $('#copyCode').addEventListener('click', () => copyText($('#copyCode'), $('.code-card code').innerText, 'Copy'));
   const bibtex = `@article{foumani2025eegx,\n  title={EEG-X: Device-Agnostic and Noise-Robust Foundation Model for EEG},\n  author={Mohammadi Foumani, Navid and Ghane, Soheila and Nguyen, Nam and Salehi, Mahsa and Webb, Geoffrey I. and Mackellar, Geoffrey},\n  journal={arXiv preprint arXiv:2511.08861},\n  year={2025}\n}`;
   $('#copyCitation').addEventListener('click', () => copyText($('#copyCitation'), bibtex, 'Copy BibTeX'));
 
