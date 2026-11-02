@@ -2,93 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#070d18">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#061226">
+  <meta name="robots" content="noindex,nofollow">
   <meta name="description" content="An interactive explainer for EEG-X, a device-agnostic and noise-robust EEG foundation model.">
   <link rel="canonical" href="https://jiazhen-hong.github.io/jiazhenhong/projects/eeg-x/">
   <meta property="og:title" content="EEG-X · Interactive model explorer">
-  <meta property="og:description" content="Play with EEG-X masking, noise, channel layouts, and cross-domain transfer.">
+  <meta property="og:description" content="Explore how EEG-X learns across headsets and noisy EEG.">
   <meta property="og:url" content="https://jiazhen-hong.github.io/jiazhenhong/projects/eeg-x/">
   <title>EEG-X · Interactive model explorer</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
-  <div class="cursor-glow" aria-hidden="true"></div>
   <header class="site-nav shell">
-    <a class="brand" href="#top" aria-label="EEG-X home"><span class="brand-mark">X</span><span>EEG-X</span></a>
-    <nav aria-label="Main navigation"><a href="#playground">Playground</a><a href="#method">Method</a><a href="#results">Results</a></nav>
-    <div class="nav-actions"><a class="nav-cta" href="../">All projects</a><a class="nav-cta" href="https://github.com/Emotiv/EEG-X" target="_blank" rel="noreferrer">View code <span>↗</span></a></div>
+    <a class="brand" href="#top" aria-label="EEG-X home"><span>X</span>EEG-X</a>
+    <nav aria-label="Main navigation"><a href="#play">Play</a><a href="#space">Shared space</a><a href="#method">Method</a><a href="#results">Results</a></nav>
+    <div class="nav-actions"><a href="../">All projects</a><a href="https://github.com/Emotiv/EEG-X" target="_blank" rel="noreferrer">GitHub ↗</a></div>
   </header>
+
   <main id="top">
     <section class="hero shell">
-      <div class="hero-meta mono reveal"><span>FOUNDATION MODEL</span><span class="meta-line"></span><span>EEG · 2025</span></div>
+      <div class="hero-meta mono"><span>EEG FOUNDATION MODEL</span><span>2025</span></div>
       <div class="hero-grid">
-        <div class="hero-copy">
-          <p class="overline reveal">Device-agnostic. Noise-robust.</p>
-          <h1 class="reveal"><span>EEG</span><i>-X</i></h1>
-          <p class="hero-deck reveal">One representation across noisy signals and different headsets.</p>
-          <div class="hero-actions reveal"><a class="button primary" href="#playground">Play with the model <span>↓</span></a><a class="button ghost" href="https://arxiv.org/abs/2511.08861" target="_blank" rel="noreferrer">Read the paper ↗</a></div>
+        <div class="hero-copy reveal">
+          <p class="eyebrow mono">ANY DEVICE · LESS NOISE</p>
+          <h1>EEG<span>-X</span></h1>
+          <p class="deck">One model.<br><em>Any headset.</em></p>
+          <p class="authors">Navid Mohammadi Foumani · Soheila Ghane · Nam Nguyen · Mahsa Salehi · Geoffrey I. Webb · Geoffrey Mackellar</p>
+          <div class="hero-actions"><a class="button primary" href="#play">Play with EEG-X ↓</a><a class="button ghost" href="https://arxiv.org/abs/2511.08861" target="_blank" rel="noreferrer">Paper ↗</a></div>
         </div>
-        <div class="hero-visual reveal" aria-label="Animated EEG signal passing through EEG-X">
+        <div class="hero-visual reveal" aria-label="Animated noisy EEG becoming a stable representation">
           <canvas id="heroCanvas"></canvas>
-          <div class="model-orb"><span class="orb-ring ring-a"></span><span class="orb-ring ring-b"></span><span class="orb-core">X</span></div>
-          <div class="signal-label label-in mono">RAW + NOISE</div><div class="signal-label label-out mono">ROBUST FEATURES</div>
+          <div class="x-core"><i></i><i></i><strong>X</strong><small>SHARED FEATURES</small></div>
+          <span class="hero-label label-left mono">NOISY EEG</span><span class="hero-label label-right mono">ROBUST FEATURES</span>
         </div>
       </div>
-      <div class="hero-summary reveal"><span class="summary-label mono">THE IDEA</span><p><em>Coordinates</em> align devices. <em>Clean targets</em> suppress artifacts.</p><a href="#method" aria-label="Jump to method">↓</a></div>
+      <div class="hero-stats reveal"><div><strong>348</strong><span>universal scalp positions</span></div><div><strong>Clean</strong><span>artifact-removed targets</span></div><div><strong>DiCT</strong><span>shape-aware loss</span></div></div>
     </section>
-    <section id="playground" class="playground section shell">
-      <div class="section-head reveal"><p class="section-kicker mono">01 / PLAYGROUND</p><h2>Make it harder.<br><em>Watch the signal change.</em></h2><p class="section-intro">Adjust noise, masking, patch size, and headset layout.</p></div>
+
+    <section id="play" class="section shell">
+      <div class="section-head split reveal"><div><p class="kicker mono">01 / NOISE-AWARE LEARNING</p><h2>Add noise.<br><em>Keep the brain signal.</em></h2></div><p>Move a control. The clean target stays fixed.</p></div>
       <div class="lab reveal">
-        <aside class="controls" aria-label="EEG-X playground controls">
-          <div class="control-heading"><span class="live-dot"></span><span class="mono">INTERACTIVE CONTROLS</span><button id="resetLab" class="text-button" type="button">Reset</button></div>
-          <label class="control" for="noiseLevel"><span><b>Artifact level</b><output id="noiseValue">38%</output></span><small>Eye blinks, muscle and line noise</small><input id="noiseLevel" type="range" min="0" max="100" value="38" step="1"></label>
-          <label class="control" for="maskRatio"><span><b>Mask ratio</b><output id="maskValue">50%</output></span><small>Fraction of EEG tokens hidden from the student</small><input id="maskRatio" type="range" min="10" max="80" value="50" step="5"></label>
-          <label class="control" for="patchSize"><span><b>Patch size</b><output id="patchValue">128 samples</output></span><small>Signal window used to create one token</small><input id="patchSize" type="range" min="64" max="256" value="128" step="64"></label>
-          <div class="control select-control"><span><b>Downstream headset</b><output id="channelValue">14 ch</output></span><small>Try a layout different from pretraining</small><div class="segmented" id="channelSelect" role="group" aria-label="Channel count"><button type="button" data-channels="8">8</button><button type="button" data-channels="14" class="active">14</button><button type="button" data-channels="19">19</button><button type="button" data-channels="22">22</button></div></div>
-          <button id="resampleButton" class="button primary wide" type="button">↻ New EEG sample</button><p class="demo-note mono">ILLUSTRATIVE BROWSER DEMO<br>NO MODEL INFERENCE IS RUNNING</p>
+        <aside class="controls" aria-label="EEG-X interactive controls">
+          <div class="controls-title"><span class="pulse"></span><span class="mono">MODEL CONTROLS</span><button id="resetLab" type="button">Reset</button></div>
+          <label><span><b>Artifact level</b><output id="noiseValue">65%</output></span><small>Eye, muscle and line noise</small><input id="noiseLevel" type="range" min="0" max="100" value="65" step="1"></label>
+          <label><span><b>Mask ratio</b><output id="maskValue">50%</output></span><small>How much EEG the student must predict</small><input id="maskRatio" type="range" min="10" max="80" value="50" step="5"></label>
+          <button id="resampleButton" class="button primary full" type="button">↻ New EEG sample</button>
+          <p class="disclaimer mono">ILLUSTRATIVE DEMO · NO MODEL INFERENCE</p>
         </aside>
-        <div class="lab-stage">
-          <div class="stage-top"><div><span class="mono stage-label">SELECTED ELECTRODE</span><strong id="selectedChannel">F4</strong></div><div class="stage-stat"><span class="mono">VISIBLE TOKENS</span><strong id="visibleTokens">16 / 32</strong></div><div class="stage-stat"><span class="mono">LAYOUT</span><strong id="layoutStatus">14 → universal map</strong></div></div>
-          <div class="signal-stack">
-            <div class="signal-row"><div class="signal-name"><span class="signal-swatch raw"></span><b>Raw input</b><small>what the headset records</small></div><canvas id="rawCanvas" aria-label="Simulated noisy raw EEG signal"></canvas></div>
-            <div class="signal-row"><div class="signal-name"><span class="signal-swatch target"></span><b>Clean target</b><small>artifact-removed supervision</small></div><canvas id="targetCanvas" aria-label="Illustrative clean EEG target"></canvas></div>
-            <div class="signal-row"><div class="signal-name"><span class="signal-swatch recon"></span><b>Reconstruction</b><small>student + predictor + decoder</small></div><canvas id="reconCanvas" aria-label="Illustrative EEG reconstruction"></canvas></div>
-          </div>
-          <div class="stage-bottom">
-            <div class="scalp-panel"><div class="panel-title"><span class="mono">LOCATION MAP</span><small>click an electrode</small></div><svg id="scalpMap" viewBox="0 0 300 300" role="img" aria-label="Interactive EEG electrode scalp map"><defs><radialGradient id="headGlow"><stop offset="0" stop-color="#1b2730"/><stop offset="1" stop-color="#101316"/></radialGradient></defs><path class="ear" d="M47 126c-16 0-22 14-18 31 3 13 12 22 24 20"/><path class="ear" d="M253 126c16 0 22 14 18 31-3 13-12 22-24 20"/><circle class="head" cx="150" cy="150" r="102"/><path class="nose" d="M137 51l13-21 13 21"/><g id="electrodes"></g></svg></div>
-            <div class="token-panel"><div class="panel-title"><span class="mono">TOKEN VIEW</span><small id="tokenCaption">50% hidden</small></div><div id="tokenGrid" class="token-grid" aria-label="Visible and masked EEG tokens"></div><div class="legend mono"><span><i class="visible"></i>VISIBLE</span><span><i class="masked"></i>MASKED</span><span><i class="predicted"></i>PREDICTED</span></div></div>
-          </div>
+        <div class="signal-stage">
+          <div class="stage-head"><div><span class="mono">EXAMPLE CHANNEL</span><strong id="selectedChannel">F4</strong></div><div><span class="mono">VISIBLE TOKENS</span><strong id="visibleTokens">16 / 32</strong></div><div><span class="mono">CLEAN TARGET</span><strong>fixed</strong></div></div>
+          <div class="signal-card"><canvas id="signalCanvas" aria-label="Noisy EEG and fixed clean target controlled by artifact level"></canvas><div class="legend mono"><span><i class="noisy"></i>NOISY INPUT</span><span><i class="clean"></i>CLEAN TARGET</span></div></div>
+          <div class="token-card"><div class="token-head"><span class="mono">MASKED VIEW</span><strong id="tokenCaption">50% hidden</strong></div><div id="tokenGrid" class="token-grid" aria-label="Visible and masked EEG tokens"></div></div>
         </div>
       </div>
     </section>
-    <section id="method" class="method section shell">
-      <div class="section-head split reveal"><div><p class="section-kicker mono">02 / HOW IT WORKS</p><h2>Four steps.<br><em>One shared space.</em></h2></div><p class="section-intro">Tap a step to change the diagram.</p></div>
-      <div class="pipeline reveal">
-        <div class="pipeline-tabs" role="tablist" aria-label="EEG-X method stages"><button class="pipeline-tab active" data-stage="tokenizer" role="tab" aria-selected="true"><span>01</span>Location tokenizer</button><button class="pipeline-tab" data-stage="latent" role="tab" aria-selected="false"><span>02</span>Latent prediction</button><button class="pipeline-tab" data-stage="raw" role="tab" aria-selected="false"><span>03</span>Clean reconstruction</button><button class="pipeline-tab" data-stage="downstream" role="tab" aria-selected="false"><span>04</span>Downstream tasks</button></div>
-        <div class="pipeline-canvas">
-          <div class="pipeline-copy"><p class="mono" id="pipelineEyebrow">DEVICE VARIABILITY</p><h3 id="pipelineTitle">Position, not device identity</h3><p id="pipelineText">Scalp coordinates align channels across headsets.</p><div class="takeaway"><span>WHY</span><p id="pipelineTakeaway">New layouts enter the same representation space.</p></div></div>
-          <div id="pipelineVisual" class="pipeline-visual" data-stage="tokenizer" aria-hidden="true"><div class="flow-node input-node"><span>EEG</span><small>variable layout</small></div><div class="flow-line line-one"><i></i><i></i><i></i></div><div class="flow-node core-node"><span>X</span><small>EEG-X</small></div><div class="flow-line line-two"><i></i><i></i><i></i></div><div class="flow-node output-node"><span>z</span><small>shared space</small></div><div class="floating-tag tag-a">F4 · (u,v)</div><div class="floating-tag tag-b">P7 · (u,v)</div><div class="floating-tag tag-c">Cz · (u,v)</div></div>
+
+    <section id="space" class="section spatial-section">
+      <div class="shell">
+        <div class="section-head split reveal"><div><p class="kicker mono">02 / LOCATION EMBEDDING</p><h2>Different headsets.<br><em>One scalp space.</em></h2></div><p>Choose a headset, then click one electrode.</p></div>
+        <div class="montage-control reveal" aria-label="Headset layout controls"><div><span class="mono">INPUT HEADSET</span><strong id="montageValue">EPOC X · 14 ch</strong></div><div id="channelSelect" class="montage-buttons" role="group" aria-label="Input headset"><button type="button" data-channels="8"><b>8</b><small>SSVEP</small></button><button type="button" data-channels="14" class="active"><b>14</b><small>EPOC X</small></button><button type="button" data-channels="19"><b>19</b><small>TUH</small></button><button type="button" data-channels="22"><b>22</b><small>BCI IV 2a</small></button></div></div>
+        <div class="mapping reveal">
+          <div class="scalp-card"><div class="panel-head"><span class="mono">INPUT LAYOUT</span><strong id="layoutTitle">EPOC X · 14 channels</strong></div><svg id="inputScalp" viewBox="0 0 300 300" role="img" aria-label="Interactive input EEG montage"><path class="ear" d="M47 126c-16 0-22 14-18 31 3 13 12 22 24 20"/><path class="ear" d="M253 126c16 0 22 14 18 31-3 13-12 22-24 20"/><circle class="head" cx="150" cy="150" r="102"/><path class="nose" d="M137 51l13-21 13 21"/><g id="electrodes"></g></svg><p class="map-tip mono">CLICK AN ELECTRODE</p></div>
+          <div class="map-arrow"><span>→</span><small class="mono">LOCATION<br>EMBEDDING</small></div>
+          <div class="scalp-card"><div class="panel-head"><span class="mono">SIMULATED SIMILARITY</span><strong id="targetTitle">F4 neighbors</strong></div><svg id="universalScalp" viewBox="0 0 300 300" role="img" aria-label="Illustrative similarity in the universal scalp space"><path class="ear" d="M47 126c-16 0-22 14-18 31 3 13 12 22 24 20"/><path class="ear" d="M253 126c16 0 22 14 18 31-3 13-12 22-24 20"/><circle class="head" cx="150" cy="150" r="102"/><path class="nose" d="M137 51l13-21 13 21"/><g id="universalPoints"></g></svg><div class="similarity-key mono"><span>FAR</span><i></i><span>NEAR</span></div></div>
+        </div>
+        <p class="mapping-note mono">ILLUSTRATIVE COORDINATE-DISTANCE PROXY · NOT CHECKPOINT WEIGHTS · THE PAPER USES A 348-POSITION STANDARD MESH.</p>
+      </div>
+    </section>
+
+    <section id="method" class="method-section section">
+      <div class="shell">
+        <div class="section-head split reveal"><div><p class="kicker mono">03 / THE MODEL</p><h2>Four ideas.<br><em>One training path.</em></h2></div><p>Tap a step.</p></div>
+        <div class="method reveal">
+          <div class="method-tabs" role="tablist" aria-label="EEG-X method stages"><button class="active" data-stage="token" role="tab" aria-selected="true"><span>01</span>Tokenize</button><button data-stage="latent" role="tab" aria-selected="false"><span>02</span>Predict</button><button data-stage="clean" role="tab" aria-selected="false"><span>03</span>Clean target</button><button data-stage="transfer" role="tab" aria-selected="false"><span>04</span>Transfer</button></div>
+          <div class="method-copy"><p id="methodEyebrow" class="mono">LOCATION + SIGNAL</p><h3 id="methodTitle">Turn EEG into positioned tokens</h3><p id="methodText">Each patch carries signal and scalp location.</p><div class="why"><span class="mono">WHY</span><strong id="methodWhy">The model can read a new headset.</strong></div></div>
+          <div id="methodVisual" class="method-visual" data-stage="token" aria-label="Animated EEG-X method diagram"><div class="method-node input"><b id="nodeA">EEG</b><small id="smallA">many layouts</small></div><div class="method-flow first"><i></i><i></i><i></i></div><div class="method-node core"><b id="nodeB">X</b><small id="smallB">tokens</small></div><div class="method-flow second"><i></i><i></i><i></i></div><div class="method-node output"><b id="nodeC">z</b><small id="smallC">shared space</small></div><span id="methodTag" class="method-tag mono">(u,v) + STFT</span></div>
         </div>
       </div>
     </section>
-    <section class="dict-section section"><div class="shell dict-shell">
-      <div class="dict-copy reveal"><p class="section-kicker mono">DiCT LOSS</p><h2>Compare shape,<br><em>not only samples.</em></h2><p>Switch the reconstruction error case.</p><div class="scenario-picker" role="group" aria-label="Reconstruction scenario"><button type="button" class="active" data-scenario="low">Low-frequency only</button><button type="button" data-scenario="mixed">Mixed frequencies</button><button type="button" data-scenario="phase">Phase shifted</button></div><p class="source-note mono">PAPER · TABLE 6</p></div>
-      <div class="dict-demo reveal"><canvas id="dictCanvas" aria-label="Comparison of target and reconstructed synthetic signals"></canvas><div class="loss-cards"><div><span>DIRECT MSE</span><strong id="directMse">0.58</strong><small>point-by-point</small></div><div class="accent"><span>DiCT MSE</span><strong id="dictMse">9.26</strong><small>structured space</small></div></div><p id="dictExplanation">Direct MSE looks small because the large slow wave dominates, even though faster components are missing.</p></div>
-    </div></section>
-    <section id="results" class="results section shell">
-      <div class="section-head split reveal"><div><p class="section-kicker mono">03 / RESULTS</p><h2>Pretrain once.<br><em>Transfer widely.</em></h2></div><p class="section-intro">Choose a new headset and compare frozen representations.</p></div>
-      <div class="results-panel reveal"><div class="dataset-tabs" role="tablist" aria-label="Cross-domain datasets"><button class="active" data-dataset="crowd" role="tab" aria-selected="true"><b>Crowdsourced</b><span>14 channels · eyes open/closed</span></button><button data-dataset="bci" role="tab" aria-selected="false"><b>BCICIV-2a</b><span>22 channels · motor imagery</span></button><button data-dataset="ssvep" role="tab" aria-selected="false"><b>SSVEP</b><span>8 channels · visual potentials</span></button></div><div class="chart-wrap"><div class="chart-head"><span class="mono">MODEL</span><span class="mono">ACCURACY (%)</span></div><div id="barChart" class="bar-chart"></div><p class="chart-note" id="chartNote">EEG-X transfers from a clinical 19-channel montage to a consumer 14-channel headset.</p></div><div class="result-callout"><span class="mono">EEG-X</span><strong id="resultValue">86.89</strong><p id="resultDelta">+7.34 points over the strongest baseline</p><small>Frozen tokenizer + encoder<br>Logistic regression probe</small></div></div>
+
+    <section class="dict-section section">
+      <div class="shell dict-grid">
+        <div class="dict-copy reveal"><p class="kicker mono">04 / DiCT LOSS</p><h2>Compare shape.<br><em>Not just samples.</em></h2><div class="scenario-picker" role="group" aria-label="Reconstruction case"><button class="active" data-scenario="low">Slow wave only</button><button data-scenario="mixed">Mixed frequencies</button><button data-scenario="phase">Phase shifted</button></div><p class="paper-note mono">REPORTED VALUES · PAPER TABLE 6</p></div>
+        <div class="dict-demo reveal"><canvas id="dictCanvas" aria-label="Target and reconstructed synthetic EEG signals"></canvas><div class="loss-cards"><div><span>DIRECT MSE</span><strong id="directMse">0.58</strong></div><div class="accent"><span>DiCT MSE</span><strong id="dictMse">9.26</strong></div></div><p id="dictExplanation">Direct MSE misses the lost fast patterns.</p></div>
+      </div>
     </section>
-    <section class="use-section section"><div class="shell use-grid"><div class="use-copy reveal"><p class="section-kicker mono">EXPLORE</p><h2>Paper, code,<br><em>and checkpoints.</em></h2><div class="resource-list"><a href="https://arxiv.org/abs/2511.08861" target="_blank" rel="noreferrer"><span>01</span><b>Paper</b><i>arXiv ↗</i></a><a href="https://github.com/Emotiv/EEG-X" target="_blank" rel="noreferrer"><span>02</span><b>Code</b><i>GitHub ↗</i></a><a href="https://github.com/Emotiv/EEG-X/tree/main/Checkpoints" target="_blank" rel="noreferrer"><span>03</span><b>Checkpoints</b><i>Weights ↗</i></a></div></div></div></section>
-    <section class="citation shell reveal"><span class="mono">CITE EEG-X</span><p>Mohammadi Foumani, N., Ghane, S., Nguyen, N., Salehi, M., Webb, G. I., &amp; Mackellar, G. (2025). <em>EEG-X: Device-Agnostic and Noise-Robust Foundation Model for EEG.</em></p><button id="copyCitation" type="button">Copy BibTeX</button></section>
+
+    <section id="results" class="section shell">
+      <div class="section-head split reveal"><div><p class="kicker mono">05 / CROSS-DEVICE RESULTS</p><h2>Pretrain once.<br><em>Transfer to new headsets.</em></h2></div><p>Frozen EEG-X features with a linear probe.</p></div>
+      <div class="results reveal"><div class="dataset-tabs" role="tablist" aria-label="Cross-domain datasets"><button class="active" data-dataset="crowd" role="tab" aria-selected="true"><b>Crowdsourced</b><small>14 ch · eye state</small></button><button data-dataset="bci" role="tab" aria-selected="false"><b>BCI IV 2a</b><small>22 ch · motor imagery</small></button><button data-dataset="ssvep" role="tab" aria-selected="false"><b>SSVEP</b><small>8 ch · visual response</small></button></div><div class="chart"><div class="chart-head mono"><span>MODEL</span><span id="metricLabel">ACCURACY (%)</span></div><div id="barChart"></div><p id="chartNote">TUAB pretraining → a different 14-channel headset.</p></div><div class="score"><span class="mono">EEG-X</span><strong id="resultValue">86.89</strong><p id="resultDelta">+7.34 points</p><small>mean over five runs</small></div></div>
+    </section>
+
+    <section id="cite" class="resources section"><div class="shell resources-grid"><div class="reveal"><p class="kicker mono">EXPLORE</p><h2>Paper.<br><em>Code. Weights.</em></h2></div><div class="resource-list reveal"><a href="https://arxiv.org/abs/2511.08861" target="_blank" rel="noreferrer"><span>01</span><b>Paper</b><i>arXiv ↗</i></a><a href="https://github.com/Emotiv/EEG-X" target="_blank" rel="noreferrer"><span>02</span><b>Code</b><i>GitHub ↗</i></a><a href="https://github.com/Emotiv/EEG-X/tree/main/Checkpoints" target="_blank" rel="noreferrer"><span>03</span><b>Checkpoints</b><i>Weights ↗</i></a></div></div></section>
+    <section class="citation shell"><span class="mono">CITE EEG-X</span><p>Mohammadi Foumani, N., Ghane, S., Nguyen, N., Salehi, M., Webb, G. I., &amp; Mackellar, G. (2025). <em>EEG-X: Device-Agnostic and Noise-Robust Foundation Model for EEG.</em></p><button id="copyCitation" type="button">Copy BibTeX</button></section>
   </main>
-  <footer class="footer shell"><a class="brand" href="#top"><span class="brand-mark">X</span><span>EEG-X</span></a><p>Interactive explainer based on the EEG-X paper and official code.</p><div><a href="https://arxiv.org/abs/2511.08861" target="_blank" rel="noreferrer">Paper</a><a href="https://github.com/Emotiv/EEG-X" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
-  <script src="app.js?v=6" defer></script>
+
+  <footer class="footer shell"><a class="brand" href="#top"><span>X</span>EEG-X</a><p>Interactive explanation based on the paper and official code.</p><div><a href="https://arxiv.org/abs/2511.08861" target="_blank" rel="noreferrer">Paper</a><a href="https://github.com/Emotiv/EEG-X" target="_blank" rel="noreferrer">Code</a><a href="#top">Top ↑</a></div></footer>
+  <script src="app.js?v=7" defer></script>
 </body>
 </html>
