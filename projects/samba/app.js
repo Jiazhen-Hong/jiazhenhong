@@ -35,7 +35,7 @@
   drawHero();
 
   const state = { seq: 30, mask: 50, heads: 8, channels: 14, seed: 3, selected: 0 };
-  const montageByChannels = { 2: 'mn8', 14: 'epocx', 64: 'physionet64', 128: 'grosse128', 256: 'standard256' };
+  const montageByChannels = { 2: 'mn8', 14: 'epocx', 32: 'standard32', 64: 'physionet64', 128: 'grosse128', 256: 'standard256' };
   const montages = window.SAMBA_MONTAGES || {};
   function currentMontage() { return montages[montageByChannels[state.channels]]; }
   function rand(i) { const x = Math.sin((i + state.seed * 31) * 12.9898) * 43758.5453; return x - Math.floor(x); }
@@ -122,7 +122,7 @@
   const benchmark = {
     sampleRate: 128,
     measuredMax: 2000,
-    maxSteps: 300 * 128,
+    maxSteps: 600 * 128,
     memory: { points: [[200, 207.20], [2000, 1437.54]], unit: 'MB', decimals: 0 },
     inference: { points: [[200, .28], [2000, .38]], unit: 'ms', decimals: 2 }
   };
@@ -156,7 +156,7 @@
     }
 
     ctx.textAlign = 'center';
-    [0, 60, 120, 180, 240, 300].forEach((seconds) => {
+    [0, 120, 240, 360, 480, 600].forEach((seconds) => {
       const xx = x(seconds * benchmark.sampleRate);
       ctx.fillStyle = '#617b81'; ctx.fillText(`${seconds}s`, xx, h - 8);
     });
@@ -168,7 +168,7 @@
     ctx.beginPath(); ctx.moveTo(boundaryX, pad.top); ctx.lineTo(boundaryX, pad.top + plotH); ctx.stroke();
     ctx.restore();
     ctx.fillStyle = '#ffc17f'; ctx.font = '7px DM Mono, monospace'; ctx.textAlign = 'left';
-    ctx.fillText('VALIDATED TO 2,000', Math.min(boundaryX + 5, w - 105), pad.top + 9);
+    ctx.fillText('REPORTED TO 2,000', Math.min(boundaryX + 5, w - 105), pad.top + 9);
 
     const start = series.points[0], end = series.points[1];
     ctx.strokeStyle = '#55c7d4'; ctx.lineWidth = 2;
@@ -201,7 +201,7 @@
     status.classList.toggle('estimated', estimated);
     status.classList.toggle('measured', !estimated);
     status.querySelector('span').textContent = estimated ? 'ESTIMATED' : 'MEASURED RANGE';
-    status.querySelector('small').textContent = estimated ? 'Beyond 2,000 measured steps' : 'Interpolated between paper measurements';
+    status.querySelector('small').textContent = estimated ? 'Beyond reported resource points' : 'Interpolated between reported resource points';
     drawResourceChart($('#memoryChart'), benchmark.memory, steps);
     drawResourceChart($('#inferenceChart'), benchmark.inference, steps);
   }
@@ -220,7 +220,7 @@
 
   const method = {
     tsr: ['SELF-SUPERVISION','Hide meaningful spans','Mask contiguous EEG, then reconstruct it from context.','Learn beyond local interpolation.',['masked EEG','semantic spans','reconstruction']],
-    cdse: ['SPATIAL MAPPING','Map layouts by coordinates','Relative 3D positions produce a soft montage projection.','Transfer across headsets.',['input montage','Δ(x,y,z)','target montage']],
+    cdse: ['SPATIAL MAPPING','Learn a map between layouts','Pairwise 3D coordinate differences pass through an MLP and softmax to form W.','Project input EEG into a shared target montage.',['input montage','Δ(x,y,z)','target montage']],
     mamba: ['LONG CONTEXT','Subtract shared responses','Paired Mamba branches remove redundant temporal responses.','Keep distinctive dynamics.',['head A','difference Δ','head B']],
     decoder: ['RECONSTRUCTION','Compress and rebuild','A U-shaped decoder restores masked EEG across scales.','Mix global and local context.',['encoder','mediator','decoder']]
   };
@@ -235,6 +235,28 @@
 
   function projectPoint(point) {
     return { x: 150 + point.x / .105 * 102, y: 150 - point.y / .12 * 100 };
+  }
+
+  const methodHeadOutline = '<path d="M48 135c-18 0-22 15-18 31 3 13 12 21 23 19M252 135c18 0 22 15 18 31-3 13-12 21-23 19M137 49l13-21 13 21" fill="none" stroke="#9c7773" stroke-width="2"/><circle cx="150" cy="150" r="105" fill="#f3ebe9" stroke="#9c7773" stroke-width="2"/>';
+
+  function renderMethodTopo(svg, montage, fill) {
+    if (!svg || !montage) return;
+    svg.innerHTML = methodHeadOutline;
+    const radius = montage.points.length <= 14 ? 6.5 : montage.points.length <= 64 ? 4.1 : montage.points.length <= 128 ? 3 : 2.1;
+    montage.points.forEach((point) => {
+      const projected = projectPoint(point), circle = document.createElementNS(svgNS, 'circle');
+      circle.setAttribute('cx', projected.x); circle.setAttribute('cy', projected.y); circle.setAttribute('r', radius);
+      circle.setAttribute('fill', fill); circle.setAttribute('opacity', '.82');
+      circle.setAttribute('stroke', '#f7f1ef'); circle.setAttribute('stroke-width', '.55');
+      svg.appendChild(circle);
+    });
+  }
+
+  function renderMethodCdse(montage, target) {
+    renderMethodTopo($('#methodInputTopo'), montage, '#3f9daa');
+    renderMethodTopo($('#methodTargetTopo'), target, '#e35e51');
+    $('#methodInputLabel').textContent = `${montage.label} · ${montage.channels} ch`;
+    $('#methodTargetLabel').textContent = `${target.label} · ${target.channels} ch`;
   }
 
   function electrodeRadius(count) {
@@ -348,7 +370,7 @@
     if (!montage || !target) return;
     state.selected = Math.min(state.selected, montage.points.length - 1);
     const selected = montage.points[state.selected], weights = relativeWeights(proxyWeights(montage.points, target.points));
-    renderInputScalp($('#inputScalp'), montage); renderTargetScalp($('#targetScalp'), target, weights, selected.name); renderProjectionBars(weights);
+    renderInputScalp($('#inputScalp'), montage); renderTargetScalp($('#targetScalp'), target, weights, selected.name); renderProjectionBars(weights); renderMethodCdse(montage, target);
     $('#inputMapTitle').textContent = `${montage.label} · ${montage.channels} channels${montage.schematic ? ' · schematic' : ''}`;
     $('#selectedChannel').textContent = selected.name;
     const strongest = [...weights].sort((a, b) => b.value - a.value)[0];

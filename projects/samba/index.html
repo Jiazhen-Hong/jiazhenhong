@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -41,7 +41,7 @@
           <div class="hero-label label-left mono">LONG EEG</div><div class="hero-label label-right mono">REPRESENTATION</div>
         </div>
       </div>
-      <div class="hero-stats reveal"><div><strong>O(n)</strong><span>sequence scaling</span></div><div><strong>13</strong><span>EEG datasets</span></div><div><strong>3D</strong><span>montage mapping</span></div></div>
+      <div class="hero-stats reveal"><div><strong>O(n)</strong><span>linear computational complexity</span></div><div><strong>3D</strong><span>montage-agnostic spatial learning</span></div><div><strong>TSR + DM</strong><span>representation learning and denoising</span></div></div>
     </section>
 
     <section id="play" class="section shell">
@@ -49,10 +49,10 @@
       <div class="playground reveal">
         <aside class="controls">
           <div class="controls-title"><span class="pulse"></span><span class="mono">MODEL CONTROLS</span><button id="reset" type="button">Reset</button></div>
-          <label class="sequence-control"><span><b>Sequence length</b><output id="seqValue">30 s</output></span><small>Longer context; estimates continue after 2,000 steps</small><div class="range-shell"><input id="seq" type="range" min="5" max="300" step="5" value="30"><i class="measured-marker" aria-hidden="true"><span>2k measured</span></i></div><div class="range-zones mono"><span>MEASURED</span><span>ESTIMATED →</span></div></label>
+          <label class="sequence-control"><span><b>Sequence length</b><output id="seqValue">30 s</output></span><small>Experimentally tested to 120 s; extrapolated after.</small><div class="range-shell"><input id="seq" type="range" min="5" max="600" step="5" value="30"><i class="experiment-marker" aria-hidden="true"><span>120 s tested</span></i></div><div class="range-zones mono"><span>TESTED</span><span>EXTRAPOLATED →</span></div></label>
           <label><span><b>TSR mask ratio</b><output id="maskValue">50%</output></span><small>Semantic segments hidden before reconstruction</small><input id="mask" type="range" min="10" max="80" step="5" value="50"></label>
           <label><span><b>Differential heads</b><output id="headValue">8</output></span><small>Parallel Mamba heads used to suppress redundancy</small><input id="heads" type="range" min="2" max="8" step="2" value="8"></label>
-          <div class="choice"><span><b>Input montage</b><output id="montageValue">EPOC X · 14 ch</output></span><small>Real layouts from the SAMBA montage tables</small><div id="montageButtons" class="segments montage-segments"><button data-ch="2"><b>2</b><small>MN8</small></button><button data-ch="14" class="active"><b>14</b><small>EPOC X</small></button><button data-ch="64"><b>64</b><small>PhysioNet</small></button><button data-ch="128"><b>128</b><small>Grosse</small></button><button data-ch="256"><b>256</b><small>10–5</small></button></div></div>
+          <div class="choice"><span><b>Input montage</b><output id="montageValue">EPOC X · 14 ch</output></span><small>Layouts use coordinates from the SAMBA montage tables</small><div id="montageButtons" class="segments montage-segments"><button data-ch="2"><b>2</b><small>MN8</small></button><button data-ch="14" class="active"><b>14</b><small>EPOC X</small></button><button data-ch="32"><b>32</b><small>10–20</small></button><button data-ch="64"><b>64</b><small>PhysioNet</small></button><button data-ch="128"><b>128</b><small>Grosse</small></button><button data-ch="256"><b>256</b><small>10–5</small></button></div></div>
           <button id="resample" type="button" class="button primary full">↻ Resample TSR mask</button>
           <p class="disclaimer mono">ILLUSTRATIVE DEMO · NO TRAINED WEIGHTS</p>
         </aside>
@@ -81,7 +81,7 @@
           <div class="resource-model">
             <div class="resource-head">
               <div><span class="mono">RESOURCE TREND</span><h3>Measured → estimated</h3></div>
-              <div id="estimateStatus" class="estimate-status estimated"><i></i><span>ESTIMATED</span><small>Beyond 2,000 measured steps</small></div>
+              <div id="estimateStatus" class="estimate-status estimated"><i></i><span>ESTIMATED</span><small>Beyond reported resource points</small></div>
             </div>
             <div class="resource-grid">
               <article class="metric-card">
@@ -98,7 +98,7 @@
             <div class="benchmark-legend mono">
               <span><i class="measured-line"></i>FIT WITHIN MEASURED RANGE</span>
               <span><i class="estimated-line"></i>CODE-INFORMED EXTRAPOLATION</span>
-              <span><i class="boundary-line"></i>2,000-STEP VALIDATION LIMIT</span>
+              <span><i class="boundary-line"></i>LAST REPORTED RESOURCE POINT</span>
             </div>
             <p class="benchmark-note">Solid = reported measurements. Dashed = affine extrapolation from the <a href="https://arxiv.org/abs/2511.18571" target="_blank" rel="noreferrer">paper</a>; not a new benchmark.</p>
           </div>
@@ -113,7 +113,14 @@
           <div class="method-tabs" role="tablist"><button class="active" data-step="tsr"><span>01</span>TSR masking</button><button data-step="cdse"><span>02</span>CDSE</button><button data-step="mamba"><span>03</span>Differential Mamba</button><button data-step="decoder"><span>04</span>U-shaped decoder</button></div>
           <div class="method-content">
             <div class="method-copy"><p id="methodKicker" class="mono">SELF-SUPERVISION</p><h3 id="methodTitle">Hide meaningful spans</h3><p id="methodText">Mask contiguous EEG segments, then reconstruct them from context.</p><div class="method-note"><span>WHY</span><p id="methodNote">Learn beyond local interpolation.</p></div></div>
-            <div class="method-visual" id="methodVisual" data-step="tsr"><div class="tower left"><i></i><i></i><i></i><i></i></div><div class="bridge"><span>Δ</span><b>MAMBA</b></div><div class="tower right"><i></i><i></i><i></i><i></i></div><div class="flow"></div><span class="tag tag1">masked EEG</span><span class="tag tag2">3D coordinates</span><span class="tag tag3">reconstruction</span></div>
+            <div class="method-visual" id="methodVisual" data-step="tsr">
+              <div class="generic-method-visual"><div class="tower left"><i></i><i></i><i></i><i></i></div><div class="bridge"><span>Δ</span><b>MAMBA</b></div><div class="tower right"><i></i><i></i><i></i><i></i></div><div class="flow"></div><span class="tag tag1">masked EEG</span><span class="tag tag2">3D coordinates</span><span class="tag tag3">reconstruction</span></div>
+              <div class="cdse-method-visual" aria-label="CDSE coordinate-driven spatial mapping">
+                <div class="mini-topomap"><span class="mono" id="methodInputLabel">EPOC X · 14 ch</span><svg id="methodInputTopo" viewBox="0 0 300 300" role="img" aria-label="CDSE input montage"></svg></div>
+                <div class="cdse-operator"><span class="mono">PAIRWISE 3D DIFFERENCE</span><strong>Δ(x, y, z)</strong><b>MLP → softmax over input channels</b><i></i><small class="mono">X<sub>target</sub> = W X<sub>input</sub></small></div>
+                <div class="mini-topomap target"><span class="mono" id="methodTargetLabel">PhysioNet · 64 ch</span><svg id="methodTargetTopo" viewBox="0 0 300 300" role="img" aria-label="CDSE target montage"></svg></div>
+              </div>
+            </div>
           </div>
         </div>
         <a class="source-strip reveal" href="https://github.com/Jiazhen-Hong/SAMBA/blob/main/Models/SAMBA.py" target="_blank" rel="noreferrer"><span class="mono">FULL MODEL</span><strong>Open the architecture source</strong><i>↗</i></a>
@@ -148,6 +155,7 @@
   </main>
   <footer class="footer shell"><a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a><p>Accepted to the NeurReps 2026 Proceedings Track at NeurIPS 2026.</p><div><a href="../">Projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
   <script src="montages.js?v=3" defer></script>
-  <script src="app.js?v=7" defer></script>
+  <script src="montage32.js?v=1" defer></script>
+  <script src="app.js?v=8" defer></script>
 </body>
 </html>
