@@ -22,6 +22,36 @@
 
 @media(max-width:700px){.mapping-overlay{display:none}.montage-segments{grid-template-columns:repeat(5,1fr)}.map-title strong{font-size:16px}.target-map{padding-bottom:28px}}
 
+.diff-lab{padding:27px;border-bottom:1px solid var(--line);background:#071920}
+.diff-head{display:flex;justify-content:space-between;gap:25px;align-items:end;margin-bottom:21px}
+.diff-head>div:first-child>span{font-size:7px;color:var(--cyan)}
+.diff-head h3{font:300 25px var(--serif);margin:7px 0 0}
+.diff-readout{text-align:right}
+.diff-readout span{display:block;font-size:7px;color:var(--cyan)}
+.diff-readout strong{display:block;font:400 11px var(--mono);margin-top:5px;color:#dce8e6}
+.diff-grid{display:grid;grid-template-columns:minmax(260px,.8fr) 1.2fr;gap:18px;align-items:stretch}
+.diff-grid>div{min-width:0;border:1px solid var(--line);background:#06161d}
+.diff-heads{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:13px}
+.diff-head-card{min-width:0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 6px;padding:7px;border:1px solid #1b3b45;background:#0a2029}
+.diff-head-card>span{font-size:6px;color:#6e8a90}
+.diff-head-card>div{display:flex;gap:3px}
+.diff-head-card i{width:15px;height:15px;display:grid;place-items:center;border:1px solid #31616a;border-radius:50%;font:normal 6px var(--mono);color:var(--cyan)}
+.diff-head-card i+i{border-color:#7d483e;color:var(--coral)}
+.diff-head-card b{font:6px var(--mono);color:#7b9499}
+.diff-head-card strong{font:300 16px var(--serif);color:#eef5f3}
+.diff-equation{margin:0;padding:11px 13px;border-top:1px solid var(--line);font-size:7px;color:#668187;text-align:center}
+.diff-signal{padding:10px 12px}
+.diff-signal canvas{display:block;width:100%;height:174px}
+.diff-legend{display:flex;flex-wrap:wrap;gap:11px;color:#698188;font-size:6px}
+.diff-legend span{display:flex;align-items:center;gap:5px}
+.diff-legend i{display:inline-block;width:13px;border-top:2px solid var(--cyan)}
+.diff-legend .branch-two{border-color:var(--coral)}
+.diff-legend .diff-output{border-color:#edf4f2}
+.diff-note{margin:14px 0 0;color:#607b81;font-size:8px}
+
+@media(max-width:900px){.diff-grid{grid-template-columns:1fr}.diff-heads{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:700px){.diff-lab{padding:20px}.diff-head{align-items:flex-start;flex-direction:column}.diff-readout{text-align:left}.diff-heads{grid-template-columns:repeat(2,1fr)}.diff-signal canvas{height:160px}}
+
 .resource-model{border-top:1px solid var(--line);padding:27px}.resource-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;margin-bottom:22px}.resource-head>div:first-child>span{font-size:7px;color:#618089}.resource-head h3{font:300 25px var(--serif);margin:7px 0 0}.estimate-status{display:grid;grid-template-columns:8px auto;column-gap:8px;align-items:center;min-width:210px;padding:10px 12px;border:1px solid var(--line);background:#071920}.estimate-status i{width:7px;height:7px;border-radius:50%;grid-row:1/3;background:var(--coral);box-shadow:0 0 9px #ff745c88}.estimate-status span{font:8px var(--mono);color:var(--coral)}.estimate-status small{font-size:8px;color:#6f898f}.estimate-status.measured i{background:var(--cyan);box-shadow:0 0 9px #61d5dd88}.estimate-status.measured span{color:var(--cyan)}.resource-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.metric-card{min-width:0;margin:0;padding:16px;border:1px solid var(--line);background:#071920}.metric-title{display:flex;justify-content:space-between;gap:15px;align-items:baseline}.metric-title span{font-size:9px;color:#83999d}.metric-title strong{font:400 18px var(--mono);color:var(--ink)}.metric-card canvas{display:block;width:100%;height:190px;margin:12px 0 4px}.metric-card p{margin:7px 0 0;color:#617b81;font-size:8px}.metric-card p b{color:#9cb0b2}.benchmark-legend{display:flex;flex-wrap:wrap;gap:18px;margin:17px 0 10px;color:#728a8f;font-size:7px}.benchmark-legend span{display:flex;align-items:center;gap:7px}.benchmark-legend i{display:inline-block;width:25px;height:0;border-top:2px solid var(--cyan)}.benchmark-legend .estimated-line{border-top:2px dashed var(--coral)}.benchmark-legend .boundary-line{width:0;height:13px;border-top:0;border-left:1px dashed var(--coral)}.benchmark-note{margin:0;color:#607b81;font-size:8px;line-height:1.7}.benchmark-note a{color:var(--cyan);text-decoration:underline;text-underline-offset:2px}
 
 @media(max-width:900px){.resource-grid{grid-template-columns:1fr}.metric-card canvas{height:210px}}

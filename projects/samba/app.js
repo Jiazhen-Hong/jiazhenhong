@@ -70,6 +70,45 @@
     masked.forEach((i) => { const x = i * w / blocks, bw = w / blocks + .5; ctx.fillStyle = '#20373ee8'; ctx.fillRect(x, 19, bw, panelH - 25); ctx.strokeStyle = '#55747d'; ctx.setLineDash([3, 3]); ctx.strokeRect(x, 19, bw, panelH - 25); ctx.setLineDash([]); });
   }
 
+  function drawDifferentialSignal() {
+    const canvas = $('#diffCanvas'), { ctx, w, h } = canvasContext(canvas); ctx.clearRect(0, 0, w, h);
+    const rows = [h * .2, h * .5, h * .8], labels = ['x₁', 'λx₂', 'x₁ − λx₂'];
+    const residual = .58 / Math.sqrt(state.heads / 2);
+    ctx.font = '8px DM Mono, monospace'; ctx.lineWidth = 1;
+    rows.forEach((y, index) => {
+      ctx.strokeStyle = '#17343d'; ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(w, y); ctx.stroke();
+      ctx.fillStyle = '#69848a'; ctx.fillText(labels[index], 7, y + 3);
+    });
+    const trace = (row, color, valueAt) => {
+      ctx.beginPath();
+      for (let x = 30; x <= w; x += 1.5) {
+        const t = (x - 30) / Math.max(1, w - 30) * 18;
+        const y = rows[row] - valueAt(t) * Math.min(22, h * .105);
+        x === 30 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = color; ctx.lineWidth = row === 2 ? 1.8 : 1.1; ctx.stroke();
+    };
+    const neural = (t) => Math.sin(t * .72) * .62 + Math.sin(t * 1.9 + .6) * .22;
+    const shared = (t) => Math.sin(t * 6.1) * .34 + Math.sin(t * 10.7 + .4) * .18 + (Math.sin(t * .36) > .78 ? .32 * Math.sin(t * 14) : 0);
+    trace(0, '#61d5dd', (t) => neural(t) + shared(t));
+    trace(1, '#ff745c', (t) => shared(t) * .94 + Math.sin(t * 5.6 + 1.1) * .045);
+    trace(2, '#edf4f2', (t) => neural(t) + shared(t) * residual + Math.sin(t * (4 + state.heads * .15)) * residual * .07);
+    const residualPercent = Math.round(residual * 100);
+    $('#headPairCount').textContent = `${state.heads} PAIRED HEADS · ${state.heads * 2} MAMBA BRANCHES`;
+    $('#noiseResidual').textContent = `${residualPercent}% synthetic residual`;
+  }
+
+  function renderDifferentialHeads() {
+    const container = $('#diffHeads'); container.innerHTML = '';
+    for (let index = 0; index < state.heads; index++) {
+      const head = document.createElement('div'); head.className = 'diff-head-card';
+      head.innerHTML = `<span class="mono">H${index + 1}</span><div><i>A</i><i>B</i></div><b>− λ</b><strong>Δ</strong>`;
+      container.appendChild(head);
+    }
+  }
+
+  function updateDifferentialDemo() { renderDifferentialHeads(); drawDifferentialSignal(); }
+
   function updateGrowth() {
     const ratio = state.seq / 5, quad = ratio * ratio;
     $('#tokenCount').textContent = `${(state.seq * 128).toLocaleString()} time steps`;
@@ -168,7 +207,7 @@
   function updatePlay() {
     const montage = currentMontage();
     $('#seqValue').textContent = `${state.seq} s`; $('#maskValue').textContent = `${state.mask}%`; $('#headValue').textContent = state.heads; $('#montageValue').textContent = montage ? `${montage.label} · ${montage.channels} ch` : `${state.channels} ch`; $('#visibleValue').textContent = `${100 - state.mask}%`;
-    ['seq','mask','heads'].forEach((id) => setFill($(`#${id}`))); drawSequence(); updateGrowth(); updateResourceForecast(); renderScalps();
+    ['seq','mask','heads'].forEach((id) => setFill($(`#${id}`))); drawSequence(); updateDifferentialDemo(); updateGrowth(); updateResourceForecast(); renderScalps();
   }
   $('#seq').addEventListener('input', (e) => { state.seq = +e.target.value; updatePlay(); });
   $('#mask').addEventListener('input', (e) => { state.mask = +e.target.value; updatePlay(); });
@@ -326,6 +365,6 @@
   $('#copyCode').addEventListener('click',()=>copy($('#copyCode'),$('.code-card code').innerText,'Copy'));
   const bib=`@inproceedings{hong2026samba,\n  title={{SAMBA}: Toward an {EEG} Foundation Model via Differential Mamba and Coordinate-Driven Spatial Embedding},\n  author={Hong, Jiazhen and Mackellar, Geoffrey and Ghane, Soheila},\n  booktitle={NeurReps 2026: Symmetry and Geometry in Neural Representations},\n  year={2026},\n  note={Proceedings Track, to appear in Proceedings of Machine Learning Research}\n}`;
   $('#copyCitation').addEventListener('click',()=>copy($('#copyCitation'),bib,'Copy BibTeX'));
-  addEventListener('resize',()=>{drawSequence();updateResourceForecast();renderScalps();if(reduced)drawHero()});
+  addEventListener('resize',()=>{drawSequence();drawDifferentialSignal();updateResourceForecast();renderScalps();if(reduced)drawHero()});
   updatePlay();
 })();
