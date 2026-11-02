@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0b0d">
+  <meta name="description" content="An interactive explainer for EEG-X, a device-agnostic and noise-robust EEG foundation model.">
+  <link rel="canonical" href="https://jiazhen-hong.github.io/jiazhenhong/projects/eeg-x/">
+  <meta property="og:title" content="EEG-X · Interactive model explorer">
+  <meta property="og:description" content="Play with EEG-X masking, noise, channel layouts, and cross-domain transfer.">
+  <meta property="og:url" content="https://jiazhen-hong.github.io/jiazhenhong/projects/eeg-x/">
+  <title>EEG-X · Interactive model explorer</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <header class="site-nav shell">
+    <a class="brand" href="#top" aria-label="EEG-X home"><span class="brand-mark">X</span><span>EEG-X</span></a>
+    <nav aria-label="Main navigation"><a href="#playground">Playground</a><a href="#method">Method</a><a href="#results">Results</a></nav>
+    <div class="nav-actions"><a class="nav-cta" href="../">All projects</a><a class="nav-cta" href="https://github.com/Emotiv/EEG-X" target="_blank" rel="noreferrer">View code <span>↗</span></a></div>
+  </header>
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-meta mono reveal"><span>FOUNDATION MODEL</span><span class="meta-line"></span><span>EEG · 2025</span></div>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="overline reveal">Device-agnostic. Noise-robust.</p>
+          <h1 class="reveal"><span>EEG</span><i>-X</i></h1>
+          <p class="hero-deck reveal">One model for the messy reality of brain signals: different headsets, missing channels, and noise much larger than the signal we care about.</p>
+          <div class="hero-actions reveal"><a class="button primary" href="#playground">Play with the model <span>↓</span></a><a class="button ghost" href="https://arxiv.org/abs/2511.08861" target="_blank" rel="noreferrer">Read the paper ↗</a></div>
+        </div>
+        <div class="hero-visual reveal" aria-label="Animated EEG signal passing through EEG-X">
+          <canvas id="heroCanvas"></canvas>
+          <div class="model-orb"><span class="orb-ring ring-a"></span><span class="orb-ring ring-b"></span><span class="orb-core">X</span></div>
+          <div class="signal-label label-in mono">RAW + NOISE</div><div class="signal-label label-out mono">ROBUST FEATURES</div>
+        </div>
+      </div>
+      <div class="hero-summary reveal"><span class="summary-label mono">IN ONE SENTENCE</span><p>EEG-X learns <em>where</em> each signal comes from and reconstructs <em>clean brain activity</em>, so its representations transfer across devices and resist artifacts.</p><a href="#method" aria-label="Jump to method">01—03</a></div>
+    </section>
+    <section id="playground" class="playground section shell">
+      <div class="section-head reveal"><p class="section-kicker mono">01 / LIVE INTUITION</p><h2>Make the signal harder.<br><em>Watch EEG-X adapt.</em></h2><p class="section-intro">Adjust the inputs used by EEG-X pretraining. The visualization shows why spatial channel information and clean reconstruction targets matter.</p></div>
+      <div class="lab reveal">
+        <aside class="controls" aria-label="EEG-X playground controls">
+          <div class="control-heading"><span class="live-dot"></span><span class="mono">INTERACTIVE CONTROLS</span><button id="resetLab" class="text-button" type="button">Reset</button></div>
+          <label class="control" for="noiseLevel"><span><b>Artifact level</b><output id="noiseValue">38%</output></span><small>Eye blinks, muscle and line noise</small><input id="noiseLevel" type="range" min="0" max="100" value="38" step="1"></label>
+          <label class="control" for="maskRatio"><span><b>Mask ratio</b><output id="maskValue">50%</output></span><small>Fraction of EEG tokens hidden from the student</small><input id="maskRatio" type="range" min="10" max="80" value="50" step="5"></label>
+          <label class="control" for="patchSize"><span><b>Patch size</b><output id="patchValue">128 samples</output></span><small>Signal window used to create one token</small><input id="patchSize" type="range" min="64" max="256" value="128" step="64"></label>
+          <div class="control select-control"><span><b>Downstream headset</b><output id="channelValue">14 ch</output></span><small>Try a layout different from pretraining</small><div class="segmented" id="channelSelect" role="group" aria-label="Channel count"><button type="button" data-channels="8">8</button><button type="button" data-channels="14" class="active">14</button><button type="button" data-channels="19">19</button><button type="button" data-channels="22">22</button></div></div>
+          <button id="resampleButton" class="button primary wide" type="button">↻ New EEG sample</button><p class="demo-note mono">ILLUSTRATIVE BROWSER DEMO<br>NO MODEL INFERENCE IS RUNNING</p>
+        </aside>
+        <div class="lab-stage">
+          <div class="stage-top"><div><span class="mono stage-label">SELECTED ELECTRODE</span><strong id="selectedChannel">F4</strong></div><div class="stage-stat"><span class="mono">VISIBLE TOKENS</span><strong id="visibleTokens">16 / 32</strong></div><div class="stage-stat"><span class="mono">LAYOUT</span><strong id="layoutStatus">14 → universal map</strong></div></div>
+          <div class="signal-stack">
+            <div class="signal-row"><div class="signal-name"><span class="signal-swatch raw"></span><b>Raw input</b><small>what the headset records</small></div><canvas id="rawCanvas" aria-label="Simulated noisy raw EEG signal"></canvas></div>
+            <div class="signal-row"><div class="signal-name"><span class="signal-swatch target"></span><b>Clean target</b><small>artifact-removed supervision</small></div><canvas id="targetCanvas" aria-label="Illustrative clean EEG target"></canvas></div>
+            <div class="signal-row"><div class="signal-name"><span class="signal-swatch recon"></span><b>Reconstruction</b><small>student + predictor + decoder</small></div><canvas id="reconCanvas" aria-label="Illustrative EEG reconstruction"></canvas></div>
+          </div>
+          <div class="stage-bottom">
+            <div class="scalp-panel"><div class="panel-title"><span class="mono">LOCATION MAP</span><small>click an electrode</small></div><svg id="scalpMap" viewBox="0 0 300 300" role="img" aria-label="Interactive EEG electrode scalp map"><defs><radialGradient id="headGlow"><stop offset="0" stop-color="#1b2730"/><stop offset="1" stop-color="#101316"/></radialGradient></defs><path class="ear" d="M47 126c-16 0-22 14-18 31 3 13 12 22 24 20"/><path class="ear" d="M253 126c16 0 22 14 18 31-3 13-12 22-24 20"/><circle class="head" cx="150" cy="150" r="102"/><path class="nose" d="M137 51l13-21 13 21"/><g id="electrodes"></g></svg></div>
+            <div class="token-panel"><div class="panel-title"><span class="mono">TOKEN VIEW</span><small id="tokenCaption">50% hidden</small></div><div id="tokenGrid" class="token-grid" aria-label="Visible and masked EEG tokens"></div><div class="legend mono"><span><i class="visible"></i>VISIBLE</span><span><i class="masked"></i>MASKED</span><span><i class="predicted"></i>PREDICTED</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="method" class="method section shell">
+      <div class="section-head split reveal"><div><p class="section-kicker mono">02 / HOW IT WORKS</p><h2>Three ideas,<br><em>one robust model.</em></h2></div><p class="section-intro">Follow one EEG recording through the pipeline. Choose a stage to see what is learned and why it matters.</p></div>
+      <div class="pipeline reveal">
+        <div class="pipeline-tabs" role="tablist" aria-label="EEG-X method stages"><button class="pipeline-tab active" data-stage="tokenizer" role="tab" aria-selected="true"><span>01</span>Location tokenizer</button><button class="pipeline-tab" data-stage="latent" role="tab" aria-selected="false"><span>02</span>Latent prediction</button><button class="pipeline-tab" data-stage="raw" role="tab" aria-selected="false"><span>03</span>Clean reconstruction</button><button class="pipeline-tab" data-stage="downstream" role="tab" aria-selected="false"><span>04</span>Downstream tasks</button></div>
+        <div class="pipeline-canvas">
+          <div class="pipeline-copy"><p class="mono" id="pipelineEyebrow">DEVICE VARIABILITY</p><h3 id="pipelineTitle">Position, not device identity</h3><p id="pipelineText">Each channel receives an embedding from its scalp coordinates. Nearby electrodes get similar representations, even when headset names and layouts differ.</p><div class="takeaway"><span>WHY IT HELPS</span><p id="pipelineTakeaway">A pretrained model can understand a new 8-, 14-, or 22-channel layout without relearning every channel from scratch.</p></div></div>
+          <div id="pipelineVisual" class="pipeline-visual" data-stage="tokenizer" aria-hidden="true"><div class="flow-node input-node"><span>EEG</span><small>variable layout</small></div><div class="flow-line line-one"><i></i><i></i><i></i></div><div class="flow-node core-node"><span>X</span><small>EEG-X</small></div><div class="flow-line line-two"><i></i><i></i><i></i></div><div class="flow-node output-node"><span>z</span><small>shared space</small></div><div class="floating-tag tag-a">F4 · (u,v)</div><div class="floating-tag tag-b">P7 · (u,v)</div><div class="floating-tag tag-c">Cz · (u,v)</div></div>
+        </div>
+      </div>
+      <div class="feature-grid reveal">
+        <article><span class="feature-index mono">A</span><h3>Location-based channel embedding</h3><p>Universal scalp coordinates preserve spatial relationships across electrode systems.</p><div class="mini-map" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+        <article><span class="feature-index mono">B</span><h3>Dual-space self-supervision</h3><p>A student predicts hidden tokens while an EMA teacher supplies stable latent targets.</p><div class="mini-latent mono" aria-hidden="true"><span>STUDENT</span><b>↔</b><span>TEACHER</span></div></article>
+        <article><span class="feature-index mono">C</span><h3>DiCT reconstruction loss</h3><p>Random dilated convolutions compare frequency and shape, not only pointwise amplitude.</p><div class="mini-dict" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></article>
+      </div>
+    </section>
+    <section class="dict-section section"><div class="shell dict-shell">
+      <div class="dict-copy reveal"><p class="section-kicker mono">A CLOSER LOOK / DiCT</p><h2>Same shape.<br><em>Different timing.</em></h2><p>Direct MSE can punish a phase shift more than a missing frequency. DiCT compares signals after multi-scale convolution, making the loss more aware of structure.</p><div class="scenario-picker" role="group" aria-label="Reconstruction scenario"><button type="button" class="active" data-scenario="low">Low-frequency only</button><button type="button" data-scenario="mixed">Mixed frequencies</button><button type="button" data-scenario="phase">Phase shifted</button></div><p class="source-note mono">VALUES REPORTED IN PAPER · TABLE 6</p></div>
+      <div class="dict-demo reveal"><canvas id="dictCanvas" aria-label="Comparison of target and reconstructed synthetic signals"></canvas><div class="loss-cards"><div><span>DIRECT MSE</span><strong id="directMse">0.58</strong><small>point-by-point</small></div><div class="accent"><span>DiCT MSE</span><strong id="dictMse">9.26</strong><small>structured space</small></div></div><p id="dictExplanation">Direct MSE looks small because the large slow wave dominates, even though faster components are missing.</p></div>
+    </div></section>
+    <section id="results" class="results section shell">
+      <div class="section-head split reveal"><div><p class="section-kicker mono">03 / CROSS-DOMAIN RESULTS</p><h2>Pretrain once.<br><em>Transfer widely.</em></h2></div><p class="section-intro">All models were pretrained on 19-channel TUAB, then frozen and evaluated on different devices and layouts. Values are mean balanced accuracy or accuracy over five runs.</p></div>
+      <div class="results-panel reveal"><div class="dataset-tabs" role="tablist" aria-label="Cross-domain datasets"><button class="active" data-dataset="crowd" role="tab" aria-selected="true"><b>Crowdsourced</b><span>14 channels · eyes open/closed</span></button><button data-dataset="bci" role="tab" aria-selected="false"><b>BCICIV-2a</b><span>22 channels · motor imagery</span></button><button data-dataset="ssvep" role="tab" aria-selected="false"><b>SSVEP</b><span>8 channels · visual potentials</span></button></div><div class="chart-wrap"><div class="chart-head"><span class="mono">MODEL</span><span class="mono">ACCURACY (%)</span></div><div id="barChart" class="bar-chart"></div><p class="chart-note" id="chartNote">EEG-X transfers from a clinical 19-channel montage to a consumer 14-channel headset.</p></div><div class="result-callout"><span class="mono">EEG-X</span><strong id="resultValue">86.89</strong><p id="resultDelta">+7.34 points over the strongest baseline</p><small>Frozen tokenizer + encoder<br>Logistic regression probe</small></div></div>
+    </section>
+    <section class="device-section section shell"><div class="device-copy reveal"><p class="section-kicker mono">ONE REPRESENTATION SPACE</p><h2>Different devices.<br><em>Same brain.</em></h2><p>EEG-X maps standard electrode positions into a dense universal scalp mesh. Similar locations remain similar, even when channel sets do not match.</p></div><div class="device-marquee reveal" aria-label="EEG device layouts used in evaluation"><article><div class="device-head channels-8"></div><span class="mono">08 CH</span><h3>SSVEP</h3><p>Visual potentials</p></article><article><div class="device-head channels-14"></div><span class="mono">14 CH</span><h3>Emotiv</h3><p>Portable headset</p></article><article><div class="device-head channels-19"></div><span class="mono">19 CH</span><h3>TUH</h3><p>Clinical montage</p></article><article><div class="device-head channels-22"></div><span class="mono">22 CH</span><h3>BCICIV-2a</h3><p>Motor imagery</p></article></div></section>
+    <section class="use-section section"><div class="shell use-grid"><div class="use-copy reveal"><p class="section-kicker mono">EXPLORE THE WORK</p><h2>Paper, code,<br><em>and checkpoints.</em></h2><p>The public implementation includes pretrained checkpoints, dataset loaders, and training code for EEG-X and comparison models.</p><div class="resource-list"><a href="https://arxiv.org/abs/2511.08861" target="_blank" rel="noreferrer"><span>01</span><b>Read the paper</b><i>arXiv ↗</i></a><a href="https://github.com/Emotiv/EEG-X" target="_blank" rel="noreferrer"><span>02</span><b>Browse the code</b><i>GitHub ↗</i></a><a href="https://github.com/Emotiv/EEG-X/tree/main/Checkpoints" target="_blank" rel="noreferrer"><span>03</span><b>Get checkpoints</b><i>Weights ↗</i></a></div></div><div class="code-card reveal"><div class="code-head"><span class="mono">QUICK START</span><button id="copyCode" type="button">Copy</button></div><pre><code><span class="code-dim"># clone the official implementation</span>
+git clone https://github.com/Emotiv/EEG-X
+cd EEG-X
+
+<span class="code-dim"># install and inspect all options</span>
+pip install -r requirements.txt
+python Main.py --help
+
+<span class="code-dim"># change model parameters</span>
+python Main.py \
+  --Model EEG-X \
+  --mask_ratio 0.5 \
+  --patch_size 128 \
+  --emb_size 16</code></pre></div></div></section>
+    <section class="citation shell reveal"><span class="mono">CITE EEG-X</span><p>Mohammadi Foumani, N., Ghane, S., Nguyen, N., Salehi, M., Webb, G. I., &amp; Mackellar, G. (2025). <em>EEG-X: Device-Agnostic and Noise-Robust Foundation Model for EEG.</em></p><button id="copyCitation" type="button">Copy BibTeX</button></section>
+  </main>
+  <footer class="footer shell"><a class="brand" href="#top"><span class="brand-mark">X</span><span>EEG-X</span></a><p>Interactive explainer based on the EEG-X paper and official code.</p><div><a href="https://arxiv.org/abs/2511.08861" target="_blank" rel="noreferrer">Paper</a><a href="https://github.com/Emotiv/EEG-X" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
+  <script src="app.js" defer></script>
+</body>
+</html>

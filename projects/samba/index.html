@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#06161d">
+  <meta name="description" content="Interactive explainer for SAMBA: long-sequence EEG foundation modeling with Differential Mamba and Coordinate-Driven Spatial Embedding.">
+  <link rel="canonical" href="https://jiazhen-hong.github.io/jiazhenhong/projects/samba/">
+  <meta property="og:title" content="SAMBA · Interactive EEG foundation model explorer">
+  <meta property="og:description" content="Explore long-context EEG, temporal semantic masking, Differential Mamba, and CDSE.">
+  <meta property="og:url" content="https://jiazhen-hong.github.io/jiazhenhong/projects/samba/">
+  <title>SAMBA · Interactive EEG foundation model explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="nav shell">
+    <a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a>
+    <nav><a href="#play">Playground</a><a href="#method">Method</a><a href="#spatial">Spatial maps</a></nav>
+    <div class="nav-actions"><a href="../" class="pill">All projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer" class="pill accent">GitHub ↗</a></div>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-meta mono"><span>NEURREPS 2026 · PROCEEDINGS TRACK</span><span>EEG FOUNDATION MODEL</span></div>
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow mono">LONG SEQUENCES. DIFFERENT DEVICES. ONE MODEL.</p>
+          <h1>SAMBA</h1>
+          <p class="subtitle">Toward an EEG Foundation Model via <em>Differential Mamba</em> and <em>Coordinate-Driven Spatial Embedding</em></p>
+          <p class="authors">Jiazhen Hong · Geoffrey Mackellar · Soheila Ghane</p>
+          <div class="hero-buttons"><a href="#play" class="button primary">Play with SAMBA <span>↓</span></a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer" class="button secondary">View source ↗</a></div>
+        </div>
+        <div class="hero-visual reveal">
+          <canvas id="heroCanvas" aria-label="Long EEG sequence passing through SAMBA"></canvas>
+          <div class="samba-core"><i></i><i></i><i></i><span>S</span><small>LINEAR TIME</small></div>
+          <div class="hero-label label-left mono">LONG EEG</div><div class="hero-label label-right mono">REPRESENTATION</div>
+        </div>
+      </div>
+      <div class="hero-stats reveal"><div><strong>O(n)</strong><span>sequence scaling</span></div><div><strong>13</strong><span>EEG datasets evaluated</span></div><div><strong>3D</strong><span>coordinate-aware montage mapping</span></div><p>SAMBA replaces quadratic attention with a U-shaped Mamba encoder-decoder, while learning how electrode layouts relate in physical space.</p></div>
+    </section>
+
+    <section id="play" class="section shell">
+      <div class="section-head reveal"><p class="kicker mono">01 / LONG-CONTEXT PLAYGROUND</p><h2>Stretch the context.<br><em>Keep memory controlled.</em></h2><p>Change the sequence, masking, montage, and differential heads. The browser demo visualizes the architecture’s behavior; it does not run the trained model.</p></div>
+      <div class="playground reveal">
+        <aside class="controls">
+          <div class="controls-title"><span class="pulse"></span><span class="mono">MODEL CONTROLS</span><button id="reset" type="button">Reset</button></div>
+          <label><span><b>Sequence length</b><output id="seqValue">30 s</output></span><small>Longer context increases the number of time steps</small><input id="seq" type="range" min="5" max="120" step="5" value="30"></label>
+          <label><span><b>TSR mask ratio</b><output id="maskValue">50%</output></span><small>Semantic segments hidden before reconstruction</small><input id="mask" type="range" min="10" max="80" step="5" value="50"></label>
+          <label><span><b>Differential heads</b><output id="headValue">8</output></span><small>Parallel Mamba heads used to suppress redundancy</small><input id="heads" type="range" min="2" max="8" step="2" value="8"></label>
+          <div class="choice"><span><b>Input montage</b><output id="montageValue">14 ch</output></span><small>CDSE maps the input into a common target space</small><div id="montageButtons" class="segments"><button data-ch="14" class="active">14</button><button data-ch="22">22</button><button data-ch="64">64</button><button data-ch="128">128</button></div></div>
+          <button id="resample" type="button" class="button primary full">↻ Resample TSR mask</button>
+          <p class="disclaimer mono">ILLUSTRATIVE DEMO · NO TRAINED WEIGHTS</p>
+        </aside>
+        <div class="stage">
+          <div class="stage-head"><div><span class="mono">CURRENT VIEW</span><strong>Temporal Semantic Random Masking</strong></div><div><span class="mono">VISIBLE</span><strong id="visibleValue">50%</strong></div><div><span class="mono">TARGET SPACE</span><strong>64 channels</strong></div></div>
+          <div class="sequence"><canvas id="sequenceCanvas" aria-label="Illustrative TSR masking and EEG reconstruction"></canvas><div class="sequence-legend mono"><span><i class="raw"></i>RAW EEG</span><span><i class="masked"></i>MASKED</span><span><i class="recon"></i>RECONSTRUCTED</span></div></div>
+          <div class="complexity">
+            <div class="complexity-copy"><span class="mono">CONTEXT GROWTH</span><h3 id="tokenCount">3,840 time steps</h3><p>Relative operation growth as context increases. This is a complexity illustration, not a hardware benchmark.</p></div>
+            <div class="growth-bars">
+              <div><span>Transformer attention <b>O(n²)</b></span><div class="track"><i id="transformerBar"></i></div><output id="transformerGrowth">×36.0</output></div>
+              <div class="mamba"><span>SAMBA state-space <b>O(n)</b></span><div class="track"><i id="mambaBar"></i></div><output id="mambaGrowth">×6.0</output></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="method" class="method-section section">
+      <div class="shell">
+        <div class="section-head split reveal"><div><p class="kicker mono">02 / THE MODEL</p><h2>Four ideas in<br><em>one signal path.</em></h2></div><p>Move through the pipeline to see how SAMBA handles long, incomplete, and spatially heterogeneous EEG.</p></div>
+        <div class="method reveal">
+          <div class="method-tabs" role="tablist"><button class="active" data-step="tsr"><span>01</span>TSR masking</button><button data-step="cdse"><span>02</span>CDSE</button><button data-step="mamba"><span>03</span>Differential Mamba</button><button data-step="decoder"><span>04</span>U-shaped decoder</button></div>
+          <div class="method-content">
+            <div class="method-copy"><p id="methodKicker" class="mono">SELF-SUPERVISION</p><h3 id="methodTitle">Hide meaningful temporal spans</h3><p id="methodText">Temporal Semantic Random masking removes contiguous segments rather than isolated samples, forcing the model to use longer-range neural context.</p><div class="method-note"><span>DESIGN GOAL</span><p id="methodNote">Learn structure that remains useful beyond local waveform interpolation.</p></div></div>
+            <div class="method-visual" id="methodVisual" data-step="tsr"><div class="tower left"><i></i><i></i><i></i><i></i></div><div class="bridge"><span>Δ</span><b>MAMBA</b></div><div class="tower right"><i></i><i></i><i></i><i></i></div><div class="flow"></div><span class="tag tag1">masked EEG</span><span class="tag tag2">3D coordinates</span><span class="tag tag3">reconstruction</span></div>
+          </div>
+        </div>
+        <figure class="architecture reveal"><img src="assets/samba-architecture.png" alt="SAMBA architecture showing TSR masking, CDSE, Differential Mamba, and the encoder-decoder"><figcaption><span class="mono">FULL ARCHITECTURE</span><p>SAMBA combines TSR masking, coordinate-driven projection, multi-head Differential Mamba, and a U-shaped encoder-mediator-decoder.</p></figcaption></figure>
+      </div>
+    </section>
+
+    <section id="spatial" class="section shell">
+      <div class="section-head split reveal"><div><p class="kicker mono">03 / COORDINATE-DRIVEN SPATIAL EMBEDDING</p><h2>Electrodes move.<br><em>Coordinates remain.</em></h2></div><p>CDSE uses relative 3D electrode displacement to learn a spatial projection from an input montage to a target montage. Click an input electrode to inspect its illustrative distance-based connections.</p></div>
+      <div class="spatial-lab reveal">
+        <div class="head-map"><div class="map-title"><span class="mono">INPUT SPACE</span><strong id="inputMapTitle">14 channels</strong></div><svg id="inputScalp" viewBox="0 0 300 300" role="img" aria-label="Input EEG montage"></svg></div>
+        <div class="projection"><div class="projection-lines" id="projectionLines"></div><div class="weight-card"><span class="mono">RELATIVE DISPLACEMENT</span><strong>Δ(x, y, z)</strong><p>Linear → ReLU → Linear → Softmax</p></div><p class="mono">LEARNED W<sub>COUT×CIN</sub></p></div>
+        <div class="head-map"><div class="map-title"><span class="mono">TARGET SPACE</span><strong>64 channels</strong></div><svg id="targetScalp" viewBox="0 0 300 300" role="img" aria-label="Target EEG montage"></svg></div>
+      </div>
+      <p class="spatial-note mono reveal">CONNECTIONS ABOVE USE DISTANCE FOR VISUAL INTUITION; THEY ARE NOT EXTRACTED MODEL WEIGHTS.</p>
+      <figure class="cdse-figure reveal"><img src="assets/cdse.png" alt="Coordinate-Driven Spatial Embedding architecture"><figcaption>Official CDSE module diagram from the SAMBA repository.</figcaption></figure>
+    </section>
+
+    <section class="maps-section section">
+      <div class="shell">
+        <div class="section-head split reveal"><div><p class="kicker mono">04 / INTERPRETABLE SPATIAL WEIGHTS</p><h2>Where SAMBA<br><em>looks.</em></h2></div><p>The repository visualizes learned spatial weights for five downstream EEG tasks. Select a task to view its animated topography and the reported neurophysiological interpretation.</p></div>
+        <div class="map-gallery reveal">
+          <div class="task-list" role="tablist"><button class="active" data-task="eyes">Eyes open / closed</button><button data-task="driver">Driver distraction</button><button data-task="workload">Mental workload</button><button data-task="tuab">Abnormal EEG</button><button data-task="motor">Motor imagery</button></div>
+          <div class="topo-view"><img id="topoImage" src="assets/topography/eyes-state.gif" alt="Animated spatial weights for eyes open and closed"><div><span id="topoRegion" class="mono">FRONTAL REGION</span><h3 id="topoTitle">Eyes open / closed</h3><p id="topoText">The repository reports frontal emphasis, consistent with alpha modulation during eye closure.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="use-section section shell">
+      <div class="use-copy reveal"><p class="kicker mono">USE THE MODEL</p><h2>Code, configuration,<br><em>and citation.</em></h2><p>The public repository contains model code, montage files, data utilities, and training options for reconstruction, probing, fine-tuning, and supervised learning.</p><div class="links"><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer"><span>01</span><b>Official repository</b><i>GitHub ↗</i></a><a href="https://github.com/Jiazhen-Hong/SAMBA/blob/main/Models/SAMBA.py" target="_blank" rel="noreferrer"><span>02</span><b>Model architecture</b><i>Python ↗</i></a><a href="https://github.com/Jiazhen-Hong/SAMBA/tree/main/Montage" target="_blank" rel="noreferrer"><span>03</span><b>Montage coordinates</b><i>Data ↗</i></a></div></div>
+      <div class="code-card reveal"><div class="code-head"><span class="mono">QUICK START</span><button id="copyCode" type="button">Copy</button></div><pre><code><span># clone SAMBA</span>
+git clone https://github.com/Jiazhen-Hong/SAMBA
+cd SAMBA
+
+<span># inspect training options</span>
+python "Main(SAMBA).py" --help
+
+<span># core playground parameters</span>
+python "Main(SAMBA).py" \
+  --model_name SAMBA \
+  --masking_method TSR \
+  --time_mask_ratio 0.5 \
+  --d_state 16 \
+  --d_conv 2 \
+  --expand 8</code></pre></div>
+    </section>
+
+    <section class="citation shell reveal"><span class="mono">CITE SAMBA</span><p>Hong, J., Mackellar, G., &amp; Ghane, S. (2026). <em>SAMBA: Toward an EEG Foundation Model via Differential Mamba and Coordinate-Driven Spatial Embedding.</em> NeurReps 2026 Proceedings Track.</p><button id="copyCitation" type="button">Copy BibTeX</button></section>
+  </main>
+  <footer class="footer shell"><a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a><p>Accepted to the NeurReps 2026 Proceedings Track at NeurIPS 2026.</p><div><a href="../">Projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
+  <script src="app.js" defer></script>
+</body>
+</html>

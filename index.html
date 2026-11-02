@@ -7,7 +7,7 @@
   <title>Jiazhen Hong</title>
   <meta name="author" content="Jiazhen Hong">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="images/favicon/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" type="text/css" href="stylesheet.css">
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -70,7 +70,8 @@
       gap: 0;
     }
 
-    nav.tabs button {
+    nav.tabs button,
+    nav.tabs .tab-link {
       background: none;
       border: none;
       cursor: pointer;
@@ -83,9 +84,12 @@
       transition: color 0.2s;
       letter-spacing: 0.04em;
       text-transform: uppercase;
+      text-decoration: none;
+      line-height: 1.7;
     }
 
-    nav.tabs button:hover { color: rgba(255,255,255,0.9); }
+    nav.tabs button:hover,
+    nav.tabs .tab-link:hover { color: rgba(255,255,255,0.9); }
 
     nav.tabs button.active { color: #fff; }
 
@@ -435,7 +439,7 @@
       .profile-links { justify-content: center; }
       .research-card { flex-direction: column; }
       .research-card img, .research-card video { width: 100%; }
-      nav.tabs button { padding: 14px 10px; font-size: 0.75em; }
+      nav.tabs button, nav.tabs .tab-link { padding: 14px 10px; font-size: 0.75em; }
       .header-inner { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -452,6 +456,7 @@
       <button onclick="switchTab('news', this)">News</button>
       <button onclick="switchTab('research', this)">Research</button>
       <button onclick="switchTab('publications', this)">Publications</button>
+      <a class="tab-link" href="{{ '/projects/' | relative_url }}">Projects</a>
       <button onclick="switchTab('people', this)">People</button>
     </nav>
   </div>
@@ -570,11 +575,16 @@
 </div><!-- /page-wrap -->
 
 <script>
-  function switchTab(id, btn) {
+  function switchTab(id, btn, updateUrl = true) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
     document.getElementById('tab-' + id).classList.add('active');
     btn.classList.add('active');
+    if (updateUrl) {
+      const url = new URL(window.location.href);
+      url.hash = id === 'home' ? '' : id;
+      history.replaceState(null, '', url);
+    }
   }
 
   function switchSubtab(id, btn) {
@@ -584,6 +594,16 @@
     btn.classList.add('active');
     parent.querySelector('#subtab-' + id).classList.add('active');
   }
+
+  function openTabFromUrl() {
+    const id = window.location.hash.slice(1);
+    if (!id || !document.getElementById('tab-' + id)) return;
+    const btn = Array.from(document.querySelectorAll('nav.tabs button')).find(b => b.getAttribute('onclick').includes("'" + id + "'"));
+    if (btn) switchTab(id, btn, false);
+  }
+
+  openTabFromUrl();
+  window.addEventListener('hashchange', openTabFromUrl);
 </script>
 
 </body>
