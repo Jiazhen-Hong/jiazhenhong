@@ -302,14 +302,15 @@
     svg.innerHTML = headOutline;
     weights.forEach((weight) => {
       const point = targetMontage.points[weight.targetIndex], projected = projectPoint(point);
+      const visual = .2 + .8 * Math.pow(weight.relative, .45);
       const group = document.createElementNS(svgNS, 'g');
       group.setAttribute('class', 'electrode target-electrode');
       group.setAttribute('data-index', weight.targetIndex);
       group.appendChild(makeTitle(`${point.name}: ${(weight.value * 100).toFixed(2)}% contribution from ${selectedName}`));
       const circle = document.createElementNS(svgNS, 'circle');
       circle.setAttribute('cx', projected.x); circle.setAttribute('cy', projected.y);
-      circle.setAttribute('r', 3.2 + weight.relative * 4.7); circle.setAttribute('fill', weightColor(weight.relative));
-      circle.setAttribute('opacity', .28 + weight.relative * .72); circle.setAttribute('stroke', '#06161d'); circle.setAttribute('stroke-width', '.65');
+      circle.setAttribute('r', 3.5 + visual * 4.1); circle.setAttribute('fill', weightColor(weight.relative));
+      circle.setAttribute('opacity', .45 + visual * .5); circle.setAttribute('stroke', '#16090c'); circle.setAttribute('stroke-width', '.65');
       group.appendChild(circle); svg.appendChild(group);
     });
   }
@@ -328,13 +329,14 @@
     const labRect = lab.getBoundingClientRect(), sourceRect = selected.getBoundingClientRect();
     overlay.setAttribute('viewBox', `0 0 ${labRect.width} ${labRect.height}`); overlay.innerHTML = '';
     const sourceX = sourceRect.left + sourceRect.width / 2 - labRect.left, sourceY = sourceRect.top + sourceRect.height / 2 - labRect.top;
-    [...weights].sort((a, b) => b.value - a.value).slice(0, 9).forEach((weight) => {
+    [...weights].sort((a, b) => a.value - b.value).forEach((weight) => {
       const target = $(`#targetScalp .target-electrode[data-index="${weight.targetIndex}"] circle`); if (!target) return;
       const targetRect = target.getBoundingClientRect(), targetX = targetRect.left + targetRect.width / 2 - labRect.left, targetY = targetRect.top + targetRect.height / 2 - labRect.top;
       const path = document.createElementNS(svgNS, 'path');
       const bend = Math.max(45, Math.abs(targetX - sourceX) * .32);
       path.setAttribute('d', `M ${sourceX} ${sourceY} C ${sourceX + bend} ${sourceY}, ${targetX - bend} ${targetY}, ${targetX} ${targetY}`);
-      path.setAttribute('fill', 'none'); path.setAttribute('stroke', weightColor(weight.relative)); path.setAttribute('stroke-width', 1 + weight.relative * 2.7); path.setAttribute('opacity', .15 + weight.relative * .58);
+      const emphasis = Math.pow(weight.relative, .85);
+      path.setAttribute('fill', 'none'); path.setAttribute('stroke', weightColor(weight.relative)); path.setAttribute('stroke-width', .45 + emphasis * 2.5); path.setAttribute('opacity', .035 + emphasis * .48);
       overlay.appendChild(path);
     });
   }
@@ -348,7 +350,7 @@
     $('#inputMapTitle').textContent = `${montage.label} · ${montage.channels} channels${montage.schematic ? ' · schematic' : ''}`;
     $('#selectedChannel').textContent = selected.name;
     const strongest = [...weights].sort((a, b) => b.value - a.value)[0];
-    $('#weightSummary').textContent = `Strongest target: ${target.points[strongest.targetIndex].name} · ${(strongest.value * 100).toFixed(2)}%`;
+    $('#weightSummary').textContent = `Peak: ${target.points[strongest.targetIndex].name} · ${(strongest.value * 100).toFixed(1)}%`;
     requestAnimationFrame(() => renderMappingOverlay(weights));
   }
 

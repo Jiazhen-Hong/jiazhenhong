@@ -83,3 +83,17 @@
 .code-card{background:#100609}
 .estimate-status i{box-shadow:0 0 9px #ffb05c88}
 .estimate-status.measured i{box-shadow:0 0 9px #ff6f6188}
+
+/* Whole-scalp simulated CDSE mapping. */
+.projection{background:rgba(25,11,15,.18);backdrop-filter:none}
+.weight-card{width:72%;padding:18px 20px;border-color:#ff8a7b4a;background:rgba(22,9,12,.56);box-shadow:0 14px 40px #0b030630;backdrop-filter:blur(4px)}
+.weight-card .simulation-label{display:inline-flex;align-items:center;gap:6px;color:#ff9b8f;font-weight:500}
+.weight-card .simulation-label::before{content:"";width:5px;height:5px;border-radius:50%;background:#ff6f61;box-shadow:0 0 8px #ff6f61}
+.weight-card strong{margin:5px 0 2px;font-size:28px}
+.weight-card p{margin:0;color:#d7b7b5;font-size:8px}
+.weight-card small{margin-top:4px;color:#9b7e80;font-size:6px}
+.projection>p{margin-top:13px;color:#9b7e80;font-size:6px}
+.mapping-overlay{z-index:3}
+.head-map,.projection{z-index:2}
+.weight-card,.projection>p{position:relative;z-index:4}
+.spatial-note{color:#8f7174}

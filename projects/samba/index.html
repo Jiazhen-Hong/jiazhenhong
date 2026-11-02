@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#06161d">
+  <meta name="theme-color" content="#16090c">
   <meta name="description" content="Interactive explainer for SAMBA: long-sequence EEG foundation modeling with Differential Mamba and Coordinate-Driven Spatial Embedding.">
   <link rel="icon" href="../../images/favicon/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://jiazhen-hong.github.io/jiazhenhong/projects/samba/">
@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -123,11 +123,11 @@
       <div class="section-head split reveal"><div><p class="kicker mono">03 / COORDINATE-DRIVEN SPATIAL EMBEDDING</p><h2>Electrodes move.<br><em>Coordinates remain.</em></h2></div><p>CDSE uses relative 3D electrode displacement to learn a spatial projection from an input montage to a target montage. Choose a real montage, then click one input electrode to see its contribution across the 64-channel target space.</p></div>
       <div class="spatial-lab reveal">
         <div class="head-map"><div class="map-title"><span class="mono">INPUT SPACE</span><strong id="inputMapTitle">14 channels</strong></div><svg id="inputScalp" viewBox="0 0 300 300" role="img" aria-label="Input EEG montage"></svg></div>
-        <div class="projection"><div class="projection-lines" id="projectionLines"></div><div class="weight-card"><span class="mono">SELECTED INPUT</span><strong id="selectedChannel">AF3</strong><p id="weightSummary">Mapped into the common target space</p><small>Δ(x, y, z) → MLP → softmax over input channels</small></div><p class="mono">COLUMN OF W<sub>COUT×CIN</sub></p></div>
-        <div class="head-map target-map"><div class="map-title"><span class="mono">TARGET RESPONSE</span><strong>PhysioNet · 64 ch</strong></div><svg id="targetScalp" viewBox="0 0 300 300" role="img" aria-label="Target EEG montage with mapping contributions"></svg><div class="weight-legend mono"><span>LOW</span><i></i><span>HIGH CONTRIBUTION</span></div></div>
+        <div class="projection"><div class="projection-lines" id="projectionLines"></div><div class="weight-card" aria-label="Simulated CDSE mapping"><span class="mono simulation-label">SIMULATED MAPPING</span><strong id="selectedChannel">AF3</strong><p id="weightSummary">Peak: Fp1 · 36.1%</p><small>Coordinate-distance proxy</small></div><p class="mono">ILLUSTRATIVE W COLUMN</p></div>
+        <div class="head-map target-map"><div class="map-title"><span class="mono">SIMULATED RESPONSE</span><strong>PhysioNet · 64 ch</strong></div><svg id="targetScalp" viewBox="0 0 300 300" role="img" aria-label="Simulated whole-scalp CDSE mapping response"></svg><div class="weight-legend mono"><span>LOW</span><i></i><span>HIGH CONTRIBUTION</span></div></div>
         <svg id="mappingOverlay" class="mapping-overlay" aria-hidden="true"></svg>
       </div>
-      <p class="spatial-note mono reveal">LAYOUTS USE THE SAMBA REPOSITORY COORDINATES. MN8 EAR-CANAL LOCATIONS ARE SCHEMATIC BECAUSE PUBLIC 3D COORDINATES ARE UNAVAILABLE. TARGET COLORS SHOW A COORDINATE-BASED SOFTMAX PROXY, NOT CHECKPOINT-EXTRACTED WEIGHTS.</p>
+      <p class="spatial-note mono reveal">SIMULATED PROXY · NO CHECKPOINT WEIGHTS. LAYOUTS USE REPOSITORY COORDINATES; MN8 LOCATIONS ARE SCHEMATIC.</p>
       <figure class="cdse-figure reveal"><img src="assets/cdse.png" alt="Coordinate-Driven Spatial Embedding architecture"><figcaption>Official CDSE module diagram from the SAMBA repository.</figcaption></figure>
     </section>
 
@@ -164,6 +164,6 @@ python "Main(SAMBA).py" \
   </main>
   <footer class="footer shell"><a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a><p>Accepted to the NeurReps 2026 Proceedings Track at NeurIPS 2026.</p><div><a href="../">Projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
   <script src="montages.js?v=3" defer></script>
-  <script src="app.js?v=5" defer></script>
+  <script src="app.js?v=6" defer></script>
 </body>
 </html>
