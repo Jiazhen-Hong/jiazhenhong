@@ -57,3 +57,29 @@
 @media(max-width:900px){.resource-grid{grid-template-columns:1fr}.metric-card canvas{height:210px}}
 @media(max-width:700px){.resource-model{padding:20px 14px}.resource-head{flex-direction:column}.estimate-status{width:100%}.metric-card canvas{height:180px}.benchmark-legend{gap:11px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}}
+
+/* SAMBA warm red theme. */
+:root{--bg:#16090c;--panel:#211014;--panel2:#2a1418;--ink:#fff2ef;--muted:#b79a9d;--line:#4b252b;--cyan:#ff6f61;--coral:#ffb05c;--green:#f4c66c}
+.samba-core{background:#1e0d12;box-shadow:0 0 70px #ff6f6124}
+.samba-core i{border-color:#ff6f6155}
+.segments button{background:#13090c;color:#b99b9e}
+.projection,.weight-card,.diff-grid>div{background:#190b0f}
+.diff-lab,.resource-model,.metric-card,.estimate-status{background:#1b0c10}
+.diff-head-card{border-color:#592c32;background:#241015}
+.diff-head-card i{border-color:#9e403b}
+.weight-legend i{background:linear-gradient(90deg,#ff9b8f55,#ffb05c,#ff5f53)}
+.method-section{background:#f3e8e5;color:#351518}
+.method-section .kicker,.method-section .section-head h2 em,.method-copy>p:first-child,.method-note span{color:#a43a34}
+.method-section .section-head.split>p,.method-copy>p{color:#755f60}
+.method,.method-tabs,.architecture figcaption{border-color:#d5b9b5}
+.method-tabs button.active{border-color:#a43a34;color:#351518;background:#ead7d3}
+.method-note{border-color:#a43a34}
+.method-visual{background:radial-gradient(circle,#e4cbc7,transparent 64%)}
+.bridge{border-color:#a43a34;background:#ead7d3}
+.bridge span{color:#a43a34}
+.flow{background:#a43a34}
+.tower i{border-color:#9d7775;background:#f0e2df}
+.maps-section{background:#211014}
+.code-card{background:#100609}
+.estimate-status i{box-shadow:0 0 9px #ffb05c88}
+.estimate-status.measured i{box-shadow:0 0 9px #ff6f6188}

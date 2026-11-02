@@ -4,3 +4,25 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.orb-ring,.flow-line i,.pipeline-visual[data-stage=latent] .core-node{animation:none}}
 .nav-actions{display:flex;gap:8px}
 @media(max-width:700px){.nav-actions .nav-cta:first-child{display:none}}
+
+/* EEG-X blue theme. */
+:root{--bg:#070d18;--panel:#0c1626;--panel2:#101d30;--ink:#f1f5fb;--muted:#98a7bb;--line:#203755;--orange:#4f8cff;--cyan:#7ec8ff;--lime:#78dfc3}
+.cursor-glow{background:radial-gradient(circle,rgba(79,140,255,.1),transparent 68%)}
+.button.primary:hover{background:#70a5ff}
+.orb-core{box-shadow:0 0 70px rgba(79,140,255,.28)}
+.electrode:hover circle,.electrode.active circle{stroke:#bed8ff}
+.segmented button,.scenario-picker button{background:#08101d}
+.pipeline-tab.active{background:linear-gradient(90deg,rgba(79,140,255,.12),transparent)}
+.core-node{box-shadow:0 0 50px rgba(79,140,255,.16)}
+.pipeline-visual{background:radial-gradient(circle at center,#142844 0,transparent 60%)}
+.dict-section{background:#e8eef7;color:#101827}
+.dict-copy h2 em,.loss-cards .accent strong{color:#315fb5}
+.scenario-picker button{border-color:#b9c7d9}
+.dict-demo canvas{border-color:#b4c1d2}
+.loss-cards>div{border-color:#bdc9d8}
+.dataset-tabs button.active{color:#0b1830}
+.device-head{background:radial-gradient(circle,#142844,#09111f)}
+.use-section{background:var(--panel)}
+.code-card{background:#050b14}
+.bar-track{background:#142239}
+@keyframes pulse{50%{box-shadow:0 0 70px rgba(79,140,255,.34)}}

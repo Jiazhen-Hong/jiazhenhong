@@ -50,9 +50,9 @@
       }
       const g = ctx.createLinearGradient(0, 0, w, 0);
       g.addColorStop(0, 'rgba(170,178,181,.45)');
-      g.addColorStop(.48, 'rgba(255,106,61,.28)');
-      g.addColorStop(.52, 'rgba(117,212,216,.25)');
-      g.addColorStop(1, 'rgba(117,212,216,.65)');
+      g.addColorStop(.48, 'rgba(79,140,255,.32)');
+      g.addColorStop(.52, 'rgba(126,200,255,.28)');
+      g.addColorStop(1, 'rgba(126,200,255,.72)');
       ctx.strokeStyle = g;
       ctx.lineWidth = 1;
       ctx.stroke();
@@ -91,7 +91,7 @@
     const hidden = new Set([...Array(tokenCount).keys()].sort((a, b) => seeded(a + 80) - seeded(b + 80)).slice(0, hiddenCount));
     if (kind === 'raw') {
       hidden.forEach((i) => {
-        ctx.fillStyle = 'rgba(255,106,61,.065)';
+        ctx.fillStyle = 'rgba(79,140,255,.08)';
         ctx.fillRect(i * w / tokenCount, 5, w / tokenCount - 2, h - 10);
       });
     }
@@ -111,7 +111,7 @@
       const y = h / 2 - v * h * .32;
       x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     }
-    ctx.strokeStyle = kind === 'raw' ? '#aeb4b5' : kind === 'target' ? '#75d4d8' : '#ff6a3d';
+    ctx.strokeStyle = kind === 'raw' ? '#aeb8c8' : kind === 'target' ? '#7ec8ff' : '#4f8cff';
     ctx.lineWidth = 1.25;
     ctx.stroke();
   }
@@ -235,7 +235,7 @@
         const y = y0 - v * h * .09;
         x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
-      ctx.strokeStyle = target ? '#111' : '#a84226'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.strokeStyle = target ? '#101827' : '#315fb5'; ctx.lineWidth = 1.5; ctx.stroke();
     };
     draw(h * .30, true); draw(h * .79, false);
   }

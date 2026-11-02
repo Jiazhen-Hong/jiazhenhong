@@ -27,7 +27,7 @@
         const y = y0 + (Math.sin(t) * 5 + Math.sin(t * 2.7) * 2.5 + Math.sin(t * .17) * 4) * envelope;
         x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
-      const g = ctx.createLinearGradient(0, 0, w, 0); g.addColorStop(0, '#6c858a77'); g.addColorStop(.45, '#61d5dd44'); g.addColorStop(.55, '#61d5dd55'); g.addColorStop(1, '#61d5ddaa');
+      const g = ctx.createLinearGradient(0, 0, w, 0); g.addColorStop(0, '#92727677'); g.addColorStop(.45, '#ff6f6144'); g.addColorStop(.55, '#ff6f6155'); g.addColorStop(1, '#ff6f61bb');
       ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.stroke();
     }
     if (!reduced) requestAnimationFrame(drawHero);
@@ -64,7 +64,7 @@
           if (panel === 1) v = v * .96 + Math.sin(t * 2.5 + 1.2) * (state.mask / 100) * .045;
           const y = y0 - v * 13; x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
         }
-        ctx.strokeStyle = panel ? '#ff745c' : '#91a7aa'; ctx.lineWidth = 1; ctx.stroke();
+        ctx.strokeStyle = panel ? '#ff6f61' : '#aa9295'; ctx.lineWidth = 1; ctx.stroke();
       }
     }
     masked.forEach((i) => { const x = i * w / blocks, bw = w / blocks + .5; ctx.fillStyle = '#20373ee8'; ctx.fillRect(x, 19, bw, panelH - 25); ctx.strokeStyle = '#55747d'; ctx.setLineDash([3, 3]); ctx.strokeRect(x, 19, bw, panelH - 25); ctx.setLineDash([]); });
@@ -90,8 +90,8 @@
     };
     const neural = (t) => Math.sin(t * .72) * .62 + Math.sin(t * 1.9 + .6) * .22;
     const shared = (t) => Math.sin(t * 6.1) * .34 + Math.sin(t * 10.7 + .4) * .18 + (Math.sin(t * .36) > .78 ? .32 * Math.sin(t * 14) : 0);
-    trace(0, '#61d5dd', (t) => neural(t) + shared(t));
-    trace(1, '#ff745c', (t) => shared(t) * .94 + Math.sin(t * 5.6 + 1.1) * .045);
+    trace(0, '#ff6f61', (t) => neural(t) + shared(t));
+    trace(1, '#ffb05c', (t) => shared(t) * .94 + Math.sin(t * 5.6 + 1.1) * .045);
     trace(2, '#edf4f2', (t) => neural(t) + shared(t) * residual + Math.sin(t * (4 + state.heads * .15)) * residual * .07);
     const residualPercent = Math.round(residual * 100);
     $('#headPairCount').textContent = `${state.heads} PAIRED HEADS · ${state.heads * 2} MAMBA BRANCHES`;
@@ -162,29 +162,29 @@
     ctx.fillStyle = '#0d2731';
     ctx.fillRect(boundaryX, pad.top, w - pad.right - boundaryX, plotH);
     ctx.save();
-    ctx.setLineDash([4, 4]); ctx.strokeStyle = '#ff745c99';
+    ctx.setLineDash([4, 4]); ctx.strokeStyle = '#ffb05caa';
     ctx.beginPath(); ctx.moveTo(boundaryX, pad.top); ctx.lineTo(boundaryX, pad.top + plotH); ctx.stroke();
     ctx.restore();
-    ctx.fillStyle = '#ff8e7a'; ctx.font = '7px DM Mono, monospace'; ctx.textAlign = 'left';
+    ctx.fillStyle = '#ffc17f'; ctx.font = '7px DM Mono, monospace'; ctx.textAlign = 'left';
     ctx.fillText('VALIDATED TO 2,000', Math.min(boundaryX + 5, w - 105), pad.top + 9);
 
     const start = series.points[0], end = series.points[1];
-    ctx.strokeStyle = '#61d5dd'; ctx.lineWidth = 2;
+    ctx.strokeStyle = '#ff6f61'; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(x(start[0]), y(start[1])); ctx.lineTo(x(end[0]), y(end[1])); ctx.stroke();
 
     ctx.save();
-    ctx.setLineDash([7, 5]); ctx.strokeStyle = '#ff745c';
+    ctx.setLineDash([7, 5]); ctx.strokeStyle = '#ffb05c';
     ctx.beginPath(); ctx.moveTo(x(end[0]), y(end[1])); ctx.lineTo(x(benchmark.maxSteps), y(affineEstimate(series.points, benchmark.maxSteps))); ctx.stroke();
     ctx.restore();
 
     series.points.forEach(([steps, value]) => {
-      ctx.beginPath(); ctx.arc(x(steps), y(value), 3.5, 0, Math.PI * 2); ctx.fillStyle = '#61d5dd'; ctx.fill();
+      ctx.beginPath(); ctx.arc(x(steps), y(value), 3.5, 0, Math.PI * 2); ctx.fillStyle = '#ff6f61'; ctx.fill();
       ctx.strokeStyle = '#06161d'; ctx.lineWidth = 1; ctx.stroke();
     });
 
     const currentValue = affineEstimate(series.points, currentSteps);
     ctx.beginPath(); ctx.arc(x(currentSteps), y(currentValue), 5, 0, Math.PI * 2);
-    ctx.fillStyle = currentSteps > benchmark.measuredMax ? '#ff745c' : '#edf4f2'; ctx.fill();
+    ctx.fillStyle = currentSteps > benchmark.measuredMax ? '#ffb05c' : '#fff2ef'; ctx.fill();
     ctx.strokeStyle = '#06161d'; ctx.lineWidth = 2; ctx.stroke();
   }
 
@@ -229,7 +229,7 @@
   }));
 
   const svgNS = 'http://www.w3.org/2000/svg';
-  const headOutline = '<path d="M48 135c-18 0-22 15-18 31 3 13 12 21 23 19M252 135c18 0 22 15 18 31-3 13-12 21-23 19M137 49l13-21 13 21" fill="none" stroke="#294851" stroke-width="2"/><circle cx="150" cy="150" r="105" fill="#092029" stroke="#294851"/>';
+  const headOutline = '<path d="M48 135c-18 0-22 15-18 31 3 13 12 21 23 19M252 135c18 0 22 15 18 31-3 13-12 21-23 19M137 49l13-21 13 21" fill="none" stroke="#63343a" stroke-width="2"/><circle cx="150" cy="150" r="105" fill="#220e13" stroke="#63343a"/>';
 
   function projectPoint(point) {
     return { x: 150 + point.x / .105 * 102, y: 150 - point.y / .12 * 100 };
@@ -263,8 +263,8 @@
   }
 
   function weightColor(relative) {
-    const hue = 185 - 170 * Math.pow(relative, .78);
-    const light = 56 + 8 * relative;
+    const hue = 34 - 26 * Math.pow(relative, .78);
+    const light = 55 + 9 * relative;
     return `hsl(${hue.toFixed(0)} 88% ${light.toFixed(0)}%)`;
   }
 
@@ -288,7 +288,7 @@
       group.appendChild(makeTitle(`${point.name} · (${point.x.toFixed(3)}, ${point.y.toFixed(3)}, ${point.z.toFixed(3)}) m`));
       const circle = document.createElementNS(svgNS, 'circle');
       circle.setAttribute('cx', projected.x); circle.setAttribute('cy', projected.y); circle.setAttribute('r', selected ? radius + 1.6 : radius);
-      circle.setAttribute('fill', selected ? '#ff745c' : '#61d5dd'); circle.setAttribute('opacity', selected ? '1' : '.72');
+      circle.setAttribute('fill', selected ? '#ff6f61' : '#ff9b8f'); circle.setAttribute('opacity', selected ? '1' : '.72');
       circle.setAttribute('stroke', selected ? '#ffe4de' : '#06161d'); circle.setAttribute('stroke-width', selected ? '1.4' : '.6');
       group.appendChild(circle);
       const pick = () => { state.selected = index; renderScalps(); };
