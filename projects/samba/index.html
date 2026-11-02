@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -36,9 +36,9 @@
           <div class="hero-buttons"><a href="#play" class="button primary">Play with SAMBA <span>↓</span></a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer" class="button secondary">View source ↗</a><a href="#cite" class="button secondary cite-button">Cite / BibTeX <span>↓</span></a></div>
         </div>
         <div class="hero-visual reveal">
-          <canvas id="heroCanvas" aria-label="Long EEG sequence passing through SAMBA"></canvas>
+          <canvas id="heroCanvas" aria-label="Animated EEG waves mapping into a shared scalp space"></canvas>
           <div class="samba-core"><i></i><i></i><i></i><span>S</span><small>LINEAR TIME</small></div>
-          <div class="hero-label label-left mono">LONG EEG</div><div class="hero-label label-right mono">REPRESENTATION</div>
+          <div class="hero-label label-left mono">EEG SIGNALS</div><div class="hero-label label-right mono">SHARED SPACE</div>
         </div>
       </div>
       <div class="hero-stats reveal"><div><strong>O(n)</strong><span>linear with sequence length</span></div><div><strong>3D</strong><span>one space for every headset</span></div><div><strong>TSR + DM</strong><span>learn signals, reduce shared noise</span></div></div>
@@ -66,16 +66,16 @@
             </div>
           </div>
           <div class="sequence"><canvas id="sequenceCanvas" aria-label="Illustrative TSR masking and EEG reconstruction"></canvas><div class="sequence-legend mono"><span><i class="raw"></i>RAW EEG</span><span><i class="masked"></i>MASKED</span><span><i class="recon"></i>RECONSTRUCTED</span></div></div>
-          <div class="diff-lab">
+          <div id="denoise" class="diff-lab">
             <div class="diff-head">
-              <div><span class="mono">DIFFERENTIAL MAMBA</span><h3>Subtract the shared response.</h3></div>
-              <div class="diff-readout"><span id="headPairCount" class="mono">8 PAIRED HEADS</span><strong id="noiseResidual">29% synthetic residual</strong></div>
+              <div><span class="mono">DIFFERENTIAL MAMBA</span><h3>More heads. Less shared noise.</h3></div>
+              <div class="diff-readout"><span id="headPairCount" class="mono">8 PAIRED HEADS</span><strong id="noiseResidual">18% illustrative residual</strong></div>
             </div>
             <div class="diff-grid">
-              <div><div id="diffHeads" class="diff-heads" aria-label="Differential Mamba paired head structure"></div><p class="diff-equation mono">x₁ − λx₂ → GroupNorm → concat → projection + residual</p></div>
-              <div class="diff-signal"><canvas id="diffCanvas" aria-label="Illustrative common noise cancellation as differential head count changes"></canvas><div class="diff-legend mono"><span><i class="branch-one"></i>x₁ SIGNAL + SHARED NOISE</span><span><i class="branch-two"></i>λx₂ SHARED RESPONSE</span><span><i class="diff-output"></i>DIFFERENTIAL OUTPUT</span></div></div>
+              <div class="diff-signal"><canvas id="diffCanvas" aria-label="Illustrative EEG channels before and after shared-noise reduction"></canvas><div class="diff-legend mono"><span><i class="branch-one"></i>NOISY INPUT</span><span><i class="branch-two"></i>SHARED NOISE</span><span><i class="diff-output"></i>DENOISED OUTPUT</span></div></div>
+              <div id="diffHeads" class="diff-heads" aria-label="Active Differential Mamba head pairs"></div>
             </div>
-            <p class="diff-note">Illustration only. This is not a measured denoising score.</p>
+            <p class="diff-note">Illustration only. Move “Differential heads” to compare the traces.</p>
           </div>
           <div class="resource-model">
             <div class="resource-head">
@@ -159,6 +159,6 @@
   <footer class="footer shell"><a class="brand" href="#top"><span class="mark">S</span><span>SAMBA</span></a><p>Accepted to the NeurReps 2026 Proceedings Track at NeurIPS 2026.</p><div><a href="../">Projects</a><a href="https://github.com/Jiazhen-Hong/SAMBA" target="_blank" rel="noreferrer">Code</a><a href="#top">Back to top ↑</a></div></footer>
   <script src="montages.js?v=3" defer></script>
   <script src="montage32.js?v=1" defer></script>
-  <script src="app.js?v=10" defer></script>
+  <script src="app.js?v=11" defer></script>
 </body>
 </html>

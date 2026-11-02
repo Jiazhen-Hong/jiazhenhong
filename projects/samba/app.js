@@ -18,18 +18,41 @@
   const hero = $('#heroCanvas');
   function drawHero(time = 0) {
     const { ctx, w, h } = canvasContext(hero); ctx.clearRect(0, 0, w, h);
-    const mid = w * .5;
-    for (let row = 0; row < 8; row++) {
-      const y0 = h * .22 + row * h * .075; ctx.beginPath();
-      for (let x = 0; x <= w; x += 2) {
-        const t = x * .055 + row * .8 + time * .001;
-        const envelope = x < mid ? 1 : .55 + .45 * Math.cos((x - mid) / Math.max(1, w - mid) * Math.PI / 2);
-        const y = y0 + (Math.sin(t) * 5 + Math.sin(t * 2.7) * 2.5 + Math.sin(t * .17) * 4) * envelope;
-        x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    const phase = time * .00032, centerY = h * .49;
+    const glow = ctx.createRadialGradient(w * .72, centerY, 10, w * .72, centerY, Math.max(w, h) * .46);
+    glow.addColorStop(0, '#62d1c515'); glow.addColorStop(.45, '#f1c56f0d'); glow.addColorStop(1, '#10182000');
+    ctx.fillStyle = glow; ctx.fillRect(0, 0, w, h);
+
+    for (let row = 0; row < 18; row++) {
+      ctx.beginPath();
+      const offset = (row - 8.5) * Math.max(8, h * .027);
+      for (let x = -20; x <= w + 20; x += 3) {
+        const nx = x / Math.max(1, w), t = nx * 8.2 + phase + row * .11;
+        const ribbon = Math.sin(t) * h * .12 + Math.sin(t * 2.05 + row * .17) * h * .025;
+        const fold = Math.sin(nx * Math.PI) * offset;
+        const y = centerY + ribbon + fold;
+        x > -20 ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
-      const g = ctx.createLinearGradient(0, 0, w, 0); g.addColorStop(0, '#71808f66'); g.addColorStop(.45, '#55c7d455'); g.addColorStop(.58, '#f4bd6266'); g.addColorStop(1, '#ff6f61cc');
-      ctx.strokeStyle = g; ctx.lineWidth = 1; ctx.stroke();
+      const g = ctx.createLinearGradient(0, 0, w, 0);
+      g.addColorStop(0, '#72839118'); g.addColorStop(.28, '#62d1c543'); g.addColorStop(.66, '#f1c56f66'); g.addColorStop(1, '#ff746160');
+      ctx.strokeStyle = g; ctx.lineWidth = row % 5 === 0 ? 1.35 : .72; ctx.stroke();
     }
+
+    const headX = w * .78, headY = h * .49, radius = Math.min(w, h) * .18;
+    ctx.save(); ctx.globalAlpha = .78; ctx.strokeStyle = '#90a4ae55'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(headX, headY, radius, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(headX - radius * .14, headY - radius * .98); ctx.lineTo(headX, headY - radius * 1.18); ctx.lineTo(headX + radius * .14, headY - radius * .98); ctx.stroke();
+    for (let ring = 0; ring < 5; ring++) {
+      const count = 7 + ring * 3, rr = radius * (.18 + ring * .17);
+      for (let i = 0; i < count; i++) {
+        const angle = -Math.PI * .92 + i / Math.max(1, count - 1) * Math.PI * 1.84;
+        const x = headX + Math.cos(angle) * rr, y = headY + Math.sin(angle) * rr * .9;
+        const pulse = .65 + .35 * Math.sin(phase * 5 + i * .7 + ring);
+        ctx.beginPath(); ctx.arc(x, y, Math.max(1.5, radius * .022) * (1 + pulse * .35), 0, Math.PI * 2);
+        ctx.fillStyle = ring < 2 ? `rgba(98,209,197,${.24 + pulse * .3})` : `rgba(255,116,97,${.18 + pulse * .38})`; ctx.fill();
+      }
+    }
+    ctx.restore();
     if (!reduced) requestAnimationFrame(drawHero);
   }
   drawHero();
@@ -72,30 +95,37 @@
 
   function drawDifferentialSignal() {
     const canvas = $('#diffCanvas'), { ctx, w, h } = canvasContext(canvas); ctx.clearRect(0, 0, w, h);
-    const rows = [h * .2, h * .5, h * .8], labels = ['x₁', 'λx₂', 'x₁ − λx₂'];
-    const residual = .58 / Math.sqrt(state.heads / 2);
-    ctx.font = '8px DM Mono, monospace'; ctx.lineWidth = 1;
-    rows.forEach((y, index) => {
-      ctx.strokeStyle = '#17343d'; ctx.beginPath(); ctx.moveTo(30, y); ctx.lineTo(w, y); ctx.stroke();
-      ctx.fillStyle = '#69848a'; ctx.fillText(labels[index], 7, y + 3);
-    });
-    const trace = (row, color, valueAt) => {
-      ctx.beginPath();
-      for (let x = 30; x <= w; x += 1.5) {
-        const t = (x - 30) / Math.max(1, w - 30) * 18;
-        const y = rows[row] - valueAt(t) * Math.min(22, h * .105);
-        x === 30 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    const residual = Math.max(.18, .72 - (state.heads - 2) * .09);
+    const gap = 14, panelW = (w - gap) / 2, panelH = (h - gap) / 2;
+    const labels = ['AF3', 'T7', 'Pz', 'O2'];
+    ctx.font = '8px DM Mono, monospace';
+    for (let panel = 0; panel < 4; panel++) {
+      const col = panel % 2, row = Math.floor(panel / 2), x0 = col * (panelW + gap), y0 = row * (panelH + gap);
+      ctx.fillStyle = '#111b23'; ctx.fillRect(x0, y0, panelW, panelH);
+      ctx.strokeStyle = '#31414c'; ctx.lineWidth = 1; ctx.strokeRect(x0 + .5, y0 + .5, panelW - 1, panelH - 1);
+      for (let grid = 1; grid < 4; grid++) {
+        ctx.strokeStyle = '#31414c66'; ctx.beginPath();
+        ctx.moveTo(x0 + panelW * grid / 4, y0); ctx.lineTo(x0 + panelW * grid / 4, y0 + panelH); ctx.stroke();
       }
-      ctx.strokeStyle = color; ctx.lineWidth = row === 2 ? 1.8 : 1.1; ctx.stroke();
-    };
-    const neural = (t) => Math.sin(t * .72) * .62 + Math.sin(t * 1.9 + .6) * .22;
-    const shared = (t) => Math.sin(t * 6.1) * .34 + Math.sin(t * 10.7 + .4) * .18 + (Math.sin(t * .36) > .78 ? .32 * Math.sin(t * 14) : 0);
-    trace(0, '#55c7d4', (t) => neural(t) + shared(t));
-    trace(1, '#ffb05c', (t) => shared(t) * .94 + Math.sin(t * 5.6 + 1.1) * .045);
-    trace(2, '#edf4f2', (t) => neural(t) + shared(t) * residual + Math.sin(t * (4 + state.heads * .15)) * residual * .07);
+      ctx.fillStyle = '#8ea2ac'; ctx.fillText(labels[panel], x0 + 10, y0 + 16);
+      const baseline = y0 + panelH * .55, amplitude = Math.min(31, panelH * .28);
+      const neural = (t) => Math.sin(t * (.62 + panel * .05) + panel) * .55 + Math.sin(t * 1.55 + panel * .8) * .2;
+      const shared = (t) => Math.sin(t * 5.8 + panel * .18) * .32 + Math.sin(t * 10.4 + .4) * .16 + (Math.sin(t * .42 + panel) > .72 ? .27 * Math.sin(t * 13.2) : 0);
+      const trace = (color, width, alpha, valueAt) => {
+        ctx.beginPath();
+        for (let x = x0 + 7; x <= x0 + panelW - 7; x += 1.5) {
+          const t = (x - x0) / panelW * 18, y = baseline - valueAt(t) * amplitude;
+          x > x0 + 7 ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        }
+        ctx.save(); ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke(); ctx.restore();
+      };
+      trace('#ff7461', 1.1, .42, (t) => neural(t) + shared(t));
+      trace('#f1c56f', .8, .24, (t) => shared(t));
+      trace('#dffbf7', 1.65, .95, (t) => neural(t) + shared(t) * residual);
+    }
     const residualPercent = Math.round(residual * 100);
     $('#headPairCount').textContent = `${state.heads} PAIRED HEADS · ${state.heads * 2} MAMBA BRANCHES`;
-    $('#noiseResidual').textContent = `${residualPercent}% synthetic residual`;
+    $('#noiseResidual').textContent = `${residualPercent}% illustrative residual`;
   }
 
   function renderDifferentialHeads() {
