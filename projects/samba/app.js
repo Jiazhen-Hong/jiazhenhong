@@ -93,19 +93,28 @@
     masked.forEach((i) => { const x = i * w / blocks, bw = w / blocks + .5; ctx.fillStyle = '#17353be0'; ctx.fillRect(x, 19, bw, panelH - 25); ctx.strokeStyle = '#55c7d4'; ctx.setLineDash([3, 3]); ctx.strokeRect(x, 19, bw, panelH - 25); ctx.setLineDash([]); });
   }
 
-  let differentialFrame = 0;
-  function drawDifferentialSignal(reveal = 1) {
+  let differentialFrame = 0, displayedNoiseLevel = null;
+  function differentialNoiseTarget() { return 1 - (state.heads - 2) / 6 * .9; }
+  function drawDifferentialSignal(noiseLevel = differentialNoiseTarget(), phase = 0) {
     const canvas = $('#diffCanvas'), { ctx, w, h } = canvasContext(canvas); ctx.clearRect(0, 0, w, h);
-    const residual = Math.max(.18, .72 - (state.heads - 2) * .09);
     const pad = Math.max(20, w * .025), plotLeft = pad, plotRight = w - pad;
-    const top = 34, bottom = h - 22, divider = h * .52, rawBase = h * .31, cleanBase = h * .75;
-    const amplitude = Math.min(57, h * .16), duration = 22;
-    const neural = (t) => Math.sin(t * .55) * .52 + Math.sin(t * 1.28 + .7) * .19 + Math.sin(t * .18 - .8) * .14;
-    const noise = (t) => Math.sin(t * 6.8 + .2) * .47 + Math.sin(t * 12.4 + 1.1) * .27 + Math.sin(t * 19.7) * .13 + (Math.sin(t * .38) > .68 ? Math.sin(t * 25.4) * .24 : 0);
-    const trace = (baseline, color, width, alpha, valueAt, end = plotRight) => {
+    const top = 34, bottom = h - 24, baseline = h * .56, amplitude = Math.min(82, h * .29), duration = 24;
+    const neural = (t) => Math.sin(t * .47 - .7) * .38 + Math.sin(t * 1.16 + .5) * .18 + Math.sin(t * 2.7 - .2) * .075 + Math.sin(t * .13) * .12;
+    const hash = (index, layer) => {
+      const value = Math.sin((index + 1) * 12.9898 + (layer + 1) * 78.233 + state.seed * 19.19 + phase * 2.7) * 43758.5453;
+      return (value - Math.floor(value)) * 2 - 1;
+    };
+    const noise = (index, layer = 0) => {
+      const white = hash(index, layer) * .66 + hash(index + 17, layer + 3) * .24;
+      const burstSeed = Math.abs(hash(Math.floor(index / 19), layer + 8));
+      const burst = burstSeed > .82 ? hash(index + 41, layer + 11) * (burstSeed - .82) * 3.6 : 0;
+      return white + burst + Math.sin(index * .34 + layer * .8 + phase * 4) * .16;
+    };
+    const trace = (color, width, alpha, valueAt) => {
       ctx.beginPath();
-      for (let x = plotLeft; x <= end; x += 1.25) {
-        const t = (x - plotLeft) / (plotRight - plotLeft) * duration, y = baseline - valueAt(t) * amplitude;
+      let sample = 0;
+      for (let x = plotLeft; x <= plotRight; x += 1.4, sample++) {
+        const t = (x - plotLeft) / (plotRight - plotLeft) * duration, y = baseline - valueAt(t, sample) * amplitude;
         x > plotLeft ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
       ctx.save(); ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke(); ctx.restore();
@@ -117,32 +126,35 @@
       const x = plotLeft + (plotRight - plotLeft) * grid / 8;
       ctx.strokeStyle = '#31414c55'; ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom); ctx.stroke();
     }
-    ctx.strokeStyle = '#31414c'; ctx.beginPath(); ctx.moveTo(plotLeft, divider); ctx.lineTo(plotRight, divider); ctx.stroke();
+    for (let grid = 1; grid < 4; grid++) {
+      const y = top + (bottom - top) * grid / 4;
+      ctx.strokeStyle = '#31414c55'; ctx.beginPath(); ctx.moveTo(plotLeft, y); ctx.lineTo(plotRight, y); ctx.stroke();
+    }
+    ctx.strokeStyle = '#52616b88'; ctx.beginPath(); ctx.moveTo(plotLeft, baseline); ctx.lineTo(plotRight, baseline); ctx.stroke();
     ctx.font = '8px DM Mono, monospace'; ctx.fillStyle = '#8ea2ac';
     ctx.fillText('EXAMPLE CHANNEL · AF3', plotLeft, 18);
-    ctx.fillStyle = '#ff8c7b'; ctx.fillText('NOISY INPUT', plotLeft, rawBase - amplitude - 10);
-    ctx.fillStyle = '#b9d9d5'; ctx.fillText('DENOISED OUTPUT', plotLeft, cleanBase - amplitude - 10);
+    ctx.fillStyle = '#ff8c7b'; ctx.fillText(`NOISE AMPLITUDE · ${Math.round(noiseLevel * 100)}%`, plotRight - 148, 18);
 
-    trace(rawBase, '#ff7461', 1.15, .55, (t) => neural(t) + noise(t));
-    trace(rawBase, '#ffb0a6', .7, .28, (t) => neural(t) + noise(t) * 1.28);
-    const revealEnd = plotLeft + (plotRight - plotLeft) * Math.max(0, Math.min(1, reveal));
-    trace(cleanBase, '#dffbf7', 2, .98, (t) => neural(t) + noise(t) * residual, revealEnd);
-    trace(cleanBase, '#62d1c5', .9, .34, neural, revealEnd);
-    if (reveal < 1) {
-      ctx.strokeStyle = '#f1c56fcc'; ctx.beginPath(); ctx.moveTo(revealEnd, divider + 12); ctx.lineTo(revealEnd, bottom); ctx.stroke();
+    for (let layer = 1; layer <= 4; layer++) {
+      trace('#ff7461', .8, .08 + noiseLevel * .06, (t, sample) => neural(t) + noise(sample, layer) * noiseLevel * .62);
     }
-    const residualPercent = Math.round(residual * 100);
+    trace('#ff7461', 1.15, .72, (t, sample) => neural(t) + noise(sample) * noiseLevel * .7);
+    trace('#62d1c5', 1.8, .78, neural);
+
+    displayedNoiseLevel = noiseLevel;
     $('#headPairCount').textContent = `${state.heads} PAIRED HEADS · ${state.heads * 2} MAMBA BRANCHES`;
-    $('#noiseResidual').textContent = `${residualPercent}% illustrative noise left`;
+    $('#noiseResidual').textContent = `${Math.round(noiseLevel * 100)}% illustrative noise amplitude`;
   }
 
   function animateDifferentialSignal() {
     cancelAnimationFrame(differentialFrame);
-    if (reduced) { drawDifferentialSignal(); return; }
-    const started = performance.now(), duration = 520;
+    const target = differentialNoiseTarget(), start = displayedNoiseLevel === null ? target : displayedNoiseLevel;
+    if (reduced || Math.abs(target - start) < .001) { drawDifferentialSignal(target); return; }
+    const started = performance.now(), duration = 460;
     const frame = (now) => {
       const progress = Math.min(1, (now - started) / duration);
-      drawDifferentialSignal(1 - Math.pow(1 - progress, 3));
+      const eased = 1 - Math.pow(1 - progress, 3);
+      drawDifferentialSignal(start + (target - start) * eased, progress);
       if (progress < 1) differentialFrame = requestAnimationFrame(frame);
     };
     differentialFrame = requestAnimationFrame(frame);
