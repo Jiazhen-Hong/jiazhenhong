@@ -229,8 +229,9 @@ nav.tabs a.active::after {
 
 @media (max-width: 760px) {
   .header-inner { align-items: flex-start; flex-direction: column; }
-  nav.tabs { width: 100%; overflow-x: auto; }
-  nav.tabs a { padding: 12px 9px; font-size: .7em; white-space: nowrap; }
+  nav.tabs { width: 100%; justify-content: space-between; overflow-x: auto; scrollbar-width: none; }
+  nav.tabs::-webkit-scrollbar { display: none; }
+  nav.tabs a { padding: 12px 4px; font-size: .64em; white-space: nowrap; }
   .page-wrap { padding-top: 32px; }
   .research-card { flex-direction: column; }
   .research-card > img,

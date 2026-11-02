@@ -443,8 +443,9 @@
       .research-card img, .research-card video { width: 100%; }
       nav.tabs button, nav.tabs .tab-link { padding: 14px 10px; font-size: 0.75em; }
       .header-inner { flex-direction: column; align-items: flex-start; }
-      nav.tabs { width: 100%; overflow-x: auto; }
-      nav.tabs .tab-link { white-space: nowrap; }
+      nav.tabs { width: 100%; justify-content: space-between; overflow-x: auto; scrollbar-width: none; }
+      nav.tabs::-webkit-scrollbar { display: none; }
+      nav.tabs .tab-link { padding: 14px 4px; font-size: 0.64em; white-space: nowrap; }
     }
   </style>
 </head>
