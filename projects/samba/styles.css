@@ -208,9 +208,11 @@ body{background:var(--bg)}
 
 /* v10: clearer venue and citation entry points. */
 .hero-meta{font-size:12px;align-items:center;min-height:28px}
-.conference-link{display:inline-flex;align-items:center;gap:9px;color:var(--coral);font-weight:500;letter-spacing:.1em;padding:4px 0 7px;border-bottom:1px solid #ff6f6170;transition:color .2s,border-color .2s,transform .2s}
+.conference-link{display:inline-flex;align-items:baseline;gap:2px;color:var(--coral);font-weight:500;letter-spacing:.1em;padding:4px 0 7px;border-bottom:1px solid #ff6f6170;transition:color .2s,border-color .2s,transform .2s;white-space:nowrap}
 .conference-link:hover{color:#ff9a90;border-color:#ff9a90;transform:translateY(-1px)}
-.conference-link span{font-size:15px;line-height:1}
+.conference-link .conference-main{font-size:18px;line-height:1;font-weight:600}
+.conference-link .conference-detail{font-size:9px;line-height:1.2;opacity:.82}
+.conference-link .conference-arrow{font-size:13px;line-height:1;margin-left:6px}
 .hero-copy .eyebrow{position:relative;z-index:2;margin-bottom:34px}
 .hero h1{line-height:.8}
 .cite-button{border-color:#ff6f6170;color:#ffb0a8}
@@ -223,7 +225,7 @@ body{background:var(--bg)}
 .citation button:hover{background:var(--coral);border-color:var(--coral);color:#16090c}
 
 @media(max-width:1000px){.hero-stats{max-width:none}.aligned-growth{grid-template-columns:1fr}.growth-bars>div{grid-template-columns:150px 1fr 60px}}
-@media(max-width:700px){.section{padding:82px 0}.hero-meta{font-size:9px}.conference-link{gap:6px}.hero-copy .eyebrow{margin-bottom:28px}.hero-buttons{flex-wrap:wrap}.hero-stats{grid-template-columns:repeat(3,1fr)}.hero-stats div{padding-right:12px;margin-right:12px}.hero-stats strong{font-size:29px}.complexity{grid-template-columns:1fr}.growth-bars>div{grid-template-columns:110px 1fr 50px}.source-strip{grid-template-columns:1fr auto}.source-strip span{grid-column:1/-1}.experiment-marker span{transform:rotate(-35deg);transform-origin:left bottom}.cdse-method-visual{grid-template-columns:1fr 105px 1fr;padding:22px 10px;gap:4px}.cdse-operator{min-width:0;padding:15px 5px}.cdse-operator strong{font-size:23px}.mini-topomap svg{max-width:125px}.citation{padding:34px 24px}.citation-label{align-self:auto}}
+@media(max-width:700px){.section{padding:82px 0}.hero-meta{font-size:9px}.conference-link{gap:1px}.conference-link .conference-main{font-size:14px}.conference-link .conference-detail{font-size:7px}.conference-link .conference-arrow{font-size:11px;margin-left:4px}.hero-copy .eyebrow{margin-bottom:28px}.hero-buttons{flex-wrap:wrap}.hero-stats{grid-template-columns:repeat(3,1fr)}.hero-stats div{padding-right:12px;margin-right:12px}.hero-stats strong{font-size:29px}.complexity{grid-template-columns:1fr}.growth-bars>div{grid-template-columns:110px 1fr 50px}.source-strip{grid-template-columns:1fr auto}.source-strip span{grid-column:1/-1}.experiment-marker span{transform:rotate(-35deg);transform-origin:left bottom}.cdse-method-visual{grid-template-columns:1fr 105px 1fr;padding:22px 10px;gap:4px}.cdse-operator{min-width:0;padding:15px 5px}.cdse-operator strong{font-size:23px}.mini-topomap svg{max-width:125px}.citation{padding:34px 24px}.citation-label{align-self:auto}}
 
 /* v11: one dark canvas with functional color accents. */
 :root{--bg:#101820;--panel:#16222c;--panel2:#1b2a35;--ink:#f4f1eb;--muted:#9aa8b2;--line:#31414c;--coral:#ff7461;--cyan:#ff7461;--teal:#62d1c5;--gold:#f1c56f;--green:#72d3ae}
