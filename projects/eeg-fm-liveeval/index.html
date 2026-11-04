@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -35,7 +35,9 @@
       <div class="hero-orbit" aria-label="EEG signal flowing through a foundation model into text">
         <div class="signal-line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="model-core"><small>EEG</small><strong>FM</strong><span>LIVE</span></div>
-        <div class="typed-card"><small class="mono">DECODED OUTPUT</small><strong>THOUGHTS<br>INTO WORDS<span>_</span></strong></div>
+        <div class="typed-card"><small class="mono">DECODED OUTPUT</small><strong aria-label="Thoughts into words"><span id="heroTypedText" class="typed-output" aria-hidden="true">THOUGHTS
+INTO
+WORDS</span><span class="type-cursor" aria-hidden="true">_</span></strong></div>
         <p class="orbit-label mono">EEG → MODEL → ACTION</p>
       </div>
     </section>
@@ -124,6 +126,6 @@
   </main>
 
   <footer class="footer shell"><a class="brand" href="#top"><span>FM</span> LiveEval</a><p>Real-time evaluation of EEG foundation models through online P300 spelling.</p><div><a href="../">Projects</a><a href="../../">Home</a></div></footer>
-  <script src="app.js?v=1" defer></script>
+  <script src="app.js?v=2" defer></script>
 </body>
 </html>

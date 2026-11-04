@@ -6,6 +6,60 @@ const replayButton = document.querySelector("#replayButton");
 const repeatSlider = document.querySelector("#repeatSlider");
 const repeatValue = document.querySelector("#repeatValue");
 const modelSelect = document.querySelector("#modelSelect");
+const heroTypedText = document.querySelector("#heroTypedText");
+
+const heroMessage = "THOUGHTS\nINTO\nWORDS";
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let heroTypingTimer = null;
+let heroTypingIndex = 0;
+let heroDeleting = false;
+
+function scheduleHeroTyping(delay) {
+  heroTypingTimer = window.setTimeout(updateHeroTyping, delay);
+}
+
+function updateHeroTyping() {
+  if (reducedMotion.matches) {
+    heroTypedText.textContent = heroMessage;
+    return;
+  }
+
+  if (!heroDeleting) {
+    heroTypingIndex += 1;
+    heroTypedText.textContent = heroMessage.slice(0, heroTypingIndex);
+
+    if (heroTypingIndex < heroMessage.length) {
+      const typedCharacter = heroMessage[heroTypingIndex - 1];
+      scheduleHeroTyping(typedCharacter === "\n" ? 260 : 72);
+    } else {
+      heroDeleting = true;
+      scheduleHeroTyping(1800);
+    }
+    return;
+  }
+
+  heroTypingIndex -= 1;
+  heroTypedText.textContent = heroMessage.slice(0, heroTypingIndex);
+
+  if (heroTypingIndex > 0) {
+    scheduleHeroTyping(34);
+  } else {
+    heroDeleting = false;
+    scheduleHeroTyping(520);
+  }
+}
+
+function startHeroTyping() {
+  if (heroTypingTimer) window.clearTimeout(heroTypingTimer);
+  heroTypingTimer = null;
+  heroTypingIndex = reducedMotion.matches ? heroMessage.length : 0;
+  heroDeleting = false;
+  heroTypedText.textContent = reducedMotion.matches ? heroMessage : "";
+  if (!reducedMotion.matches) scheduleHeroTyping(450);
+}
+
+reducedMotion.addEventListener("change", startHeroTyping);
+startHeroTyping();
 
 const cells = symbols.map((symbol) => {
   const button = document.createElement("button");
