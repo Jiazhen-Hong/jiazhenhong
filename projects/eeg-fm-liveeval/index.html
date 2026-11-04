@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071413">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="EEG-FM LiveEval explores real-time evaluation of EEG foundation models through online P300 spelling.">
+  <link rel="canonical" href="https://jiazhen-hong.github.io/jiazhenhong/projects/eeg-fm-liveeval/">
+  <link rel="icon" href="../../images/favicon/favicon.svg" type="image/svg+xml">
+  <title>EEG-FM LiveEval · Jiazhen Hong</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="nav shell">
+    <a class="brand" href="#top"><span>FM</span> LiveEval</a>
+    <nav aria-label="Page navigation"><a href="#demo">Demo</a><a href="#protocol">Protocol</a><a href="#results">Results</a><a href="#evidence">Evidence</a></nav>
+    <a class="all-projects" href="../">All projects ↗</a>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow mono">REAL-TIME EEG FOUNDATION MODEL EVALUATION</p>
+        <h1>Beyond the<br><em>offline score.</em></h1>
+        <p class="deck">A brain-in-the-loop evaluation demo using online P300 spelling.</p>
+        <div class="hero-actions"><a class="button primary" href="#demo">Run the replay ↓</a><a class="button ghost" href="#summit-video">Watch the video</a></div>
+        <div class="status mono"><i></i> RESEARCH PROTOTYPE · STUDY IN DEVELOPMENT</div>
+      </div>
+
+      <div class="hero-orbit" aria-label="EEG signal flowing through a foundation model into text">
+        <div class="signal-line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="model-core"><small>EEG</small><strong>FM</strong><span>LIVE</span></div>
+        <div class="typed-card"><small class="mono">DECODED OUTPUT</small><strong>THOUGHTS<br>INTO WORDS<span>_</span></strong></div>
+        <p class="orbit-label mono">EEG → MODEL → ACTION</p>
+      </div>
+    </section>
+
+    <section class="why section shell">
+      <div class="section-number mono">01 / WHY LIVE EVALUATION</div>
+      <div class="why-grid">
+        <h2>A benchmark measures a model.<br><em>A live task measures a system.</em></h2>
+        <div class="why-copy"><p>Offline accuracy does not capture timing, calibration burden, montage changes, or how errors accumulate during actual use.</p><p>LiveEval turns these constraints into a reproducible P300 spelling task and reports behavior people can see.</p></div>
+      </div>
+      <div class="measure-strip" aria-label="Evaluation dimensions"><span>Character accuracy</span><span>Information transfer rate</span><span>Calibration cost</span><span>Montage robustness</span><span>End-to-end latency</span></div>
+    </section>
+
+    <section id="demo" class="demo-section section">
+      <div class="shell">
+        <div class="section-head"><div><p class="section-number mono">02 / INTERACTIVE REPLAY</p><h2>Watch a selection<br><em>become a word.</em></h2></div><p>Choose an evaluation track and replay a short spelling sequence.</p></div>
+        <div class="demo-lab">
+          <aside class="demo-controls">
+            <label><span class="mono">EVALUATION TRACK</span><select id="modelSelect"><option value="foundation">Foundation model</option><option value="scratch">Randomized control</option><option value="swlda">SWLDA</option></select></label>
+            <label><span><b>Flashes per selection</b><output id="repeatValue">8</output></span><input id="repeatSlider" type="range" min="4" max="12" value="8" step="1"></label>
+            <button id="replayButton" class="button primary full" type="button">▶ Start replay</button>
+            <p class="mono disclaimer">ILLUSTRATIVE REPLAY · NO LIVE MODEL INFERENCE</p>
+          </aside>
+          <div class="speller-stage">
+            <div class="stage-top"><div><span class="mono">TARGET</span><strong>BRAIN</strong></div><div><span class="mono">DECODED</span><strong id="decodedText">_____</strong></div><div><span class="mono">STATUS</span><strong id="replayStatus">Ready</strong></div></div>
+            <div id="spellerGrid" class="speller-grid" aria-label="P300 row-column spelling matrix"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="protocol" class="section shell">
+      <div class="section-head"><div><p class="section-number mono">03 / EVALUATION PROTOCOL</p><h2>One loop.<br><em>Four measurable stages.</em></h2></div><p>The current prototype follows the complete path from signal collection to typed output.</p></div>
+      <div class="protocol-grid">
+        <article><span>01</span><div class="protocol-icon scalp"><i></i><i></i><i></i><i></i><i></i></div><h3>Select a montage</h3><p>Evaluate how a decoder behaves when the available electrodes change.</p></article>
+        <article><span>02</span><div class="protocol-icon wave"><i></i></div><h3>Calibrate on P300</h3><p>Collect target and non-target responses under controlled visual timing.</p></article>
+        <article><span>03</span><div class="protocol-icon model"><b>FM</b></div><h3>Decode online</h3><p>Compare pretrained representations with controls under the same flashes.</p></article>
+        <article><span>04</span><div class="protocol-icon text"><b>A_</b></div><h3>Measure behavior</h3><p>Track accuracy, speed, errors, and the final text produced by each system.</p></article>
+      </div>
+    </section>
+
+    <section id="results" class="results-section section">
+      <div class="shell">
+        <div class="section-head"><div><p class="section-number mono">04 / CURRENT DEMO SESSION</p><h2>Results you can<br><em>inspect, not just quote.</em></h2></div><p>Values shown in the current Summit video. These are session-specific and are not population-level claims.</p></div>
+        <div class="results-grid">
+          <div class="metric-feature"><span class="mono">FOUNDATION MODEL</span><strong>94<small>%</small></strong><p>character accuracy</p><i>+27 points vs. SWLDA in this demo</i></div>
+          <div class="comparison" aria-label="Character accuracy comparison from the demo video">
+            <div class="chart-head"><span class="mono">CHARACTER ACCURACY</span><span class="mono">DEMO SESSION</span></div>
+            <div class="bar-row foundation"><span>Foundation model</span><div><i style="--value:94%"></i></div><b>94%</b></div>
+            <div class="bar-row swlda"><span>SWLDA</span><div><i style="--value:67%"></i></div><b>67%</b></div>
+            <div class="bar-row scratch"><span>Randomized control</span><div><i style="--value:33%"></i></div><b>33%</b></div>
+            <p class="chart-note">The research study will extend this comparison across participants, sessions, devices, and model families.</p>
+          </div>
+          <div class="metric-stack"><div><strong>35.1</strong><span>bits/min</span><p>foundation model</p></div><div><strong>19.5</strong><span>bits/min</span><p>SWLDA</p></div><div><strong>6.4</strong><span>bits/min</span><p>randomized control</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="evidence" class="section shell evidence">
+      <div class="section-head"><div><p class="section-number mono">05 / INSIDE THE TASK</p><h2>The evaluation is<br><em>visible end to end.</em></h2></div><p>Real interfaces expose the practical decisions hidden by an offline score.</p></div>
+      <div class="evidence-grid">
+        <figure class="wide"><div class="media-frame"><img src="assets/online-spelling.gif" alt="Online P300 spelling interface with model comparison"></div><figcaption><span class="mono">LIVE DECODING</span><p>The same flashes feed every evaluation track while text, accuracy, and information transfer rate update online.</p></figcaption></figure>
+        <figure><div class="media-frame"><img src="assets/channel-selection.gif" alt="Interactive EEG channel selection montage"></div><figcaption><span class="mono">MONTAGE SHIFT</span><p>Channel selection makes cross-montage compatibility part of the evaluation.</p></figcaption></figure>
+        <figure><div class="media-frame light"><img src="assets/p300-erp.png" alt="P300 target and non-target ERP traces across EEG channels"></div><figcaption><span class="mono">SIGNAL EVIDENCE</span><p>ERP inspection connects online behavior back to the underlying target response.</p></figcaption></figure>
+      </div>
+    </section>
+
+    <section id="summit-video" class="video-section section">
+      <div class="shell video-grid">
+        <div><p class="section-number mono">06 / SUMMIT VIDEO</p><h2>From foundation model<br><em>to live BCI.</em></h2><p>The original presentation introduces the model context, then follows the P300 spelling workflow and session comparison.</p><p class="video-note mono">PREVIEW CUT · 02:54 · CAPTIONS INCLUDED</p></div>
+        <div class="video-wrap">
+          <video controls preload="metadata" playsinline poster="assets/online-spelling.gif">
+            <source src="assets/summit-demo.m4v" type="video/mp4">
+            Your browser does not support the video element.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <section class="next-section shell">
+      <p class="section-number mono">NEXT / TOWARD A PAPER</p>
+      <div><h2>From one session<br><em>to a live benchmark.</em></h2><p>The next phase expands the protocol across participants, sessions, devices, calibration budgets, and EEG foundation models.</p></div>
+      <a class="button ghost" href="#top">Back to top ↑</a>
+    </section>
+  </main>
+
+  <footer class="footer shell"><a class="brand" href="#top"><span>FM</span> LiveEval</a><p>Real-time evaluation of EEG foundation models through online P300 spelling.</p><div><a href="../">Projects</a><a href="../../">Home</a></div></footer>
+  <script src="app.js?v=1" defer></script>
+</body>
+</html>
