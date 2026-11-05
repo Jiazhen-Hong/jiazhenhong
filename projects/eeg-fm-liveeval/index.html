@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
@@ -66,6 +66,19 @@ WORDS</span><span class="type-cursor" aria-hidden="true">_</span></strong></div>
     <section id="demo" class="demo-section section">
       <div class="shell">
         <div class="section-head"><div><p class="section-number mono">03 / INTERACTIVE REPLAY</p><h2>Watch a selection<br><em>become a word.</em></h2></div><p>Choose an evaluation track and replay a short spelling sequence.</p></div>
+        <div class="calibration-race" aria-label="Illustrative calibration progress comparison">
+          <div class="calibration-intro">
+            <span class="mono">CALIBRATION · FDR</span>
+            <h3>Ready for online use.</h3>
+            <p>Use “Flashes per selection” below to control the calibration speed.</p>
+          </div>
+          <div class="calibration-progress">
+            <div class="calibration-row pretrained"><div><strong>Pre-trained foundation model</strong><span class="mono">01 · FIRST</span></div><div class="calibration-track"><i></i><b class="mono">FDR</b></div></div>
+            <div class="calibration-row scratch-model"><div><strong>Scratch foundation model</strong><span class="mono">02 · SECOND</span></div><div class="calibration-track"><i></i><b class="mono">FDR</b></div></div>
+            <div class="calibration-row traditional"><div><strong>Traditional classifier (SWLDA)</strong><span class="mono">03 · THIRD</span></div><div class="calibration-track"><i></i><b class="mono">FDR</b></div></div>
+            <p class="calibration-note mono">ILLUSTRATIVE ORDERING · CALIBRATION TIME TO BE VALIDATED IN THE STUDY</p>
+          </div>
+        </div>
         <div class="demo-lab">
           <aside class="demo-controls">
             <label><span class="mono">EVALUATION TRACK</span><select id="modelSelect"><option value="foundation">Foundation model</option><option value="scratch">Randomized control</option><option value="swlda">SWLDA</option></select></label>
@@ -105,19 +118,6 @@ WORDS</span><span class="type-cursor" aria-hidden="true">_</span></strong></div>
           </div>
           <div class="metric-stack"><div><strong>35.1</strong><span>bits/min</span><p>foundation model</p></div><div><strong>19.5</strong><span>bits/min</span><p>SWLDA</p></div><div><strong>6.4</strong><span>bits/min</span><p>randomized control</p></div></div>
         </div>
-        <div class="calibration-race" aria-label="Illustrative calibration progress comparison">
-          <div class="calibration-intro">
-            <span class="mono">CALIBRATION RACE</span>
-            <h3>Ready for online use.</h3>
-            <p>Each track starts together. Earlier completion represents a lower calibration burden.</p>
-          </div>
-          <div class="calibration-progress">
-            <div class="calibration-row pretrained"><div><strong>Pre-trained foundation model</strong><span class="mono">01 · FIRST</span></div><div class="calibration-track"><i></i></div></div>
-            <div class="calibration-row scratch-model"><div><strong>Scratch foundation model</strong><span class="mono">02 · SECOND</span></div><div class="calibration-track"><i></i></div></div>
-            <div class="calibration-row traditional"><div><strong>Traditional classifier (SWLDA)</strong><span class="mono">03 · THIRD</span></div><div class="calibration-track"><i></i></div></div>
-            <p class="calibration-note mono">ILLUSTRATIVE ORDERING · CALIBRATION TIME TO BE VALIDATED IN THE STUDY</p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -139,6 +139,6 @@ WORDS</span><span class="type-cursor" aria-hidden="true">_</span></strong></div>
   </main>
 
   <footer class="footer shell"><a class="brand" href="#top"><span>FM</span> LiveEval</a><p>Real-time evaluation of EEG foundation models through online P300 spelling.</p><div><a href="../">Projects</a><a href="../../">Home</a></div></footer>
-  <script src="app.js?v=2" defer></script>
+  <script src="app.js?v=3" defer></script>
 </body>
 </html>

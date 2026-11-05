@@ -7,6 +7,7 @@ const repeatSlider = document.querySelector("#repeatSlider");
 const repeatValue = document.querySelector("#repeatValue");
 const modelSelect = document.querySelector("#modelSelect");
 const heroTypedText = document.querySelector("#heroTypedText");
+const calibrationRace = document.querySelector(".calibration-race");
 
 const heroMessage = "THOUGHTS\nINTO\nWORDS";
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -132,9 +133,15 @@ function runReplay() {
   }, speed);
 }
 
-repeatSlider.addEventListener("input", () => {
-  repeatValue.textContent = repeatSlider.value;
-});
+function updateSelectionSpeed() {
+  const flashesPerSelection = Number(repeatSlider.value);
+  const calibrationCycle = 2.8 + (flashesPerSelection - 4) * 0.36;
+  repeatValue.textContent = flashesPerSelection;
+  calibrationRace.style.setProperty("--calibration-cycle", `${calibrationCycle.toFixed(2)}s`);
+}
+
+repeatSlider.addEventListener("input", updateSelectionSpeed);
+updateSelectionSpeed();
 replayButton.addEventListener("click", runReplay);
 modelSelect.addEventListener("change", () => {
   stopReplay();
