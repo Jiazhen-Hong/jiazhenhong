@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#071413">
+  <meta name="theme-color" content="#101820">
   <meta name="robots" content="noindex,nofollow">
   <meta name="description" content="EEG-FM LiveEval explores real-time evaluation of EEG foundation models through online P300 spelling.">
   <link rel="canonical" href="https://jiazhen-hong.github.io/jiazhenhong/projects/eeg-fm-liveeval/">
@@ -11,34 +11,35 @@
   <title>EEG-FM LiveEval · Jiazhen Hong</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,300..700&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <script>(function(){var t=null;try{t=localStorage.getItem('dcode-theme')}catch(e){}var light=t==='light';document.documentElement.dataset.theme=light?'light':'dark';if(light){var m=document.querySelector('meta[name="theme-color"]');if(m)m.content='#F5F5F3'}})();</script>
+  <link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
   <header class="nav shell">
-    <a class="brand" href="#top"><span>FM</span> LiveEval</a>
+    <a class="brand" href="#top"><span class="mark">FM</span><span>LiveEval</span></a>
     <nav aria-label="Page navigation"><a href="#demo">Demo</a><a href="#protocol">Protocol</a><a href="#results">Results</a><a href="#evidence">Evidence</a></nav>
-    <a class="all-projects" href="../">All projects ↗</a>
+    <div class="nav-actions"><button type="button" class="theme-x" aria-label="Switch to light theme"><svg class="sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg><svg class="moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.6 9.6A5.8 5.8 0 0 1 6.4 2.4a5.8 5.8 0 1 0 7.2 7.2z"/></svg></button><a class="pill" href="../">All projects</a></div>
   </header>
 
   <main id="top">
     <section class="hero shell">
       <div class="hero-copy">
-        <p class="eyebrow mono">REAL-TIME EEG FOUNDATION MODEL EVALUATION</p>
+        <p class="eyebrow mono">Real-time EEG foundation model evaluation</p>
         <h1>Beyond the<br><em>offline score.</em></h1>
         <p class="deck">A brain-in-the-loop evaluation demo using online P300 spelling.</p>
         <div class="hero-actions"><a class="button primary" href="#demo">Run the replay ↓</a><a class="button ghost" href="#summit-video">Watch the video</a></div>
-        <div class="status mono"><i></i> RESEARCH PROTOTYPE · STUDY IN DEVELOPMENT</div>
+        <div class="status mono"><i></i> Research prototype · study in development</div>
       </div>
 
       <div class="hero-orbit" aria-label="EEG signal flowing through a foundation model into text">
         <div class="signal-line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="model-core"><small>EEG</small><strong>FM</strong><span>LIVE</span></div>
-        <div class="typed-card"><small class="mono">DECODED OUTPUT</small><strong aria-label="Thoughts into words"><span id="heroTypedText" class="typed-output" aria-hidden="true">THOUGHTS
+        <div class="typed-card"><small class="mono">Decoded output</small><strong aria-label="Thoughts into words"><span id="heroTypedText" class="typed-output" aria-hidden="true">THOUGHTS
 INTO
 WORDS</span><span class="type-cursor" aria-hidden="true">_</span></strong></div>
-        <p class="orbit-label mono">EEG → MODEL → ACTION</p>
+        <p class="orbit-label mono">EEG → model → action</p>
       </div>
     </section>
 
@@ -68,7 +69,7 @@ WORDS</span><span class="type-cursor" aria-hidden="true">_</span></strong></div>
         <div class="section-head"><div><p class="section-number mono">03 / INTERACTIVE REPLAY</p><h2>Watch a selection<br><em>become a word.</em></h2></div><p>Choose an evaluation track and replay a short spelling sequence.</p></div>
         <div class="calibration-race" aria-label="Illustrative calibration progress comparison">
           <div class="calibration-intro">
-            <span class="mono">CALIBRATION · FDR</span>
+            <span class="mono">Calibration · FDR</span>
             <h3>Ready for online use.</h3>
             <p>Use “Flashes per selection” below to control the calibration speed.</p>
           </div>
@@ -76,18 +77,18 @@ WORDS</span><span class="type-cursor" aria-hidden="true">_</span></strong></div>
             <div class="calibration-row pretrained"><div><strong>Pre-trained foundation model</strong><span class="mono">01 · FIRST</span></div><div class="calibration-track"><i></i><b class="mono">FDR</b></div></div>
             <div class="calibration-row scratch-model"><div><strong>Scratch foundation model</strong><span class="mono">02 · SECOND</span></div><div class="calibration-track"><i></i><b class="mono">FDR</b></div></div>
             <div class="calibration-row traditional"><div><strong>Traditional classifier (SWLDA)</strong><span class="mono">03 · THIRD</span></div><div class="calibration-track"><i></i><b class="mono">FDR</b></div></div>
-            <p class="calibration-note mono">ILLUSTRATIVE ORDERING · CALIBRATION TIME TO BE VALIDATED IN THE STUDY</p>
+            <p class="calibration-note mono">Illustrative ordering · calibration time to be validated in the study</p>
           </div>
         </div>
         <div class="demo-lab">
           <aside class="demo-controls">
-            <label><span class="mono">EVALUATION TRACK</span><select id="modelSelect"><option value="foundation">Foundation model</option><option value="scratch">Randomized control</option><option value="swlda">SWLDA</option></select></label>
+            <label><span class="mono">Evaluation track</span><select id="modelSelect"><option value="foundation">Foundation model</option><option value="scratch">Randomized control</option><option value="swlda">SWLDA</option></select></label>
             <label><span><b>Flashes per selection</b><output id="repeatValue">8</output></span><input id="repeatSlider" type="range" min="4" max="12" value="8" step="1"></label>
             <button id="replayButton" class="button primary full" type="button">▶ Start replay</button>
-            <p class="mono disclaimer">ILLUSTRATIVE REPLAY · NO LIVE MODEL INFERENCE</p>
+            <p class="mono disclaimer">Illustrative replay · no live model inference</p>
           </aside>
           <div class="speller-stage">
-            <div class="stage-top"><div><span class="mono">TARGET</span><strong>BRAIN</strong></div><div><span class="mono">DECODED</span><strong id="decodedText">_____</strong></div><div><span class="mono">STATUS</span><strong id="replayStatus">Ready</strong></div></div>
+            <div class="stage-top"><div><span class="mono">Target</span><strong>BRAIN</strong></div><div><span class="mono">Decoded</span><strong id="decodedText">_____</strong></div><div><span class="mono">Status</span><strong id="replayStatus">Ready</strong></div></div>
             <div id="spellerGrid" class="speller-grid" aria-label="P300 row-column spelling matrix"></div>
           </div>
         </div>
@@ -138,7 +139,7 @@ WORDS</span><span class="type-cursor" aria-hidden="true">_</span></strong></div>
     </section>
   </main>
 
-  <footer class="footer shell"><a class="brand" href="#top"><span>FM</span> LiveEval</a><p>Real-time evaluation of EEG foundation models through online P300 spelling.</p><div><a href="../">Projects</a><a href="../../">Home</a></div></footer>
-  <script src="app.js?v=3" defer></script>
+  <footer class="footer shell"><a class="brand" href="#top"><span class="mark">FM</span><span>LiveEval</span></a><p>Real-time evaluation of EEG foundation models through online P300 spelling.</p><div><a href="../">Projects</a><a href="../../">Home</a><a href="#top">Back to top ↑</a></div></footer>
+  <script src="app.js?v=4" defer></script>
 </body>
 </html>

@@ -1,3 +1,38 @@
+const root = document.documentElement;
+const themeColor = document.querySelector('meta[name="theme-color"]');
+const themeButton = document.querySelector(".theme-x");
+const pageNav = document.querySelector("header.nav");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function syncThemeControls() {
+  const light = root.dataset.theme === "light";
+  if (themeColor) themeColor.content = light ? "#F5F5F3" : "#101820";
+  if (themeButton) themeButton.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+}
+
+if (themeButton) {
+  themeButton.addEventListener("click", () => {
+    const nextTheme = root.dataset.theme === "light" ? "dark" : "light";
+    const applyTheme = () => {
+      root.dataset.theme = nextTheme;
+      try { window.localStorage.setItem("dcode-theme", nextTheme); } catch (_) {}
+      syncThemeControls();
+    };
+    if (document.startViewTransition && !prefersReducedMotion.matches) document.startViewTransition(applyTheme);
+    else applyTheme();
+  });
+}
+
+function updateNavigation() {
+  if (!pageNav) return;
+  pageNav.classList.toggle("scrolled", window.scrollY > 8);
+  pageNav.classList.toggle("top", window.scrollY <= 8);
+}
+
+window.addEventListener("scroll", updateNavigation, { passive: true });
+syncThemeControls();
+updateNavigation();
+
 const symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789_".split("");
 const grid = document.querySelector("#spellerGrid");
 const decoded = document.querySelector("#decodedText");
