@@ -1,5 +1,7 @@
-# Jiazhen Hong's Personal Website
+# Jiazhen Hong
 
-This repository contains the source for [jiazhen-hong.github.io/jiazhenhong](https://jiazhen-hong.github.io/jiazhenhong/), including publications, research projects, news, and professional materials.
+Personal academic website featuring my research, publications, news, and curriculum vitae.
 
-The site is built with GitHub Pages and Jekyll. Content for the main sections is organized under `_includes/`.
+**Website:** [jiazhen-hong.github.io/jiazhenhong](https://jiazhen-hong.github.io/jiazhenhong/)
+
+Built with GitHub Pages and Jekyll.
