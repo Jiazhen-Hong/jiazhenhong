@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ChatBCI and ChatBCI-Assist turn P300 selections into faster, context-aware communication with large language models.">
+  <link rel="canonical" href="https://jiazhen-hong.github.io/jiazhenhong/projects/chatbci/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ChatBCI · From characters to intent">
+  <meta property="og:description" content="An interactive look at two real-world P300 BCI interfaces for LLM-assisted communication.">
+  <meta property="og:url" content="https://jiazhen-hong.github.io/jiazhenhong/projects/chatbci/">
+  <meta property="og:image" content="https://jiazhen-hong.github.io/jiazhenhong/images/ChatBCI-Assist.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ChatBCI · From characters to intent">
+  <meta name="twitter:description" content="Two real-world P300 BCI interfaces for LLM-assisted communication.">
+  <meta name="twitter:image" content="https://jiazhen-hong.github.io/jiazhenhong/images/ChatBCI-Assist.png">
+  <link rel="icon" href="../../images/favicon/favicon.svg" type="image/svg+xml">
+  <title>ChatBCI · From characters to intent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-nav" id="top">
+    <a class="brand" href="#top" aria-label="ChatBCI home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>ChatBCI</span>
+    </a>
+    <nav aria-label="Page navigation">
+      <a href="#evolution">Evolution</a>
+      <a href="#try">Try it</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#watch">Watch</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" type="button" aria-label="Switch to light theme" title="Change theme">
+        <svg class="sun" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path d="M10 1.5v2M10 16.5v2M1.5 10h2M16.5 10h2M4 4l1.4 1.4M14.6 14.6L16 16M4 16l1.4-1.4M14.6 5.4 16 4"/></svg>
+        <svg class="moon" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.4 12.8A7 7 0 0 1 7.2 3.6a7 7 0 1 0 9.2 9.2Z"/></svg>
+      </button>
+      <a class="nav-pill" href="../">All projects</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero shell">
+      <div class="hero-copy reveal">
+        <p class="eyebrow mono">REAL-WORLD INTERFACE · P300 BCI · LLM</p>
+        <h1>From characters<br>to <em>intent.</em></h1>
+        <p class="hero-deck">ChatBCI and ChatBCI-Assist combine brain-driven key selection with language intelligence to make communication faster, more natural, and more practical.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#try">Try the interface <span>↓</span></a>
+          <a class="button quiet" href="https://www.nature.com/articles/s41598-025-25660-7" target="_blank" rel="noreferrer">Read ChatBCI <span>↗</span></a>
+        </div>
+      </div>
+      <div class="hero-stage reveal" aria-label="Illustration of an EEG signal becoming a suggested message">
+        <div class="signal-card">
+          <span class="mono">EEG / P300</span>
+          <svg viewBox="0 0 420 130" role="img" aria-label="Animated EEG trace">
+            <path class="signal-grid" d="M0 32.5H420M0 65H420M0 97.5H420M70 0V130M140 0V130M210 0V130M280 0V130M350 0V130"/>
+            <path class="signal-line" d="M0 72 C12 68 18 76 29 70 S47 66 59 72 S76 79 88 69 S103 66 116 71 S132 79 143 69 S159 65 171 71 L185 73 L194 68 L201 80 L208 45 L216 95 L224 64 L234 70 C246 76 255 66 268 70 S286 78 299 70 S317 65 329 72 S347 77 360 70 S379 66 392 72 S408 76 420 69"/>
+          </svg>
+        </div>
+        <div class="stage-arrow" aria-hidden="true"><i></i><span>DECODE</span></div>
+        <div class="message-card">
+          <span class="mono">INTENT</span>
+          <p>I would like<br><strong>some water.</strong></p>
+          <div class="confidence"><i style="--confidence:92%"></i><span class="mono">92%</span></div>
+        </div>
+        <div class="hero-ring ring-one"></div><div class="hero-ring ring-two"></div>
+      </div>
+      <div class="hero-facts reveal">
+        <div><strong>2</strong><span>online BCI systems</span></div>
+        <div><strong>7 + 7</strong><span>participants</span></div>
+        <div><strong>2026</strong><span>journal publications</span></div>
+        <p>One research line, moving from context-aware word prediction to private, intent-level communication.</p>
+      </div>
+    </section>
+
+    <section class="problem-section section shell">
+      <div class="section-label mono reveal">01 / THE INTERFACE PROBLEM</div>
+      <div class="problem-grid">
+        <h2 class="reveal">A correct key<br>is only the<br><em>first step.</em></h2>
+        <div class="problem-copy reveal">
+          <p>Traditional P300 spellers select one character at a time. For a complete sentence, that can mean many repeated flashes, long periods of attention, and a high cognitive burden.</p>
+          <p>ChatBCI changes the unit of communication. Language suggestions let one brain-driven selection produce a word or phrase, while the user remains in control of every choice.</p>
+          <div class="unit-shift" aria-label="Communication unit grows from character to word to intent">
+            <span>CHARACTER</span><i>→</i><span>WORD</span><i>→</i><span>INTENT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="evolution-section section" id="evolution">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div><p class="section-label mono">02 / EVOLUTION</p><h2>Two systems.<br><em>One direction.</em></h2></div>
+          <p>Both systems join real-time EEG decoding with language support. ChatBCI predicts what comes next; ChatBCI-Assist moves toward local, intent-aware assistance.</p>
+        </div>
+        <div class="systems">
+          <article class="system-card chat reveal">
+            <div class="system-index mono">01 · CHATBCI</div>
+            <div class="system-title"><h3>Context becomes<br>a shortcut.</h3><span>REMOTE LLM</span></div>
+            <p>GPT-3.5 generates ten context-aware candidates from the partial sentence. The interface supports word completion, next-word prediction, and multi-word prediction.</p>
+            <div class="mini-interface" aria-hidden="true">
+              <div class="mini-suggestions"><i>LIKE</i><i>WANT</i><i>NEED</i></div>
+              <div class="mini-grid">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+              <div class="mini-text">I WOULD <b>LIKE</b></div>
+            </div>
+            <ul>
+              <li><span>Language</span>Remote GPT-3.5 query</li>
+              <li><span>Decoder</span>Subject-calibrated SWLDA</li>
+              <li><span>Goal</span>Fewer keys per sentence</li>
+            </ul>
+          </article>
+          <article class="system-card assist reveal">
+            <div class="system-index mono">02 · CHATBCI-ASSIST</div>
+            <div class="system-title"><h3>Intent becomes<br>the message.</h3><span>LOCAL LLM</span></div>
+            <p>A locally deployed language model proposes intent-level responses, while adaptive stopping ends each P300 selection when the accumulated evidence is sufficient.</p>
+            <div class="mini-interface assist-mini" aria-hidden="true">
+              <div class="mini-suggestions"><i>I NEED WATER</i><i>PLEASE HELP ME</i><i>I FEEL COLD</i></div>
+              <div class="mini-grid">A B C D E + * F G H I J + * K L M N O + * P Q R S T + * U V W X Y + * Z DW DC SP EN + *</div>
+              <div class="mini-text">I DO NOT <b>LIKE THIS FOOD</b></div>
+            </div>
+            <ul>
+              <li><span>Language</span>Fine-tuned local Llama 3.1 8B</li>
+              <li><span>Decoder</span>SWLDA with adaptive stopping</li>
+              <li><span>Goal</span>Private semantic communication</li>
+            </ul>
+          </article>
+        </div>
+        <figure class="architecture reveal">
+          <img src="../../images/ChatBCI-Assist.png" alt="ChatBCI-Assist system: P300 decoding, adaptive stopping, local language model, and online semantic spelling evaluation" loading="lazy">
+          <figcaption><span class="mono">CHATBCI-ASSIST</span><p>The complete closed loop joins visual stimulation, EEG decoding, language assistance, and online evaluation.</p></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="lab-section section" id="try">
+      <div class="shell">
+        <div class="section-head split reveal">
+          <div><p class="section-label mono">03 / INTERACTIVE DEMO</p><h2>Think in<br><em>larger units.</em></h2></div>
+          <p>Switch between the two interfaces. Select letters or suggestions to see how language assistance changes the number of choices needed to compose a message.</p>
+        </div>
+        <div class="lab reveal">
+          <div class="lab-toolbar">
+            <div class="mode-switch" role="group" aria-label="Choose a system">
+              <button class="active" type="button" data-mode="chat">ChatBCI</button>
+              <button type="button" data-mode="assist">ChatBCI-Assist</button>
+            </div>
+            <div class="lab-actions"><button id="flashButton" type="button"><i></i> Simulate flashes</button><button id="resetButton" type="button">Reset</button></div>
+          </div>
+          <div class="lab-content">
+            <aside class="lab-status">
+              <p class="mono status-label">CURRENT MESSAGE</p>
+              <div class="composed" id="composedText" aria-live="polite">I WOULD</div>
+              <p class="mono status-label">SYSTEM STATE</p>
+              <div class="state-row"><span>P300 evidence</span><strong id="evidenceValue">0.84</strong></div>
+              <div class="evidence-track"><i id="evidenceTrack"></i><b id="stopLine" title="Adaptive stopping threshold"></b></div>
+              <div class="state-row"><span id="stopLabel">Fixed repetitions</span><strong id="repetitionValue">10 / 10</strong></div>
+              <p class="lab-note">Illustrative browser simulation. No EEG is recorded and no model inference is performed.</p>
+            </aside>
+            <div class="speller-wrap">
+              <div class="suggestion-column" id="leftSuggestions" aria-label="Language suggestions"></div>
+              <div class="keyboard-panel">
+                <div class="keyboard" id="keyboard" aria-label="P300 speller keyboard"></div>
+                <div class="keyboard-legend"><span><i class="target-dot"></i> selectable key</span><span><i class="flash-dot"></i> current flash</span></div>
+              </div>
+              <div class="suggestion-column" id="rightSuggestions" aria-label="More language suggestions"></div>
+            </div>
+          </div>
+          <div class="lab-metrics">
+            <div><span class="mono">SELECTIONS</span><strong id="selectionCount">0</strong><small>brain-driven choices</small></div>
+            <div><span class="mono">CHARACTERS / SELECTION</span><strong id="charRate">0.0</strong><small>in this simulation</small></div>
+            <div><span class="mono">LANGUAGE MODE</span><strong id="languageMode">Word prediction</strong><small id="languageLocation">remote query</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="loop-section section shell">
+      <div class="section-head reveal">
+        <div><p class="section-label mono">04 / CLOSED LOOP</p><h2>Signal to<br><em>sentence.</em></h2></div>
+          <p>Each selection stays grounded in the same real-time loop: evoke a P300 response, decode the intended key, update language context, and present the next set of options.</p>
+      </div>
+      <div class="loop" aria-label="ChatBCI closed-loop workflow">
+        <article class="reveal"><span>01</span><div class="loop-icon eye"><i></i></div><h3>Attend</h3><p>The user focuses on a desired key while rows and columns flash.</p></article>
+        <article class="reveal"><span>02</span><div class="loop-icon wave"><i></i></div><h3>Detect</h3><p>A P300 response identifies the row and column containing the target.</p></article>
+        <article class="reveal"><span>03</span><div class="loop-icon decode"><i></i></div><h3>Decode</h3><p>SWLDA converts accumulated EEG evidence into a key selection.</p></article>
+        <article class="reveal"><span>04</span><div class="loop-icon language"><i></i></div><h3>Assist</h3><p>The language model updates candidate words or intent-level responses.</p></article>
+      </div>
+    </section>
+
+    <section class="evidence-section section" id="evidence">
+      <div class="shell">
+        <div class="section-head split reveal">
+          <div><p class="section-label mono">05 / ONLINE EVIDENCE</p><h2>Measured with<br><em>people in the loop.</em></h2></div>
+          <p>Both systems were evaluated in online sentence-composition experiments with seven participants, beyond offline replay or language-only simulation.</p>
+        </div>
+        <div class="evidence-grid">
+          <article class="metric-feature chat-metric reveal">
+            <span class="mono">CHATBCI · COPY SPELLING</span>
+            <strong>62.14<small>%</small></strong>
+            <h3>less time</h3>
+            <p>Mean reduction relative to letter-by-letter P300 spelling.</p>
+          </article>
+          <article class="metric-card reveal"><span class="mono">KEYSTROKES</span><strong>−53.22%</strong><p>Fewer selections in the copy-spelling task.</p><div class="bar"><i style="--value:53.22%"></i></div></article>
+          <article class="metric-card reveal"><span class="mono">INFORMATION RATE</span><strong>+229.48%</strong><p>Increase in character-based information transfer rate.</p><div class="bar"><i style="--value:82%"></i></div></article>
+          <article class="metric-feature assist-metric reveal">
+            <span class="mono">CHATBCI-ASSIST · ONLINE</span>
+            <strong>30.7<small> char/min</small></strong>
+            <h3>record-level spelling speed</h3>
+            <p>With 105.2 bits/min conventional ITR in the reported online evaluation.</p>
+          </article>
+          <article class="metric-card reveal"><span class="mono">SEMANTIC RATE</span><strong>147.1</strong><p>bits/min semantic information transfer rate.</p><div class="bar blue"><i style="--value:92%"></i></div></article>
+          <article class="metric-card reveal"><span class="mono">PRIVACY</span><strong>Local</strong><p>The language model can run on-device without a remote query.</p><div class="bar blue"><i style="--value:100%"></i></div></article>
+        </div>
+        <p class="evidence-note reveal">ChatBCI values are reported in the 2026 <em>Scientific Reports</em> article. ChatBCI-Assist values are reported in the 2026 <em>IEEE Transactions on Biomedical Engineering</em> article. Metrics use different task definitions and should not be treated as a direct head-to-head comparison.</p>
+      </div>
+    </section>
+
+    <section class="watch-section section shell" id="watch">
+      <div class="section-head reveal">
+        <div><p class="section-label mono">06 / REAL SYSTEMS</p><h2>Watch the<br><em>closed loop.</em></h2></div>
+        <p>These recordings show the actual interfaces used for online P300 spelling and language-assisted sentence composition.</p>
+      </div>
+      <div class="video-tabs reveal">
+        <div class="video-tablist" role="tablist" aria-label="Choose a demonstration video">
+          <button class="active" type="button" role="tab" aria-selected="true" aria-controls="video-chat" id="tab-chat" data-video="chat"><span>01</span><b>ChatBCI</b><small>Context-driven word prediction</small></button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="video-assist" id="tab-assist" data-video="assist"><span>02</span><b>ChatBCI-Assist</b><small>Intent-level local assistance</small></button>
+        </div>
+        <div class="video-frame" id="video-chat" role="tabpanel" aria-labelledby="tab-chat">
+          <iframe src="https://www.youtube.com/embed/VKEZ6ktGk0s?rel=0" title="ChatBCI online demonstration" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <div class="video-frame" id="video-assist" role="tabpanel" aria-labelledby="tab-assist" hidden>
+          <iframe data-src="https://www.youtube.com/embed/D_ycXoqfCYQ?rel=0" title="ChatBCI-Assist online demonstration" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section class="resources-section section">
+      <div class="shell resources-grid">
+        <div class="resource-copy reveal"><p class="section-label mono">EXPLORE</p><h2>Read the work.<br>Inspect the data.</h2><p>The publications describe the systems and online evaluations. The public repositories preserve participant-level experiment logs and the ChatBCI-Assist questionnaire tool.</p></div>
+        <div class="resource-links reveal">
+          <a href="https://www.nature.com/articles/s41598-025-25660-7" target="_blank" rel="noreferrer"><span class="mono">01</span><div><b>ChatBCI paper</b><small>Scientific Reports · Open access</small></div><i>↗</i></a>
+          <a href="https://ieeexplore.ieee.org/document/11520887" target="_blank" rel="noreferrer"><span class="mono">02</span><div><b>ChatBCI-Assist paper</b><small>IEEE Transactions on Biomedical Engineering</small></div><i>↗</i></a>
+          <a href="https://github.com/ChatBCI/ChatBCI-Experiment-Logs" target="_blank" rel="noreferrer"><span class="mono">03</span><div><b>ChatBCI experiment logs</b><small>Seven online participants · GitHub</small></div><i>↗</i></a>
+          <a href="https://github.com/ChatBCI/ChatBCI-Assist-ExpLogs" target="_blank" rel="noreferrer"><span class="mono">04</span><div><b>ChatBCI-Assist experiment logs</b><small>Online spelling records · GitHub</small></div><i>↗</i></a>
+          <a href="https://github.com/Jiazhen-Hong/ChatBCI-Assist-Questionnaires" target="_blank" rel="noreferrer"><span class="mono">05</span><div><b>Questionnaire interface</b><small>NASA-TLX, VAS-F, and usability ratings</small></div><i>↗</i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="citation shell reveal">
+      <div><span class="mono">CITE CHATBCI</span><small>Scientific Reports · 2026</small></div>
+      <p>Hong, J., Wang, W., &amp; Najafizadeh, L. <em>ChatBCI, a P300 speller BCI with context-driven word prediction leveraging large language models, from concept to evaluation.</em> Scientific Reports 16, 6379 (2026).</p>
+      <button type="button" id="copyCitation">Copy BibTeX</button>
+    </section>
+  </main>
+
+  <footer class="footer shell">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>ChatBCI</span></a>
+    <p>Brain-driven communication, designed as a real-world interface.</p>
+    <div><a href="../">Projects</a><a href="../../">Home</a><a href="#top">Back to top ↑</a></div>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

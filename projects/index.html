@@ -15,22 +15,33 @@
   </style>
   <style>
     [hidden] { display: none !important; }
+    .project-group{padding-top:50px}.project-group+.project-group{padding-top:10px}.group-head{display:grid;grid-template-columns:240px 1fr;gap:28px;align-items:end;border-top:1px solid var(--line);padding-top:20px}.group-head h2{font:500 30px/1.1 "EB Garamond",serif;margin:0;letter-spacing:-.025em}.group-head p{max-width:650px;margin:0;color:var(--muted);font-size:13px;line-height:1.55}.project-group .grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:24px 0 68px}.card.chatbci{background:#081612;box-shadow:inset 0 0 0 1px #6df0a729}.chatbci .num{color:#8ff4b7}.chatbci .tags span{border-color:#6df0a742}.card.chatbci:hover{box-shadow:inset 0 0 0 1px #6df0a766,0 22px 50px #16804d26}.chatbci .visual{border-color:#6df0a72e}.chatbci .visual:before{content:"";position:absolute;left:18px;right:18px;top:50%;height:2px;background:#6df0a7;box-shadow:0 -22px #72a7ff88,0 22px #6df0a788;transform:skewY(-7deg)}.chatbci .visual:after{content:"INTENT";position:absolute;right:-4px;bottom:17px;padding:6px 8px;background:#72a7ff;color:#081612;font:500 8px "DM Mono",monospace;letter-spacing:.08em}
     @media (max-width: 900px) {
       .project-nav { justify-content: space-between; scrollbar-width: none; }
       .project-nav::-webkit-scrollbar { display: none; }
       .project-nav a { padding: 12px 4px; font-size: 9px; }
     }
+    @media(max-width:680px){.group-head{grid-template-columns:1fr}.project-group .grid{grid-template-columns:1fr}.project-group{padding-top:38px}}
   </style>
 </head>
 <body>
   <header class="top"><div class="top-in"><span class="name">Jiazhen Hong &nbsp;|&nbsp; 洪嘉桢</span><nav class="project-nav" aria-label="Main navigation"><a href="../">Home</a><a href="../news/">News</a><a href="../research/">Research</a><a href="../publications/">Publications</a><a class="active" href="./">Projects</a><a href="../people/">People</a></nav></div></header>
   <main class="shell">
-    <section class="hero"><span class="kicker">INTERACTIVE RESEARCH</span><h1>Models you can<br><em>play with.</em></h1><p>Explore the ideas behind our research models through live, browser-based demonstrations. Each project has its own permanent link for direct sharing.</p></section>
-    <section class="grid" aria-label="Research projects">
-      <a class="card eegx" href="eeg-x/" hidden><span class="num">PROJECT 01 · 2025</span><span class="arrow">↗</span><div class="visual"></div><h2>EEG-X</h2><p>Device-agnostic, noise-robust EEG representation learning across headsets and recording conditions.</p><div class="tags"><span>FOUNDATION MODEL</span><span>CROSS-DEVICE</span><span>INTERACTIVE</span></div></a>
-      <a class="card samba" href="samba/" aria-label="Open the SAMBA interactive website"><span class="num">PROJECT 01 · 2026</span><span class="arrow">↗</span><div class="visual"></div><h2>SAMBA</h2><p>Long-sequence EEG foundation modeling with temporal semantic masking, differential Mamba, and coordinate-driven spatial embedding.</p><div class="tags"><span>LINEAR TIME</span><span>CDSE</span><span>LONG CONTEXT</span></div></a>
-      <a class="card liveeval" href="eeg-fm-liveeval/"><span class="num">PROJECT 02 · 2026</span><span class="arrow">↗</span><div class="visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><h2>EEG-FM<br>LiveEval</h2><p>Live evaluation of EEG foundation models through an online P300 spelling task.</p><div class="tags"><span>REAL-TIME BCI</span><span>P300</span><span>LIVE EVALUATION</span></div></a>
-      <a class="card ffkm" href="ff-kmeans/" aria-label="Open the Fission–Fusion k-means interactive website"><span class="num">PROJECT 03 · 2026</span><span class="arrow">↗</span><div class="visual" aria-hidden="true"></div><h2>Fission–Fusion<br>k-means</h2><p>Escape poor k-means local minima through geometric detection, fission, fusion, and short Lloyd updates.</p><div class="tags"><span>GEOMETRIC CLUSTERING</span><span>FFKM</span><span>INTERACTIVE</span></div></a>
+    <section class="hero"><span class="kicker">INTERACTIVE RESEARCH</span><h1>Research you can<br><em>explore.</em></h1><p>Explore research models, methods, and real-world interfaces through live, browser-based demonstrations. Each project has its own permanent link for direct sharing.</p></section>
+    <section class="project-group" aria-labelledby="models-heading">
+      <header class="group-head"><h2 id="models-heading">Models &amp; methods</h2><p>Interactive explanations of learning architectures and algorithms.</p></header>
+      <div class="grid">
+        <a class="card eegx" href="eeg-x/" hidden><span class="num">PROJECT 01 · 2025</span><span class="arrow">↗</span><div class="visual"></div><h2>EEG-X</h2><p>Device-agnostic, noise-robust EEG representation learning across headsets and recording conditions.</p><div class="tags"><span>FOUNDATION MODEL</span><span>CROSS-DEVICE</span><span>INTERACTIVE</span></div></a>
+        <a class="card samba" href="samba/" aria-label="Open the SAMBA interactive website"><span class="num">PROJECT 01 · 2026</span><span class="arrow">↗</span><div class="visual"></div><h2>SAMBA</h2><p>Long-sequence EEG foundation modeling with temporal semantic masking, differential Mamba, and coordinate-driven spatial embedding.</p><div class="tags"><span>LINEAR TIME</span><span>CDSE</span><span>LONG CONTEXT</span></div></a>
+        <a class="card ffkm" href="ff-kmeans/" aria-label="Open the Fission–Fusion k-means interactive website"><span class="num">PROJECT 02 · 2026</span><span class="arrow">↗</span><div class="visual" aria-hidden="true"></div><h2>Fission–Fusion<br>k-means</h2><p>Escape poor k-means local minima through geometric detection, fission, fusion, and short Lloyd updates.</p><div class="tags"><span>GEOMETRIC CLUSTERING</span><span>FFKM</span><span>INTERACTIVE</span></div></a>
+      </div>
+    </section>
+    <section class="project-group" aria-labelledby="interfaces-heading">
+      <header class="group-head"><h2 id="interfaces-heading">Real-world interfaces</h2><p>End-to-end systems that connect EEG acquisition, online decoding, and practical communication tasks.</p></header>
+      <div class="grid">
+        <a class="card liveeval" href="eeg-fm-liveeval/"><span class="num">PROJECT 03 · 2026</span><span class="arrow">↗</span><div class="visual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><h2>EEG-FM<br>LiveEval</h2><p>Live evaluation of EEG foundation models through an online P300 spelling task.</p><div class="tags"><span>REAL-TIME BCI</span><span>P300</span><span>LIVE EVALUATION</span></div></a>
+        <a class="card chatbci" href="chatbci/" aria-label="Open the ChatBCI and ChatBCI-Assist interactive website"><span class="num">PROJECT 04 · 2026</span><span class="arrow">↗</span><div class="visual" aria-hidden="true"></div><h2>ChatBCI<br>+ Assist</h2><p>From context-aware word prediction to local intent-level assistance for real-time P300 communication.</p><div class="tags"><span>REAL-WORLD INTERFACE</span><span>P300</span><span>LLM ASSISTANCE</span></div></a>
+      </div>
     </section>
   </main>
   <footer class="shell footer"><span>© 2026 Jiazhen Hong</span><a href="https://github.com/Jiazhen-Hong" target="_blank" rel="noreferrer">GitHub ↗</a></footer>
