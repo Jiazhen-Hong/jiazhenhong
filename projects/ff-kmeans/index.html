@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An interactive introduction to Fission–Fusion k-means, a geometric approach for escaping bad local minima."
+    />
+    <link rel="canonical" href="https://jiazhen-hong.github.io/jiazhenhong/projects/ff-kmeans/" />
+    <meta property="og:title" content="Fission–Fusion k-means · Interactive explorer" />
+    <meta property="og:description" content="See how geometric detection, fission, fusion, and Lloyd updates repair a poor k-means solution." />
+    <meta property="og:url" content="https://jiazhen-hong.github.io/jiazhenhong/projects/ff-kmeans/" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#1d2926" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f2b28'/%3E%3Cpath d='M17 32h30M32 17v30' stroke='%23bdd8b1' stroke-width='7' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23f6f4ee'/%3E%3C/svg%3E" />
+    <title>Fission–Fusion k-means</title>
+    <script>(function(){var t=null;try{t=localStorage.getItem('dcode-theme')}catch(e){}var light=t==='light';document.documentElement.dataset.theme=light?'light':'dark';if(light){var m=document.querySelector('meta[name="theme-color"]');if(m)m.content='#f4f3ed'}})();</script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Fission–Fusion k-means home">
+        <span class="brand-mark" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </span>
+        <span>FF<span>k</span>m</span>
+      </a>
+      <div class="nav-links">
+        <a href="#playground">Playground</a>
+        <a href="#method">Method</a>
+        <a href="#code">Code</a>
+      </div>
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to light theme">
+          <svg class="sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
+          <svg class="moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.6 9.6A5.8 5.8 0 0 1 6.4 2.4a5.8 5.8 0 1 0 7.2 7.2z"/></svg>
+        </button>
+        <a class="nav-projects" href="../">All projects</a>
+        <a
+          class="nav-github"
+          href="https://github.com/Jiazhen-Hong/ff-kmeans"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </nav>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span></span>A geometric approach to k-means</p>
+          <h1>Escape the<br /><em>local trap.</em></h1>
+          <p class="hero-lede">
+            Detect the geometry of a bad local solution. Split where one center
+            covers too much. Merge where two centers cover the same cluster.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#playground">
+              Run the demo <span aria-hidden="true">↓</span>
+            </a>
+            <a
+              class="button button-ghost"
+              href="https://doi.org/10.1109/TKDE.2025.3616858"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Read the paper <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" data-delay="1">
+          <div class="visual-topline">
+            <span><i class="live-dot"></i> Live geometry</span>
+            <span id="heroStage">Detecting mismatch</span>
+          </div>
+          <canvas id="heroCanvas" aria-label="Animated Fission–Fusion clustering demonstration"></canvas>
+          <div class="visual-caption">
+            <div>
+              <span class="caption-label">Current move</span>
+              <strong id="heroMove">FISSION</strong>
+            </div>
+            <div class="mini-track" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <span class="mono" id="heroCounter">01 / 04</span>
+          </div>
+        </div>
+
+        <div class="hero-stats reveal" data-delay="2">
+          <div><strong>2</strong><span>model mismatches</span></div>
+          <div><strong>6</strong><span>detector variants</span></div>
+          <div><strong>k</strong><span>centers preserved</span></div>
+        </div>
+      </section>
+
+      <section class="playground section" id="playground">
+        <div class="section-heading reveal">
+          <p class="eyebrow"><span></span>Interactive playground</p>
+          <h2>Watch a bad solution<br />repair itself.</h2>
+          <p>
+            A standard Lloyd solution can be locally stable and still assign its
+            centers poorly. Step through one FFkm iteration to see the geometric
+            correction.
+          </p>
+        </div>
+
+        <div class="lab-shell reveal" data-delay="1">
+          <div class="lab-toolbar">
+            <div class="lab-brand">
+              <span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>ffkm / interactive-lab</span>
+            </div>
+            <div class="lab-config">
+              <label>
+                Dataset
+                <select id="datasetSelect">
+                  <option value="balanced">Four islands</option>
+                  <option value="overlap">Soft overlap</option>
+                  <option value="stretched">Stretched</option>
+                </select>
+              </label>
+              <label>
+                Speed
+                <select id="speedSelect">
+                  <option value="0.7">0.7×</option>
+                  <option value="1" selected>1×</option>
+                  <option value="1.5">1.5×</option>
+                  <option value="2">2×</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="lab-body">
+            <div class="canvas-wrap">
+              <canvas id="labCanvas" aria-label="Interactive clustering plot"></canvas>
+              <div class="canvas-legend" aria-hidden="true">
+                <span><i class="point-key"></i> data</span>
+                <span><i class="center-key"></i> fitted center</span>
+                <span><i class="signal-key"></i> detected mismatch</span>
+              </div>
+              <div class="plot-label plot-label-y">feature 02</div>
+              <div class="plot-label plot-label-x">feature 01</div>
+            </div>
+
+            <aside class="lab-panel" aria-live="polite">
+              <div class="status-line">
+                <span id="stagePill">LOCAL OPTIMUM</span>
+                <span id="stageNumber">00</span>
+              </div>
+              <h3 id="stageTitle">A stable but wrong fit</h3>
+              <p id="stageDescription">
+                Lloyd updates have stopped. One center covers two clusters while
+                two centers compete for another.
+              </p>
+
+              <div class="metrics">
+                <div>
+                  <span>relative loss</span>
+                  <strong id="lossValue">1.000</strong>
+                </div>
+                <div>
+                  <span>centers</span>
+                  <strong id="centerCount">4</strong>
+                </div>
+              </div>
+
+              <div class="loss-chart-wrap">
+                <div class="chart-title"><span>Objective</span><span>lower is better</span></div>
+                <canvas id="lossCanvas" aria-label="Relative objective value across FFkm stages"></canvas>
+              </div>
+
+              <div class="lab-controls">
+                <button class="control-primary" id="playButton" type="button">
+                  <span class="play-icon" aria-hidden="true"></span>
+                  <span id="playLabel">Play sequence</span>
+                </button>
+                <button class="control-secondary" id="stepButton" type="button">Step</button>
+                <button class="icon-button" id="resetButton" type="button" aria-label="Reset demonstration">↺</button>
+              </div>
+            </aside>
+          </div>
+
+          <div class="stage-strip" id="stageStrip" aria-label="Algorithm stages">
+            <button class="active" data-stage="0" type="button"><span>00</span>Local trap</button>
+            <button data-stage="1" type="button"><span>01</span>Detect</button>
+            <button data-stage="2" type="button"><span>02</span>Fission</button>
+            <button data-stage="3" type="button"><span>03</span>Fusion</button>
+            <button data-stage="4" type="button"><span>04</span>Lloyd update</button>
+          </div>
+        </div>
+        <p class="demo-note reveal">
+          Illustrative two-dimensional example. The animation follows the same
+          operation order as <code>FFKMeans.fit</code> in the repository.
+        </p>
+      </section>
+
+      <section class="method section" id="method">
+        <div class="method-intro reveal">
+          <p class="eyebrow"><span></span>The geometric idea</p>
+          <h2>Find the mismatch.<br />Make the swap.</h2>
+        </div>
+
+        <div class="method-flow">
+          <article class="method-card reveal">
+            <div class="method-index">01</div>
+            <div class="method-icon detect-icon" aria-hidden="true">
+              <span></span><i></i><i></i>
+            </div>
+            <p class="method-tag">Detect OFM</p>
+            <h3>One fits many.</h3>
+            <p>
+              Find a fitted cluster whose points are too dispersed around one
+              center. It may be hiding multiple true groups.
+            </p>
+            <div class="detectors"><span>SD</span><span>TD</span><span>RD</span></div>
+          </article>
+
+          <article class="method-card method-card-accent reveal" data-delay="1">
+            <div class="method-index">02</div>
+            <div class="method-icon fission-icon" aria-hidden="true">
+              <span></span><i></i><i></i>
+            </div>
+            <p class="method-tag">Fission</p>
+            <h3>Split the overload.</h3>
+            <p>
+              Replace the selected center with two centers fitted to its assigned
+              points. The model temporarily has <em>k + 1</em> centers.
+            </p>
+          </article>
+
+          <article class="method-card reveal" data-delay="2">
+            <div class="method-index">03</div>
+            <div class="method-icon fusion-icon" aria-hidden="true">
+              <i></i><i></i><span></span>
+            </div>
+            <p class="method-tag">Detect MFO + fusion</p>
+            <h3>Merge the excess.</h3>
+            <p>
+              Find two redundant centers and replace them with their mean. The
+              model returns to <em>k</em> centers before short Lloyd updates.
+            </p>
+            <div class="detectors"><span>PD</span><span>OI</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="variants section">
+        <div class="variant-copy reveal">
+          <p class="eyebrow"><span></span>Modular by design</p>
+          <h2>Six ways to detect.<br />One repair loop.</h2>
+          <p>
+            Combine one OFM detector with one MFO detector. The implementation
+            exposes all six combinations through two clear parameters.
+          </p>
+        </div>
+        <div class="variant-matrix reveal" data-delay="1">
+          <div class="matrix-corner">OFM × MFO</div>
+          <div class="matrix-head">PD<br /><span>pairwise distance</span></div>
+          <div class="matrix-head">OI<br /><span>objective increment</span></div>
+          <div class="matrix-side"><strong>SD</strong><span>standard deviation</span></div>
+          <div class="matrix-cell"><i></i>SD + PD</div>
+          <div class="matrix-cell"><i></i>SD + OI</div>
+          <div class="matrix-side"><strong>TD</strong><span>total deviation</span></div>
+          <div class="matrix-cell"><i></i>TD + PD</div>
+          <div class="matrix-cell"><i></i>TD + OI</div>
+          <div class="matrix-side"><strong>RD</strong><span>ε-radius</span></div>
+          <div class="matrix-cell"><i></i>RD + PD</div>
+          <div class="matrix-cell"><i></i>RD + OI</div>
+        </div>
+      </section>
+
+      <section class="code-section section" id="code">
+        <div class="code-copy reveal">
+          <p class="eyebrow"><span></span>Use it in Python</p>
+          <h2>A small API for a<br />geometric correction.</h2>
+          <p>
+            FFkm follows the familiar scikit-learn estimator interface. Fit,
+            predict, and inspect the complete optimization history.
+          </p>
+          <a
+            class="text-link"
+            href="https://github.com/Jiazhen-Hong/ff-kmeans"
+            target="_blank"
+            rel="noreferrer"
+          >View source on GitHub <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="code-window reveal" data-delay="1">
+          <div class="code-topbar">
+            <div><i></i><i></i><i></i></div>
+            <span>quick_start.py</span>
+            <button id="copyCode" type="button">Copy</button>
+          </div>
+          <pre><code id="codeBlock"><span class="c-purple">from</span> sklearn.datasets <span class="c-purple">import</span> make_blobs
+<span class="c-purple">from</span> ffkm <span class="c-purple">import</span> FFKMeans
+
+X, _ = <span class="c-blue">make_blobs</span>(
+    n_samples=<span class="c-orange">1000</span>, centers=<span class="c-orange">5</span>, random_state=<span class="c-orange">0</span>
+)
+
+model = <span class="c-blue">FFKMeans</span>(
+    n_clusters=<span class="c-orange">5</span>,
+    ofm_method=<span class="c-green">"SD"</span>,
+    mfo_method=<span class="c-green">"PD"</span>,
+    random_state=<span class="c-orange">0</span>,
+)
+
+labels = model.<span class="c-blue">fit_predict</span>(X)
+<span class="c-muted"># objective after each accepted FFkm iteration</span>
+<span class="c-blue">print</span>(model.history_[<span class="c-green">"inertia"</span>])</code></pre>
+        </div>
+      </section>
+
+      <section class="paper section reveal">
+        <div>
+          <p class="eyebrow"><span></span>The paper</p>
+          <h2>A Geometric Approach to<br /><em>k</em>-Means Clustering</h2>
+        </div>
+        <div class="paper-meta">
+          <p>Jiazhen Hong, Wei Qian,<br />Yudong Chen, and Yuqian Zhang</p>
+          <p>IEEE Transactions on Knowledge<br />and Data Engineering, 2026</p>
+          <a href="https://doi.org/10.1109/TKDE.2025.3616858" target="_blank" rel="noreferrer">
+            DOI 10.1109/TKDE.2025.3616858 <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>FF<span>k</span>m</span></a>
+      <p>Fission–Fusion k-means for escaping bad local minima.</p>
+      <div><a href="../">Projects</a><a href="https://github.com/Jiazhen-Hong/ff-kmeans">GitHub</a><a href="https://doi.org/10.1109/TKDE.2025.3616858">Paper</a></div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
