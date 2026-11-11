@@ -133,7 +133,8 @@
             </div>
             <ul>
               <li><span>Language</span>Remote GPT-3.5 query</li>
-              <li><span>Decoder</span>Subject-calibrated SWLDA</li>
+              <li><span>Decoder</span>Traditional SWLDA</li>
+              <li><span>Stopping</span>Fixed repetitions</li>
               <li><span>Goal</span>Fewer keys per sentence</li>
             </ul>
           </article>
@@ -148,7 +149,8 @@
             </div>
             <ul>
               <li><span>Language</span>Fine-tuned local Llama 3.1 8B</li>
-              <li><span>Decoder</span>SWLDA with adaptive stopping</li>
+              <li><span>Decoder</span>Subject-specific SWLDA</li>
+              <li><span>Stopping</span>Adaptive stopping algorithm</li>
               <li><span>Goal</span>Private semantic communication</li>
             </ul>
           </article>
@@ -206,7 +208,7 @@
       <div class="loop" aria-label="ChatBCI closed-loop workflow">
         <article class="reveal"><span>01</span><div class="loop-icon eye"><i></i></div><h3>Attend</h3><p>The user focuses on a desired key while rows and columns flash.</p></article>
         <article class="reveal"><span>02</span><div class="loop-icon wave"><i></i></div><h3>Detect</h3><p>A P300 response identifies the row and column containing the target.</p></article>
-        <article class="reveal"><span>03</span><div class="loop-icon decode"><i></i></div><h3>Decode</h3><p>SWLDA converts accumulated EEG evidence into a key selection.</p></article>
+        <article class="reveal"><span>03</span><div class="loop-icon decode"><i></i></div><h3>Decode</h3><p>ChatBCI uses traditional SWLDA with fixed repetitions. ChatBCI-Assist uses subject-specific SWLDA with adaptive stopping.</p></article>
         <article class="reveal"><span>04</span><div class="loop-icon language"><i></i></div><h3>Assist</h3><p>The language model updates candidate words or intent-level responses.</p></article>
       </div>
     </section>

@@ -92,7 +92,7 @@ function updateStats(evidence = MODES[state.mode].evidence) {
   evidenceValue.textContent = evidence.toFixed(2);
   evidenceTrack.style.width = `${evidence * 100}%`;
   repetitionValue.textContent = MODES[state.mode].repetitions;
-  stopLabel.textContent = state.mode === "assist" ? "Adaptive stop" : "Fixed repetitions";
+  stopLabel.textContent = state.mode === "assist" ? "Adaptive stopping" : "Fixed repetitions";
 }
 
 function setMode(mode) {
