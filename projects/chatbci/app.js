@@ -2,22 +2,24 @@ const MODES = {
   chat: {
     initial: "I WOULD",
     suggestions: ["LIKE", "WANT", "NEED", "PREFER", "LOVE", "RATHER", "ALSO", "HAVE", "ASK", "SAY"],
-    language: "Word prediction",
-    location: "remote query",
+    language: "Word completion + prediction",
+    location: "remote GPT-3.5",
     evidence: 0.84,
-    repetitions: "10 / 10"
+    repetitions: "8 fixed"
   },
   assist: {
     initial: "I DO NOT",
-    suggestions: ["LIKE THIS FOOD", "NEED SOME WATER", "FEEL COMFORTABLE", "WANT TO REST", "NEED HELP", "FEEL COLD", "HAVE PAIN", "WANT TO LEAVE", "NEED A BREAK", "FEEL TIRED"],
-    language: "Intent prediction",
-    location: "local inference",
+    words: ["LIKE", "NEED", "FEEL", "WANT", "HAVE", "REST"],
+    phrases: ["LIKE THIS FOOD", "NEED SOME WATER", "I FEEL COLD", "WANT TO REST", "PLEASE HELP ME", "NEED A BREAK"],
+    language: "Word + phrase prediction",
+    location: "local Llama 3.1 8B",
     evidence: 0.76,
-    repetitions: "6 / 10"
+    repetitions: "Dynamic"
   }
 };
 
-const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").concat(["DW", "DC", "SP", "EN"]);
+const chatKeys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").concat(["DW", "DC", "SP", "EN"]);
+const assistBaseRows = ["ABCDE", "FGHIJ", "KLMNO", "PQRST", "UVWXY", ["Z", "DW", "DC", "SP", "EN"]];
 const state = { mode: "chat", text: MODES.chat.initial, selections: 0, characters: 0, timer: null, flashIndex: -1 };
 const keyboard = document.querySelector("#keyboard");
 const composedText = document.querySelector("#composedText");
@@ -33,28 +35,41 @@ const lab = document.querySelector(".lab");
 const flashButton = document.querySelector("#flashButton");
 
 function renderKeyboard() {
-  keyboard.replaceChildren(...keys.map((key) => {
+  const keys = state.mode === "chat" ? chatKeys.map((key) => ({ key })) : assistBaseRows.flatMap((row, index) => {
+    const base = Array.isArray(row) ? row : row.split("");
+    return [...base.map((key) => ({ key })), { key: "+", suggestion: MODES.assist.words[index], kind: "word" }, { key: "*", suggestion: MODES.assist.phrases[index], kind: "phrase" }];
+  });
+  keyboard.replaceChildren(...keys.map(({ key, suggestion, kind }) => {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = key === "SP" ? "SPACE" : key;
     button.dataset.key = key;
-    button.setAttribute("aria-label", key === "SP" ? "Space" : key === "DC" ? "Delete character" : key === "DW" ? "Delete word" : key === "EN" ? "Finish message" : `Letter ${key}`);
-    button.addEventListener("click", () => selectKey(key));
+    if (kind) button.dataset.predictionKind = kind;
+    button.setAttribute("aria-label", suggestion ? `${kind === "word" ? "Word" : "Phrase"} prediction: ${suggestion}` : key === "SP" ? "Space" : key === "DC" ? "Delete character" : key === "DW" ? "Delete word" : key === "EN" ? "Finish message" : `Letter ${key}`);
+    button.addEventListener("click", () => suggestion ? selectSuggestion(suggestion) : selectKey(key));
     return button;
   }));
 }
 
 function renderSuggestions() {
-  const list = MODES[state.mode].suggestions;
-  [document.querySelector("#leftSuggestions"), document.querySelector("#rightSuggestions")].forEach((column, columnIndex) => {
-    column.replaceChildren(...list.slice(columnIndex * 5, columnIndex * 5 + 5).map((suggestion) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.textContent = suggestion;
-      button.addEventListener("click", () => selectSuggestion(suggestion));
-      return button;
-    }));
-  });
+  const left = document.querySelector("#leftSuggestions");
+  const right = document.querySelector("#rightSuggestions");
+  const makeButton = (suggestion, kind = "") => {
+    const button = document.createElement("button");
+    button.type = "button";
+    if (kind) button.dataset.predictionKind = kind;
+    button.textContent = kind ? `${kind === "word" ? "+" : "*"}  ${suggestion}` : suggestion;
+    button.addEventListener("click", () => selectSuggestion(suggestion));
+    return button;
+  };
+  if (state.mode === "chat") {
+    left.replaceChildren(...MODES.chat.suggestions.slice(0, 5).map((suggestion) => makeButton(suggestion)));
+    right.replaceChildren(...MODES.chat.suggestions.slice(5).map((suggestion) => makeButton(suggestion)));
+  } else {
+    left.replaceChildren();
+    const predictions = MODES.assist.words.flatMap((word, index) => [[word, "word"], [MODES.assist.phrases[index], "phrase"]]);
+    right.replaceChildren(...predictions.map(([suggestion, kind]) => makeButton(suggestion, kind)));
+  }
 }
 
 function normalizeText(text) { return text.replace(/\s+/g, " ").trim(); }
@@ -103,6 +118,7 @@ function setMode(mode) {
   lab.classList.toggle("assist-mode", mode === "assist");
   document.querySelectorAll("[data-mode]").forEach((button) => button.classList.toggle("active", button.dataset.mode === mode));
   stopFlashes();
+  renderKeyboard();
   renderSuggestions();
   updateStats();
 }
@@ -111,9 +127,10 @@ function stepFlash() {
   const buttons = [...keyboard.querySelectorAll("button")];
   buttons.forEach((button) => button.classList.remove("flash"));
   state.flashIndex = (state.flashIndex + 1) % buttons.length;
-  const row = Math.floor(state.flashIndex / 6);
-  if (state.flashIndex % 2 === 0) buttons.filter((_, index) => Math.floor(index / 6) === row).forEach((button) => button.classList.add("flash"));
-  else buttons.filter((_, index) => index % 6 === state.flashIndex % 6).forEach((button) => button.classList.add("flash"));
+  const columns = state.mode === "assist" ? 7 : 6;
+  const row = Math.floor(state.flashIndex / columns);
+  if (state.flashIndex % 2 === 0) buttons.filter((_, index) => Math.floor(index / columns) === row).forEach((button) => button.classList.add("flash"));
+  else buttons.filter((_, index) => index % columns === state.flashIndex % columns).forEach((button) => button.classList.add("flash"));
 }
 
 function toggleFlashes() {

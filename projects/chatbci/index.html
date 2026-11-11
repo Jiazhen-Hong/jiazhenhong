@@ -125,30 +125,33 @@
           <article class="system-card chat reveal">
             <div class="system-index mono">01 · CHATBCI</div>
             <div class="system-title"><h3>Context becomes<br>a shortcut.</h3><span>REMOTE LLM</span></div>
-            <p>GPT-3.5 generates ten context-aware candidates from the partial sentence. The interface supports word completion, next-word prediction, and multi-word prediction.</p>
-            <div class="mini-interface" aria-hidden="true">
-              <div class="mini-suggestions"><i>LIKE</i><i>WANT</i><i>NEED</i></div>
-              <div class="mini-grid">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+            <p>Remote GPT-3.5 queries generate ten context-aware candidates. The 5 × 8 GUI places five suggestions on each side of 26 letters and four function keys.</p>
+            <div class="mini-interface chat-mini" aria-hidden="true">
+              <div class="mini-suggestions"><i>LIKE</i><i>WANT</i><i>NEED</i><i>PREFER</i><i>LOVE</i></div>
+              <div class="mini-grid">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z DW DC SP EN</div>
+              <div class="mini-suggestions"><i>RATHER</i><i>ALSO</i><i>HAVE</i><i>ASK</i><i>SAY</i></div>
               <div class="mini-text">I WOULD <b>LIKE</b></div>
             </div>
             <ul>
               <li><span>Language</span>Remote GPT-3.5 query</li>
+              <li><span>GUI</span>5 × 8 · 10 suggestion keys</li>
               <li><span>Decoder</span>Traditional SWLDA</li>
-              <li><span>Stopping</span>Fixed repetitions</li>
+              <li><span>Stopping</span>8 fixed repetitions</li>
               <li><span>Goal</span>Fewer keys per sentence</li>
             </ul>
           </article>
           <article class="system-card assist reveal">
             <div class="system-index mono">02 · CHATBCI-ASSIST</div>
             <div class="system-title"><h3>Intent becomes<br>the message.</h3><span>LOCAL LLM</span></div>
-            <p>A locally deployed language model proposes intent-level responses, while adaptive stopping ends each P300 selection when the accumulated evidence is sufficient.</p>
+            <p>A locally deployed, ALS-adapted Llama 3.1 8B produces prefix-constrained word and phrase predictions. Adaptive stopping ends each selection when the evidence is sufficient.</p>
             <div class="mini-interface assist-mini" aria-hidden="true">
-              <div class="mini-suggestions"><i>I NEED WATER</i><i>PLEASE HELP ME</i><i>I FEEL COLD</i></div>
               <div class="mini-grid">A B C D E + * F G H I J + * K L M N O + * P Q R S T + * U V W X Y + * Z DW DC SP EN + *</div>
+              <div class="mini-predictions"><span>LOCAL PREDICTIONS</span><i><b>+</b> LIKE</i><i><b>*</b> LIKE THIS FOOD</i><i><b>+</b> WATER</i><i><b>*</b> I NEED WATER</i></div>
               <div class="mini-text">I DO NOT <b>LIKE THIS FOOD</b></div>
             </div>
             <ul>
-              <li><span>Language</span>Fine-tuned local Llama 3.1 8B</li>
+              <li><span>Language</span>ALS-adapted local Llama 3.1 8B</li>
+              <li><span>GUI</span>6 × 7 · six + and six * keys</li>
               <li><span>Decoder</span>Subject-specific SWLDA</li>
               <li><span>Stopping</span>Adaptive stopping algorithm</li>
               <li><span>Goal</span>Private semantic communication</li>
@@ -162,7 +165,7 @@
       <div class="shell">
         <div class="section-head split reveal">
           <div><p class="section-label mono">03 / INTERACTIVE DEMO</p><h2>Think in<br><em>larger units.</em></h2></div>
-          <p>Switch between the two interfaces. Select letters or suggestions to see how language assistance changes the number of choices needed to compose a message.</p>
+          <p>Switch between the two paper-based layouts. ChatBCI uses ten suggestions around a 5 × 6 character grid; ChatBCI-Assist adds six word (+) and six phrase (*) keys to the right of a 6 × 5 character grid.</p>
         </div>
         <div class="lab reveal">
           <div class="lab-toolbar">
@@ -179,22 +182,22 @@
               <p class="mono status-label">SYSTEM STATE</p>
               <div class="state-row"><span>P300 evidence</span><strong id="evidenceValue">0.84</strong></div>
               <div class="evidence-track"><i id="evidenceTrack"></i><b id="stopLine" title="Adaptive stopping threshold"></b></div>
-              <div class="state-row"><span id="stopLabel">Fixed repetitions</span><strong id="repetitionValue">10 / 10</strong></div>
+              <div class="state-row"><span id="stopLabel">Fixed repetitions</span><strong id="repetitionValue">8 fixed</strong></div>
               <p class="lab-note">Illustrative browser simulation. No EEG is recorded and no model inference is performed.</p>
             </aside>
             <div class="speller-wrap">
-              <div class="suggestion-column" id="leftSuggestions" aria-label="Language suggestions"></div>
+              <div class="suggestion-column" id="leftSuggestions" aria-label="Language suggestions on the left"></div>
               <div class="keyboard-panel">
                 <div class="keyboard" id="keyboard" aria-label="P300 speller keyboard"></div>
                 <div class="keyboard-legend"><span><i class="target-dot"></i> selectable key</span><span><i class="flash-dot"></i> current flash</span></div>
               </div>
-              <div class="suggestion-column" id="rightSuggestions" aria-label="More language suggestions"></div>
+              <div class="suggestion-column" id="rightSuggestions" aria-label="Language predictions"></div>
             </div>
           </div>
           <div class="lab-metrics">
             <div><span class="mono">SELECTIONS</span><strong id="selectionCount">0</strong><small>brain-driven choices</small></div>
             <div><span class="mono">CHARACTERS / SELECTION</span><strong id="charRate">0.0</strong><small>in this simulation</small></div>
-            <div><span class="mono">LANGUAGE MODE</span><strong id="languageMode">Word prediction</strong><small id="languageLocation">remote query</small></div>
+            <div><span class="mono">LANGUAGE MODE</span><strong id="languageMode">Word completion + prediction</strong><small id="languageLocation">remote GPT-3.5</small></div>
           </div>
         </div>
       </div>
@@ -208,8 +211,8 @@
       <div class="loop" aria-label="ChatBCI closed-loop workflow">
         <article class="reveal"><span>01</span><div class="loop-icon eye"><i></i></div><h3>Attend</h3><p>The user focuses on a desired key while rows and columns flash.</p></article>
         <article class="reveal"><span>02</span><div class="loop-icon wave"><i></i></div><h3>Detect</h3><p>A P300 response identifies the row and column containing the target.</p></article>
-        <article class="reveal"><span>03</span><div class="loop-icon decode"><i></i></div><h3>Decode</h3><p>ChatBCI uses traditional SWLDA with fixed repetitions. ChatBCI-Assist uses subject-specific SWLDA with adaptive stopping.</p></article>
-        <article class="reveal"><span>04</span><div class="loop-icon language"><i></i></div><h3>Assist</h3><p>The language model updates candidate words or intent-level responses.</p></article>
+        <article class="reveal"><span>03</span><div class="loop-icon decode"><i></i></div><h3>Decode</h3><p>ChatBCI uses traditional SWLDA with eight fixed repetitions. ChatBCI-Assist uses subject-specific SWLDA with adaptive stopping.</p></article>
+        <article class="reveal"><span>04</span><div class="loop-icon language"><i></i></div><h3>Assist</h3><p>Remote GPT-3.5 supplies ChatBCI suggestions; a locally deployed, ALS-adapted Llama 3.1 8B supplies ChatBCI-Assist word and phrase predictions.</p></article>
       </div>
     </section>
 
@@ -229,13 +232,13 @@
           <article class="metric-card reveal"><span class="mono">KEYSTROKES</span><strong>−53.22%</strong><p>Fewer selections in the copy-spelling task.</p><div class="bar"><i style="--value:53.22%"></i></div></article>
           <article class="metric-card reveal"><span class="mono">INFORMATION RATE</span><strong>+229.48%</strong><p>Increase in character-based information transfer rate.</p><div class="bar"><i style="--value:82%"></i></div></article>
           <article class="metric-feature assist-metric reveal">
-            <span class="mono">CHATBCI-ASSIST · ONLINE</span>
+            <span class="mono">CHATBCI-ASSIST · SEMANTIC SPELLING</span>
             <strong>30.7<small> char/min</small></strong>
-            <h3>record-level spelling speed</h3>
-            <p>With 105.2 bits/min conventional ITR in the reported online evaluation.</p>
+            <h3>intent-level composition</h3>
+            <p>Average character rate in the semantic-spelling task.</p>
           </article>
-          <article class="metric-card reveal"><span class="mono">SEMANTIC RATE</span><strong>147.1</strong><p>bits/min semantic information transfer rate.</p><div class="bar blue"><i style="--value:92%"></i></div></article>
-          <article class="metric-card reveal"><span class="mono">PRIVACY</span><strong>Local</strong><p>The language model can run on-device without a remote query.</p><div class="bar blue"><i style="--value:100%"></i></div></article>
+          <article class="metric-card reveal"><span class="mono">COPY SPELLING</span><strong>19.7</strong><p>characters/min average in the copy-spelling task.</p><div class="bar blue"><i style="--value:64%"></i></div></article>
+          <article class="metric-card reveal"><span class="mono">INFORMATION RATE</span><strong>105.2</strong><p>bits/min average estimated ITR; semantic ITR reached 147.1 bits/min.</p><div class="bar blue"><i style="--value:92%"></i></div></article>
         </div>
         <p class="evidence-note reveal">ChatBCI values are reported in the 2026 <em>Scientific Reports</em> article. ChatBCI-Assist values are reported in the 2026 <em>IEEE Transactions on Biomedical Engineering</em> article. Metrics use different task definitions and should not be treated as a direct head-to-head comparison.</p>
       </div>
