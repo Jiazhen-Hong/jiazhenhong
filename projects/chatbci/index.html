@@ -9,11 +9,9 @@
   <meta property="og:title" content="ChatBCI · From characters to intent">
   <meta property="og:description" content="An interactive look at two real-world P300 BCI interfaces for LLM-assisted communication.">
   <meta property="og:url" content="https://jiazhen-hong.github.io/jiazhenhong/projects/chatbci/">
-  <meta property="og:image" content="https://jiazhen-hong.github.io/jiazhenhong/images/ChatBCI-Assist.png">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ChatBCI · From characters to intent">
   <meta name="twitter:description" content="Two real-world P300 BCI interfaces for LLM-assisted communication.">
-  <meta name="twitter:image" content="https://jiazhen-hong.github.io/jiazhenhong/images/ChatBCI-Assist.png">
   <link rel="icon" href="../../images/favicon/favicon.svg" type="image/svg+xml">
   <title>ChatBCI · From characters to intent</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,14 +23,13 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-nav" id="top">
     <a class="brand" href="#top" aria-label="ChatBCI home">
-      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
       <span>ChatBCI</span>
     </a>
     <nav aria-label="Page navigation">
-      <a href="#evolution">Evolution</a>
+      <a href="#papers">Papers</a>
       <a href="#try">Try it</a>
       <a href="#evidence">Evidence</a>
-      <a href="#watch">Watch</a>
+      <a href="#cite">Cite</a>
     </nav>
     <div class="nav-actions">
       <button class="theme-toggle" type="button" aria-label="Switch to light theme" title="Change theme">
@@ -40,6 +37,7 @@
         <svg class="moon" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.4 12.8A7 7 0 0 1 7.2 3.6a7 7 0 1 0 9.2 9.2Z"/></svg>
       </button>
       <a class="nav-pill" href="../">All projects</a>
+      <a class="nav-pill nav-github" href="https://github.com/ChatBCI" target="_blank" rel="noreferrer">GitHub ↗</a>
     </div>
   </header>
 
@@ -51,7 +49,8 @@
         <p class="hero-deck">ChatBCI and ChatBCI-Assist combine brain-driven key selection with language intelligence to make communication faster, more natural, and more practical.</p>
         <div class="hero-actions">
           <a class="button primary" href="#try">Try the interface <span>↓</span></a>
-          <a class="button quiet" href="https://www.nature.com/articles/s41598-025-25660-7" target="_blank" rel="noreferrer">Read ChatBCI <span>↗</span></a>
+          <a class="button quiet" href="#papers">Read both papers <span>↓</span></a>
+          <a class="button quiet" href="https://github.com/ChatBCI" target="_blank" rel="noreferrer">Public GitHub <span>↗</span></a>
         </div>
       </div>
       <div class="hero-stage reveal" aria-label="Illustration of an EEG signal becoming a suggested message">
@@ -75,6 +74,30 @@
         <div><strong>7 + 7</strong><span>participants</span></div>
         <div><strong>2026</strong><span>journal publications</span></div>
         <p>One research line, moving from context-aware word prediction to private, intent-level communication.</p>
+      </div>
+    </section>
+
+    <section class="papers-section section shell" id="papers">
+      <div class="papers-head reveal">
+        <p class="section-label mono">PUBLICATIONS · 2026</p>
+        <h2>Two papers.<br><em>One research line.</em></h2>
+        <p>Read the peer-reviewed articles or copy their citations directly.</p>
+      </div>
+      <div class="paper-grid">
+        <article class="paper-card reveal">
+          <div class="paper-meta"><span class="mono">SCIENTIFIC REPORTS</span><b>OPEN ACCESS</b></div>
+          <h3>ChatBCI</h3>
+          <p class="paper-title">A P300 speller BCI with context-driven word prediction leveraging large language models, from concept to evaluation</p>
+          <p class="paper-authors">Jiazhen Hong · Weinan Wang · Laleh Najafizadeh</p>
+          <div class="paper-actions"><a href="https://www.nature.com/articles/s41598-025-25660-7" target="_blank" rel="noreferrer">Read paper ↗</a><button type="button" data-citation="chat">Copy citation</button></div>
+        </article>
+        <article class="paper-card assist-paper reveal">
+          <div class="paper-meta"><span class="mono">IEEE TBME</span><b>VOL. 73 · NO. 8</b></div>
+          <h3>ChatBCI-Assist</h3>
+          <p class="paper-title">An Intent-Based P300 Speller With a Locally Deployed LLM and Adaptive Stopping Strategy Enabling Record Online Spelling Performance</p>
+          <p class="paper-authors">Jiazhen Hong · Pradyumna Rao · Weinan Wang · Laleh Najafizadeh</p>
+          <div class="paper-actions"><a href="https://ieeexplore.ieee.org/document/11520887" target="_blank" rel="noreferrer">Read paper ↗</a><button type="button" data-citation="assist">Copy citation</button></div>
+        </article>
       </div>
     </section>
 
@@ -130,10 +153,6 @@
             </ul>
           </article>
         </div>
-        <figure class="architecture reveal">
-          <img src="../../images/ChatBCI-Assist.png" alt="ChatBCI-Assist system: P300 decoding, adaptive stopping, local language model, and online semantic spelling evaluation" loading="lazy">
-          <figcaption><span class="mono">CHATBCI-ASSIST</span><p>The complete closed loop joins visual stimulation, EEG decoding, language assistance, and online evaluation.</p></figcaption>
-        </figure>
       </div>
     </section>
 
@@ -252,17 +271,25 @@
       </div>
     </section>
 
-    <section class="citation shell reveal">
-      <div><span class="mono">CITE CHATBCI</span><small>Scientific Reports · 2026</small></div>
-      <p>Hong, J., Wang, W., &amp; Najafizadeh, L. <em>ChatBCI, a P300 speller BCI with context-driven word prediction leveraging large language models, from concept to evaluation.</em> Scientific Reports 16, 6379 (2026).</p>
-      <button type="button" id="copyCitation">Copy BibTeX</button>
+    <section class="citations-section section shell" id="cite">
+      <div class="citation-heading reveal"><p class="section-label mono">CITATIONS</p><h2>Cite the<br><em>systems.</em></h2></div>
+      <article class="citation reveal">
+        <div><span class="mono">CITE CHATBCI</span><small>Scientific Reports · 2026</small></div>
+        <p>Hong, J., Wang, W., &amp; Najafizadeh, L. <em>ChatBCI, a P300 speller BCI with context-driven word prediction leveraging large language models, from concept to evaluation.</em> Scientific Reports 16, 6379 (2026). <a href="https://doi.org/10.1038/s41598-025-25660-7" target="_blank" rel="noreferrer">DOI ↗</a></p>
+        <button type="button" data-citation="chat">Copy BibTeX</button>
+      </article>
+      <article class="citation reveal">
+        <div><span class="mono">CITE CHATBCI-ASSIST</span><small>IEEE TBME · 2026</small></div>
+        <p>Hong, J., Rao, P., Wang, W., &amp; Najafizadeh, L. <em>ChatBCI-Assist: An Intent-Based P300 Speller With a Locally Deployed LLM and Adaptive Stopping Strategy Enabling Record Online Spelling Performance.</em> IEEE Transactions on Biomedical Engineering 73(8), 2876–2888 (2026). <a href="https://doi.org/10.1109/TBME.2026.3693965" target="_blank" rel="noreferrer">DOI ↗</a></p>
+        <button type="button" data-citation="assist">Copy BibTeX</button>
+      </article>
     </section>
   </main>
 
   <footer class="footer shell">
-    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>ChatBCI</span></a>
+    <a class="brand" href="#top"><span>ChatBCI</span></a>
     <p>Brain-driven communication, designed as a real-world interface.</p>
-    <div><a href="../">Projects</a><a href="../../">Home</a><a href="#top">Back to top ↑</a></div>
+    <div><a href="https://github.com/ChatBCI" target="_blank" rel="noreferrer">GitHub</a><a href="../">Projects</a><a href="../../">Home</a><a href="#top">Back to top ↑</a></div>
   </footer>
   <script src="app.js"></script>
 </body>

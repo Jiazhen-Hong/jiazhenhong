@@ -153,14 +153,19 @@ document.querySelectorAll("[data-video]").forEach((button) => button.addEventLis
   });
 }));
 
-const citation = `@article{hong2026chatbci,\n  title={ChatBCI, a P300 speller BCI with context-driven word prediction leveraging large language models, from concept to evaluation},\n  author={Hong, Jiazhen and Wang, Weinan and Najafizadeh, Laleh},\n  journal={Scientific Reports},\n  volume={16},\n  pages={6379},\n  year={2026},\n  doi={10.1038/s41598-025-25660-7}\n}`;
-document.querySelector("#copyCitation").addEventListener("click", async (event) => {
+const citations = {
+  chat: `@article{hong2026chatbci,\n  title={ChatBCI, a P300 speller BCI with context-driven word prediction leveraging large language models, from concept to evaluation},\n  author={Hong, Jiazhen and Wang, Weinan and Najafizadeh, Laleh},\n  journal={Scientific Reports},\n  volume={16},\n  pages={6379},\n  year={2026},\n  doi={10.1038/s41598-025-25660-7}\n}`,
+  assist: `@article{hong2026chatbciassist,\n  title={ChatBCI-Assist: An Intent-Based P300 Speller With a Locally Deployed LLM and Adaptive Stopping Strategy Enabling Record Online Spelling Performance},\n  author={Hong, Jiazhen and Rao, Pradyumna and Wang, Weinan and Najafizadeh, Laleh},\n  journal={IEEE Transactions on Biomedical Engineering},\n  volume={73},\n  number={8},\n  pages={2876--2888},\n  year={2026},\n  doi={10.1109/TBME.2026.3693965}\n}`
+};
+document.querySelectorAll("[data-citation]").forEach((button) => button.addEventListener("click", async (event) => {
+  const target = event.currentTarget;
+  const originalLabel = target.textContent;
   try {
-    await navigator.clipboard.writeText(citation);
-    event.currentTarget.textContent = "Copied";
-    window.setTimeout(() => { event.currentTarget.textContent = "Copy BibTeX"; }, 1800);
-  } catch { event.currentTarget.textContent = "Copy unavailable"; }
-});
+    await navigator.clipboard.writeText(citations[target.dataset.citation]);
+    target.textContent = "Copied";
+    window.setTimeout(() => { target.textContent = originalLabel; }, 1800);
+  } catch { target.textContent = "Copy unavailable"; }
+}));
 
 const root = document.documentElement;
 const themeButton = document.querySelector(".theme-toggle");
